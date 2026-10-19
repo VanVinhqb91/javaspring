@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{backend/fragments/head :: htmlHeadProduct}"></head>
+<body class="text-slate-700 antialiased min-h-screen flex flex-col">
+    <div class="flex flex-1">
+        <div th:replace="~{backend/fragments/leftsidebar :: htmlLeftSideBar}"></div>
+        <main class="ml-24 flex-1 bg-[#f5f5f5] p-6 overflow-x-auto">
+            <div th:replace="~{backend/fragments/header :: htmlHeader}"></div>
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                <div>
+                    <h1 class="text-2xl font-light text-slate-800">
+                    	<b>Sales / Order</b>
+                    </h1>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button class="bg-[#eb5202] hover:bg-[#ba4102] text-white font-semibold text-xs px-4 py-2.5 rounded shadow-sm transition flex items-center gap-2">
+                    	<a th:href="@{/backend/product/add}">
+                        	<span>Add Order</span>
+                        	<i class="fa-solid fa-caret-down"></i>
+                       	</a>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="success-message" th:if="${successMessage}">
+			    <span>[[${successMessage}]]</span>
+			</div>
+			<div class="error-message" th:if="${errorMessage}">
+			    <span>[[${errorMessage}]]</span>
+			</div>
+			
+            <div class="bg-white border border-slate-300 rounded-t shadow-sm">
+                <div class="p-3 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3 text-xs">
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <div class="flex items-center">
+                            <select class="bg-white border text-slate-700 rounded-l px-3 py-1.5 focus:outline-none focus:border-slate-400">
+                                <option value="">Actions</option>
+                                <option value="delete">Delete</option>
+                                <option value="change_status">Change Status</option>
+                                <option value="update_attributes">Update Attributes</option>
+                            </select>
+                            <button class="bg-[#f0f0f0] border border-l-0 hover:bg-slate-200 text-slate-700 font-semibold px-3 py-1.5 rounded-r">
+                                Submit
+                            </button>
+                        </div>
+                        <span class="text-slate-400">|</span>
+                        <div class="relative w-64">
+                            <input type="text" placeholder="Search by keyword" class="w-full pl-3 pr-8 py-1.5 border rounded text-xs focus:outline-none focus:border-orange-500">
+                            <i class="fa-solid fa-magnifying-glass absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        </div>
+                        <button class="text-slate-600 hover:text-orange-600 flex items-center gap-1.5 font-semibold">
+                            <i class="fa-solid fa-filter text-orange-500"></i> Filters
+                        </button>
+                    </div>
+                    <div class="flex items-center gap-4 text-slate-600">
+                        <button class="hover:text-slate-900 flex items-center gap-1" title="Default View">
+                            <span>Default View</span>
+                            <i class="fa-solid fa-caret-down text-[10px]"></i>
+                        </button>
+                        <button class="hover:text-slate-900 flex items-center gap-1" title="Columns Toggle">
+                            <i class="fa-solid fa-table-columns"></i>
+                            <span>Columns</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="border-b border-slate-300 text-slate-200 font-semibold tracking-wider">
+                                <th class="p-3 w-10 text-center bg-[#413c38]">
+                                    <input type="checkbox" class="rounded border-slate-300 text-orange-600 focus:ring-orange-500">
+                                </th>
+                                <th class="p-3 border-r border-slate-200 bg-[#413c38] text-white">ID 
+                                	<a th:href="@{'/backend/product?page='+${currentPage}+'&sortBy=id&sortDir='+${reverseSortDir}}"><i class="fa-solid fa-arrow-down text-[10px] text-orange-500"></i></a>
+                                </th>
+                                <th class="p-3 border-r border-slate-200 bg-[#413c38] text-white">Purchase Date</th>
+                                <th class="p-3 border-r border-slate-200 bg-[#413c38] text-white">Bill-to Name
+                                	<a th:href="@{'/backend/product?page='+${currentPage}+'&sortBy=name&sortDir='+${reverseSortDir}}"><i class="fa-solid fa-arrow-down text-[10px] text-orange-500"></i></a>
+                                </th>
+                                <th class="p-3 border-r border-slate-200 bg-[#413c38] text-white">Grand Total</th>
+                                <th class="p-3 border-r border-slate-200 bg-[#413c38] text-white">Customer Email</th>
+                                <th class="p-3 border-r border-slate-200 bg-[#413c38] text-white">Payment Method</th>
+                                <th class="p-3 border-r border-slate-200 bg-[#413c38] text-white">Status</th>
+                                <th class="p-3 text-center bg-[#413c38] text-white">Action</th>
+                            </tr>
+                        </thead>
+                        
+                       <tbody class="divide-y divide-slate-200 bg-white">
+                            <tr th:each="order:${orders}" class="hover:bg-amber-50/50 transition">
+                                <td class="p-3 text-center">
+                                    <input type="checkbox" class="rounded border-slate-300 text-orange-600 focus:ring-orange-500">
+                                </td>
+                                <td class="p-3 font-medium text-slate-800">[[${order.id}]]</td>
+                                <td class="p-3 font-semibold text-slate-800" th:text="${#dates.format(order.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
+                                <td class="p-3 text-slate-600 font-mono">2265</td>
+                                <td class="p-3 text-slate-600 font-mono">[[${order.finalPriceFormated}]]</td>
+                                <td class="p-3 text-slate-600 text-slate-800">vanvinhqb91.it@gmail.com</td>
+                                <td class="p-3 text-slate-600">[[${order.paymentMethod}]]</td>
+                                <td class="p-3">
+                                    <span class="inline-block px-2 py-0.5 text-[10px] font-bold uppercase rounded bg-emerald-100 text-emerald-800">[[${order.status}]]</span>
+                                </td>
+                                <td class="p-3 text-center">
+                                    <a th:href="@{/backend/sales/order/view/{id}(id=${order.id})}" class="text-blue-600 hover:underline font-semibold">Views</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

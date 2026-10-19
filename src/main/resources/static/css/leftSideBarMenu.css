@@ -1,0 +1,137 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.admin-wrapper {
+	display: flex;
+	min-height: 100vh;
+}
+
+/* --- STRUCTURE SIDEBAR --- */
+.nav-sidebar {
+	position: sticky;
+	top: 0;
+	height: 100vh;
+	z-index: 100;
+	background-color: #303030;
+	width: 90px; /* Độ rộng cố định của thanh icon */
+}
+
+.menu-container {
+	list-style: none;
+	height: 100%;
+}
+
+.menu-item {
+	position: relative;
+	/* Quan trọng: Làm gốc tọa độ cho menu con hiển thị đè lên */
+	width: 100%;
+}
+
+/* Đường link chính (Icon + Chữ) */
+.menu-item .main-link {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 15px 5px;
+	color: #a8a8a8;
+	text-decoration: none;
+	font-size: 11px;
+	transition: background 0.2s, color 0.2s;
+}
+
+.menu-item .main-link i {
+	font-size: 20px;
+	margin-bottom: 5px;
+}
+
+/* Hover & Active Level 1 */
+.menu-item:hover .main-link, .menu-item.active .main-link {
+	color: #ffffff;
+	background-color: #414141;
+}
+
+.menu-item.logo .main-link {
+	background-color: #eb5202;
+	color: white;
+	font-size: 24px;
+	padding: 20px 0;
+}
+
+/* --- HIỆU ỨNG HOVER TRƯỢT MỞ LEVEL 2 --- */
+.submenu-panel {
+	position: absolute;
+	top: 0;
+	left: 90px; /* Nằm ngay sát mép phải thanh icon */
+	width: 220px;
+	height: 100vh; /* Cao bằng màn hình giống Magento */
+	background-color: #ffffff;
+	border-right: 1px solid #e3e3e3;
+	box-shadow: 5px 0 15px rgba(0, 0, 0, 0.08);
+	padding: 25px 20px;
+	/* Trạng thái ẩn ban đầu */
+	opacity: 0;
+	visibility: hidden;
+	transform: translateX(-15px); /* Đẩy lùi về bên trái 15px */
+	transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
+	pointer-events: none; /* Tránh kích hoạt nhầm khi chưa hover */
+}
+
+/* Kích hoạt hiệu ứng khi HOVER vào menu cha */
+.menu-item.has-children:hover .submenu-panel {
+	opacity: 1;
+	visibility: visible;
+	transform: translateX(0); /* Trượt mượt ra vị trí chuẩn */
+	pointer-events: auto; /* Cho phép tương tác click link bên trong */
+}
+
+/* Thiết kế chi tiết bên trong submenu */
+.submenu-panel .panel-title {
+	font-size: 15px;
+	font-weight: 700;
+	text-transform: uppercase;
+	color: #333;
+	margin-bottom: 18px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #eee;
+}
+
+.submenu-panel ul {
+	list-style: none;
+}
+
+.submenu-panel ul li a {
+	display: block;
+	padding: 9px 0;
+	color: #555;
+	text-decoration: none;
+	font-size: 14px;
+	transition: color 0.2s;
+}
+
+.submenu-panel ul li a:hover {
+	color: #eb5202; /* Màu cam khi hover vào link con */
+	padding-left: 3px; /* Hiệu ứng dịch nhẹ chữ sang phải khi hover */
+	transition: all 0.2s;
+}
+
+/* --- MAIN CONTENT AREA --- */
+.main-content {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+}
+
+.top-header {
+	background: #fff;
+	padding: 15px 20px;
+	border-bottom: 1px solid #e3e3e3;
+}
+
+.content-body {
+	padding: 20px;
+}

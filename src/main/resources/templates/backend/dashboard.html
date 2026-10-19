@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="~{backend/fragments/head :: htmlHead}"></head>
+	<body class="text-slate-700 antialiased min-h-screen flex flex-col">
+		
+		<div class="flex flex-1">
+			<div th:replace="~{backend/fragments/leftsidebar :: htmlLeftSideBar}"></div>
+			<!-- Main Content Area -->
+			<main class="ml-24 flex-1 bg-[#f5f5f5] p-6 overflow-x-auto">
+				<div th:replace="~{backend/fragments/header :: htmlHeader}"></div>
+				<div class="page-title">
+                	<h1 style="font-weight: bold;">Dashboard</h1>
+            	</div>
+
+	            <!-- Metric Cards -->
+	            <div class="metrics-grid">
+	                <div class="card stat-card">
+	                    <h3>Revenue</h3>
+	                    <div class="amount">$0.00</div>
+	                </div>
+	                <div class="card stat-card">
+	                    <h3>Tax</h3>
+	                    <div class="amount">$0.00</div>
+	                </div>
+	                <div class="card stat-card">
+	                    <h3>Shipping</h3>
+	                    <div class="amount">$0.00</div>
+	                </div>
+	                <div class="card stat-card">
+	                    <h3>Quantity</h3>
+	                    <div class="amount">0</div>
+	                </div>
+	            </div>
+
+	            <!-- Dashboard Tabs / Tables -->
+	            <div class="dashboard-tabs">
+	                <div class="tab-header">
+	                    <button class="tab-btn active">Last Orders</button>
+	                    <button class="tab-btn">Search Terms</button>
+	                    <button class="tab-btn">Most Viewed Products</button>
+	                    <button class="tab-btn">New Customers</button>
+	                </div>
+	                <div class="tab-content">
+	                    <table>
+	                        <thead>
+	                            <tr>
+	                                <th>Customer</th>
+	                                <th>Items</th>
+	                                <th>Total</th>
+	                            </tr>
+	                        </thead>
+	                        <tbody>
+	                            <tr>
+	                                <td colspan="3" class="empty-row">We couldn't find any records.</td>
+	                            </tr>
+	                        </tbody>
+	                    </table>
+	                </div>
+	            </div>
+			</main>
+		</div>
+	</body>
+</html>

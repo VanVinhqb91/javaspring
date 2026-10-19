@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Hệ Thống Hỗ Trợ Khách Hàng</title>
+    
+    <!-- Lồng ghép file thiết kế CSS bên ngoài -->
+    <link rel="stylesheet" th:href="@{/css/adminchatbox.css}">
+    
+    <!-- Nhúng thư viện SockJS nội bộ đã chạy ổn định -->
+	<script th:src="@{/js/sockjs.min.js}"></script>
+</head>
+<body>
+
+    <!-- CỘT TRÁI: DANH SÁCH KHÁCH TRỰC TUYẾN -->
+    <div class="sidebar">
+        <div class="sidebar-header">Khách Đang Đợi (<span id="countActive">0</span>)</div>
+        <ul class="customer-list" id="customerList">
+            <!-- Danh sách khách vãng lai sẽ được tự động thêm vào bằng JS -->
+        </ul>
+    </div>
+
+    <!-- KHUNG PHẢI: MÀN HÌNH HỘI THOẠI CHI TIẾT -->
+    <div class="chat-area">
+        <div class="chat-header" id="activeChatHeader">Vui lòng chọn một khách hàng để bắt đầu hỗ trợ</div>
+        
+        <div class="chat-messages" id="chatMessages">
+            <div class="message system">Chưa có cuộc hội thoại nào được chọn.</div>
+        </div>
+
+        <div class="chat-footer">
+            <input type="text" id="adminInput" placeholder="Nhập câu trả lời hỗ trợ..." disabled />
+            <button id="sendBtn" onclick="sendAdminReply()" disabled>Trả lời</button>
+        </div>
+    </div>
+
+    <!-- Lồng ghép file xử lý logic Javascript ở cuối để tránh lỗi đồng bộ phần tử -->
+    <script th:src="@{/js/adminchatbox.js}"></script>
+</body>
+</html>

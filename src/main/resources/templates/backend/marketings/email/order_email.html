@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác nhận đơn hàng</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0; }
+        .email-container { max-width: 600px; margin: 20px auto; background: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .header { background-color: #1e293b; padding: 25px; text-align: center; color: #ffffff; }
+        .header h1 { margin: 0; font-size: 24px; }
+        .content { padding: 30px; color: #333333; line-height: 1.6; }
+        .customer-name { font-weight: bold; color: #1e293b; }
+        .order-info { background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 6px; margin: 20px 0; }
+        .order-info p { margin: 5px 0; }
+        .btn-action { display: inline-block; padding: 12px 24px; background-color: #2563eb; color: #ffffff !important; text-decoration: none; font-weight: bold; border-radius: 6px; margin-top: 15px; }
+        .btn-action:hover { background-color: #1d4ed8; }
+        .footer { background-color: #f1f5f9; padding: 15px; text-align: center; font-size: 12px; color: #64748b; }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Header -->
+        <div class="header">
+            <h1>VPASOUND - XÁC NHẬN ĐƠN HÀNG</h1>
+        </div>
+
+        <!-- Nội dung chính -->
+        <div class="content">
+            <p>Xin chào <span class="customer-name" th:text="${customerName}">Khách hàng</span>,</p>
+            <p>Cảm ơn bạn đã tin tưởng và đặt mua thiết bị âm thanh tại 
+				<strong>VPASOUND</strong>
+				. Đơn hàng của bạn đã được tiếp nhận thành công và đang được chuẩn bị để giao đi.
+			</p>
+            
+            <!-- Khối thông tin chi tiết nhận từ Spring Boot -->
+            <div class="order-info">
+                <p><strong>Mã đơn hàng:</strong> <span th:text="${orderId}">#123456</span></p>
+                <p><strong>Ngày đặt hàng:</strong> <span>18/10/2026</span></p>
+                <p><strong>Tổng tiền thanh toán:</strong> <span style="color: #dc2626; font-weight: bold;" th:text="${totalPrice}">0đ</span></p>
+                <p><strong>Trạng thái:</strong> <span style="color: #16a34a; font-weight: bold;" th:text="${paymentStatus}">Đang xử lý</span></p>
+            </div>
+
+            <p>Để theo dõi trạng thái vận chuyển chi tiết của đơn hàng này, vui lòng bấm vào nút bên dưới:</p>
+            
+            <div style="text-align: center;">
+                <a class="btn-action">Xem chi tiết đơn hàng</a>
+            </div>
+
+            <p style="margin-top: 25px;">Nếu có bất kỳ thắc mắc nào, vui lòng phản hồi lại email này hoặc liên hệ qua Hotline để được đội ngũ kỹ thuật hỗ trợ nhanh nhất.</p>
+            <p>Trân trọng,<br><strong>Đội ngũ VPASOUND</strong></p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>© 2026 VPASOUND. All rights reserved.</p>
+            <p>Địa chỉ: Nam Trạch, Quảng Trị, Việt Nam</p>
+        </div>
+    </div>
+</body>
+</html>

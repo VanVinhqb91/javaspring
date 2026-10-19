@@ -1,0 +1,239 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    background-color:rgb(255, 255, 255);
+    color: #303030;
+}
+
+main.flex-1 {
+	background-color: white !important;
+}
+
+/* Side bar */ 
+.sidebar {
+    width: 90px;
+    background-color: #514943;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo {
+    padding: 20px 0;
+    font-size: 32px;
+    color: #eb5202; /* Magento Orange */
+}
+
+.nav-menu {
+    width: 100%;
+}
+
+.nav-menu a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 0;
+    color: #ccc;
+    text-decoration: none;
+    font-size: 11px;
+    transition: 0.2s;
+}
+
+.nav-menu a i {
+    font-size: 18px;
+    margin-bottom: 4px;
+}
+
+.nav-menu a:hover, .nav-menu a.active {
+    background-color: #37312c;
+    color: #fff;
+    border-left: 4px solid #eb5202;
+}
+
+/* Main Wrapper */
+.main-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.header {
+    height: 60px;
+    background-color: #fff;
+    border-bottom: 1px solid #e3e3e3;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 25px;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    background: #f8f8f8;
+    border: 1px solid #ccc;
+    padding: 6px 12px;
+    border-radius: 2px;
+    width: 300px;
+}
+
+.search-bar input {
+    border: none;
+    background: transparent;
+    outline: none;
+    margin-left: 8px;
+    width: 100%;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    background: #eb5202;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* Content */
+.content {
+    padding: 25px;
+}
+
+.page-title h1 {
+    font-weight: 300;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+/* Cards */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.card {
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #e3e3e3;
+    border-radius: 2px;
+}
+
+.stat-card h3 {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.stat-card .amount {
+    font-size: 24px;
+    font-weight: 600;
+    color: #303030;
+}
+
+.btn-primary {
+    background: #eb5202;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    margin-top: 10px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background: #d44902;
+}
+
+/* Tabs & Tables */
+.dashboard-tabs {
+    background: #fff;
+    border: 1px solid #e3e3e3;
+}
+
+.tab-header {
+    display: flex;
+    background: #f8f8f8;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    padding: 12px 20px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #514943;
+}
+
+.tab-btn.active {
+    background: #fff;
+    border-top: 2px solid #eb5202;
+    border-bottom: 1px solid transparent;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px 20px;
+    text-align: left;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+th {
+    background: #fafafa;
+    color: #666;
+    font-size: 13px;
+}
+
+.empty-row {
+    text-align: center;
+    color: #888;
+    padding: 30px;
+}
+.flex-1 .success-message {
+	background-color: #e5e7eb;
+	color: green; 
+	font-weight: bold; 
+	margin-bottom: 15px;
+	border: 1px solid #cccccc;
+	font-style: italic;
+	padding: 15px 30px;
+	font-size: 18px;
+}
+.flex-1 .error-message {
+	background-color: #e5e7eb;
+	color: red; 
+	font-weight: bold; 
+	margin-bottom: 15px;
+	border: 1px solid #cccccc;
+	font-style: italic;
+	padding: 15px 30px;
+	font-size: 18px;
+}
+
+
+
+
+

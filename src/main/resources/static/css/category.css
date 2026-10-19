@@ -1,0 +1,229 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		Helvetica, Arial, sans-serif;
+}
+
+body {
+	background-color: #f5f5f5;
+	color: #303030;
+	font-size: 14px;
+}
+
+/* Admin Header */
+.admin-header {
+	background: #514943;
+	color: #fff;
+	padding: 12px 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.admin-header h1 {
+	font-size: 18px;
+	font-weight: 400;
+}
+
+/* Layout Container */
+.admin-container {
+	display: flex;
+	min-height: calc(100vh - 48px);
+}
+
+/* Left Sidebar - Category Tree */
+.category-tree-panel {
+	width: 320px;
+	background: #fff;
+	border-right: 1px solid #e3e3e3;
+	padding: 20px;
+}
+
+.tree-actions {
+	margin-bottom: 15px;
+	display: flex;
+	gap: 8px;
+}
+
+.btn {
+	padding: 8px 14px;
+	border-radius: 3px;
+	font-size: 13px;
+	font-weight: 600;
+	cursor: pointer;
+	border: 1px solid transparent;
+}
+
+.btn-primary {
+	background: #eb5202;
+	color: #fff;
+}
+
+.btn-primary:hover {
+	background: #ba4102;
+}
+
+.btn-secondary {
+	background: #e3e3e3;
+	color: #514943;
+	border-color: #adadad;
+}
+
+.btn-secondary:hover {
+	background: #d4d4d4;
+}
+
+.tree-list {
+	list-style: none;
+	padding-left: 15px;
+	margin-top: 10px;
+}
+
+.tree-list li {
+	margin: 6px 0;
+}
+
+.tree-item {
+	cursor: pointer;
+	padding: 4px 8px;
+	border-radius: 3px;
+	display: inline-block;
+	color: #2e6da4;
+}
+
+.tree-item:hover, .tree-item.active {
+	background: #e8f3fb;
+	font-weight: 600;
+	color: #000;
+}
+
+/* Main Content Area */
+.category-content {
+	flex: 1;
+	padding: 25px 30px;
+	background: #f5f5f5;
+}
+
+.page-main-actions {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 20px;
+	border-bottom: 1px solid #cccccc;
+	padding-bottom: 15px;
+}
+
+.page-title {
+	font-size: 24px;
+	font-weight: 480;
+	color: #41362f;
+}
+
+/* Tabs & Form Panels */
+.fieldset-wrapper {
+	background: #fff;
+	border: 1px solid #d6d6d6;
+	border-radius: 1px;
+	margin-bottom: 20px;
+}
+
+.fieldset-title {
+	background: #f8f8f8;
+	padding: 12px 20px;
+	font-weight: 600;
+	border-bottom: 1px solid #e3e3e3;
+	font-size: 15px;
+	color: #41362f;
+}
+
+.fieldset-content {
+	padding: 20px;
+}
+
+/* Form Styles */
+.admin-field {
+	display: flex;
+	align-items: center;
+	margin-bottom: 18px;
+}
+
+.admin-field label {
+	width: 220px;
+	text-align: right;
+	padding-right: 20px;
+	font-weight: 600;
+	color: #303030;
+	font-size: 13px;
+}
+
+.admin-field label.required::after {
+	content: " *";
+	color: #e22626;
+}
+
+.admin-field-control {
+	flex: 1;
+	max-width: 450px;
+}
+
+.admin-field-control input[type="text"], .admin-field-control select,
+	.admin-field-control textarea {
+	width: 100%;
+	padding: 7px 10px;
+	border: 1px solid #adadad;
+	border-radius: 2px;
+	font-size: 13px;
+}
+
+.admin-field-control input:focus, .admin-field-control select:focus {
+	border-color: #007bdd;
+	outline: none;
+}
+
+/* Toggle Switch Style (Magento 2 Style) */
+.switch-control {
+	position: relative;
+	display: inline-block;
+	width: 50px;
+	height: 24px;
+}
+
+.switch-control input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	transition: .3s;
+	border-radius: 24px;
+}
+
+.slider:before {
+	position: absolute;
+	content: "";
+	height: 18px;
+	width: 18px;
+	left: 3px;
+	bottom: 3px;
+	background-color: white;
+	transition: .3s;
+	border-radius: 50%;
+}
+
+input:checked+.slider {
+	background-color: #79a22e;
+}
+
+input:checked+.slider:before {
+	transform: translateX(26px);
+}

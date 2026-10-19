@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://thymeleaf.org"
+	xmlns:layout="http://ultraq.net.nz" layout:decorate="~{fontend/layout}">
+<head>
+<title>[[${title}]]</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<section class="relative w-full h-[70vh] overflow-hidden bg-zinc-50 border-b border-zinc-200">
+			<div id="slider-track"
+				class="flex w-full h-full transition-transform duration-700 ease-in-out">
+				<!-- Slide 1 -->
+				<div class="w-full h-full flex-shrink-0 relative flex items-center justify-center px-6 md:px-16 bg-gradient-to-r from-zinc-100 via-white to-zinc-100">
+					<div class="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-8 items-center">
+						<div class="space-y-6 text-left">
+							<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase border-l-2 border-black pl-3">Sản Phẩm Mới 2026</span>
+							<h1 class="text-4xl md:text-6xl font-black uppercase tracking-tight text-black">
+								Tai Nghe Hi-Res Wireless</h1>
+							<p class="text-zinc-600 text-sm md:text-base leading-relaxed">
+								Trải nghiệm âm thanh vòm chuẩn Studio với công nghệ chống ồn ANC
+								thế hệ mới.</p>
+							<div>
+								<a href="#" class="inline-block bg-black text-white font-bold px-8 py-3.5 rounded-full hover:bg-zinc-800 transition-all text-xs tracking-wider uppercase shadow-lg hover:shadow-xl">Khám
+									Phá Ngay</a>
+							</div>
+						</div>
+						<div class="flex justify-center items-center">
+							<img
+								src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=800&auto=format&fit=crop"
+								class="max-h-[350px] object-contain drop-shadow-2xl" />
+						</div>
+					</div>
+				</div>
+
+				<!-- Slide 2 -->
+				<div
+					class="w-full h-full flex-shrink-0 relative flex items-center justify-center px-6 md:px-16 bg-gradient-to-r from-white via-zinc-100 to-white">
+					<div
+						class="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-8 items-center">
+						<div class="space-y-6 text-left">
+							<span
+								class="text-xs font-bold tracking-widest text-zinc-500 uppercase border-l-2 border-black pl-3">BST
+								Cao Cấp</span>
+							<h1
+								class="text-4xl md:text-6xl font-black uppercase tracking-tight text-black">
+								Loa Hi-End Bluetooth</h1>
+							<p class="text-zinc-600 text-sm md:text-base leading-relaxed">
+								Âm bass uy lực, thiết kế phong cách Minimalism phù hợp cho không
+								gian sang trọng.</p>
+							<div>
+								<a href="#"
+									class="inline-block bg-black text-white font-bold px-8 py-3.5 rounded-full hover:bg-zinc-800 transition-all text-xs tracking-wider uppercase shadow-lg hover:shadow-xl">Mua
+									Ngay</a>
+							</div>
+						</div>
+						<div class="flex justify-center items-center">
+							<img
+								src="https://images.unsplash.com/photo-1545454675-3531b543be5d?q=80&w=800&auto=format&fit=crop"
+								class="max-h-[350px] object-contain drop-shadow-2xl" />
+						</div>
+					</div>
+				</div>
+
+				<!-- Slide 3 -->
+				<div
+					class="w-full h-full flex-shrink-0 relative flex items-center justify-center px-6 md:px-16 bg-gradient-to-r from-zinc-100 via-white to-zinc-50">
+					<div
+						class="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-8 items-center">
+						<div class="space-y-6 text-left">
+							<span
+								class="text-xs font-bold tracking-widest text-zinc-500 uppercase border-l-2 border-black pl-3">Phòng
+								Thu Chuyên Nghiệp</span>
+							<h1
+								class="text-4xl md:text-6xl font-black uppercase tracking-tight text-black">
+								DAC & Amply Giải Mã</h1>
+							<p class="text-zinc-600 text-sm md:text-base leading-relaxed">
+								Tái tạo chi tiết âm thanh chân thực nhất với chuẩn Lossless cao
+								cấp.</p>
+							<div>
+								<a href="#"
+									class="inline-block bg-black text-white font-bold px-8 py-3.5 rounded-full hover:bg-zinc-800 transition-all text-xs tracking-wider uppercase shadow-lg hover:shadow-xl">Xem
+									Chi Tiết</a>
+							</div>
+						</div>
+						<div class="flex justify-center items-center">
+							<img
+								src="https://images.unsplash.com/photo-1590658268037-6bf12165a8df?q=80&w=800&auto=format&fit=crop"
+								class="max-h-[350px] object-contain drop-shadow-2xl" />
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Nút Trượt Trái/Phải -->
+			<button id="prev-btn"
+				class="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full border border-zinc-200 bg-white/80 text-black flex items-center justify-center hover:bg-black hover:text-white transition-all shadow-md">
+				<i class="fa-solid fa-chevron-left text-sm"></i>
+			</button>
+			<button id="next-btn"
+				class="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full border border-zinc-200 bg-white/80 text-black flex items-center justify-center hover:bg-black hover:text-white transition-all shadow-md">
+				<i class="fa-solid fa-chevron-right text-sm"></i>
+			</button>
+
+			<!-- Dấu 3 chấm thể hiện số slide -->
+			<div
+				class="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-3 z-10"
+				id="dots-container">
+				<button
+					class="dot w-8 h-1.5 bg-black rounded-full transition-all duration-300"
+					onclick="goToSlide(0)"></button>
+				<button
+					class="dot w-3 h-1.5 bg-zinc-300 rounded-full transition-all duration-300"
+					onclick="goToSlide(1)"></button>
+				<button
+					class="dot w-3 h-1.5 bg-zinc-300 rounded-full transition-all duration-300"
+					onclick="goToSlide(2)"></button>
+			</div>
+		</section>
+
+		<!-- 4. BODY - NỀN TRẮNG CHUẨN ĐẸP -->
+		<main class="bg-white">
+			<!-- Section: Cam kết dịch vụ -->
+			<section class="py-12 border-b border-zinc-100 bg-zinc-50/50">
+				<div
+					class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 gap-6">
+					<div
+						class="flex items-center space-x-4 p-4 rounded-xl bg-white border border-zinc-100 shadow-sm">
+						<i class="fa-solid fa-truck-fast text-2xl text-black"></i>
+						<div>
+							<h4 class="text-xs font-bold uppercase tracking-wider">Miễn
+								Phí Giao Hàng</h4>
+							<p class="text-[11px] text-zinc-500 mt-0.5">Cho đơn hàng từ 2
+								triệu</p>
+						</div>
+					</div>
+					<div
+						class="flex items-center space-x-4 p-4 rounded-xl bg-white border border-zinc-100 shadow-sm">
+						<i class="fa-solid fa-shield-halved text-2xl text-black"></i>
+						<div>
+							<h4 class="text-xs font-bold uppercase tracking-wider">Bảo
+								Hành 24 Tháng</h4>
+							<p class="text-[11px] text-zinc-500 mt-0.5">Cam kết chính
+								hãng 100%</p>
+						</div>
+					</div>
+					<div
+						class="flex items-center space-x-4 p-4 rounded-xl bg-white border border-zinc-100 shadow-sm">
+						<i class="fa-solid fa-rotate text-2xl text-black"></i>
+						<div>
+							<h4 class="text-xs font-bold uppercase tracking-wider">Đổi
+								Trả 30 Ngày</h4>
+							<p class="text-[11px] text-zinc-500 mt-0.5">Lỗi 1 đổi 1 nhanh
+								chóng</p>
+						</div>
+					</div>
+					<div
+						class="flex items-center space-x-4 p-4 rounded-xl bg-white border border-zinc-100 shadow-sm">
+						<i class="fa-solid fa-headset text-2xl text-black"></i>
+						<div>
+							<h4 class="text-xs font-bold uppercase tracking-wider">Hỗ
+								Trợ 24/7</h4>
+							<p class="text-[11px] text-zinc-500 mt-0.5">Tư vấn âm thanh
+								chuyên sâu</p>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Section: Danh mục nổi bật -->
+			<section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div class="flex justify-between items-end mb-10">
+					<div>
+						<span
+							class="text-xs font-bold text-zinc-400 uppercase tracking-widest block mb-1">Danh
+							Mục</span>
+						<h2
+							class="text-2xl md:text-3xl font-extrabold uppercase tracking-tight text-black">
+							Thiết Bị Âm Thanh</h2>
+					</div>
+					<a href="#"
+						class="text-xs font-bold text-black hover:underline uppercase tracking-wider">Xem
+						Tất Cả <i class="fa-solid fa-arrow-right ml-1"></i>
+					</a>
+				</div>
+
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+					<!-- Banner Danh Mục 1 -->
+					<div
+						class="group relative h-96 rounded-2xl overflow-hidden bg-zinc-100 border border-zinc-200 cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500">
+						<img
+							src="https://images.unsplash.com/photo-1545454675-3531b543be5d?q=80&w=600&auto=format&fit=crop"
+							class="w-full h-full object-cover group-hover:scale-105 transition-all duration-700" />
+						<div
+							class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-8 flex flex-col justify-end text-white">
+							<span
+								class="text-[10px] font-bold uppercase tracking-widest text-zinc-300">Bộ
+								Sưu Tập</span>
+							<h3 class="text-2xl font-black uppercase mt-1">Loa Bluetooth
+								& Hi-End</h3>
+							<p class="text-xs text-zinc-300 mt-2 font-light">Công suất
+								mạnh mẽ, âm bass sâu lắng</p>
+							<div class="mt-4">
+								<span
+									class="inline-flex items-center text-xs font-bold uppercase tracking-wider text-white border-b border-white pb-0.5 group-hover:pr-2 transition-all">Khám
+									phá <i class="fa-solid fa-chevron-right ml-2 text-[10px]"></i>
+								</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- Banner Danh Mục 2 -->
+					<div
+						class="group relative h-96 rounded-2xl overflow-hidden bg-zinc-100 border border-zinc-200 cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500">
+						<img
+							src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=600&auto=format&fit=crop"
+							class="w-full h-full object-cover group-hover:scale-105 transition-all duration-700" />
+						<div
+							class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-8 flex flex-col justify-end text-white">
+							<span
+								class="text-[10px] font-bold uppercase tracking-widest text-zinc-300">Bộ
+								Sưu Tập</span>
+							<h3 class="text-2xl font-black uppercase mt-1">Tai Nghe
+								Chống Ồn</h3>
+							<p class="text-xs text-zinc-300 mt-2 font-light">Cách âm hoàn
+								hảo, thời lượng pin 40h</p>
+							<div class="mt-4">
+								<span
+									class="inline-flex items-center text-xs font-bold uppercase tracking-wider text-white border-b border-white pb-0.5 group-hover:pr-2 transition-all">Khám
+									phá <i class="fa-solid fa-chevron-right ml-2 text-[10px]"></i>
+								</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- Banner Danh Mục 3 -->
+					<div
+						class="group relative h-96 rounded-2xl overflow-hidden bg-zinc-100 border border-zinc-200 cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500">
+						<img
+							src="https://images.unsplash.com/photo-1590658268037-6bf12165a8df?q=80&w=600&auto=format&fit=crop"
+							class="w-full h-full object-cover group-hover:scale-105 transition-all duration-700" />
+						<div
+							class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-8 flex flex-col justify-end text-white">
+							<span
+								class="text-[10px] font-bold uppercase tracking-widest text-zinc-300">Bộ
+								Sưu Tập</span>
+							<h3 class="text-2xl font-black uppercase mt-1">Amply & DAC
+								Giải Mã</h3>
+							<p class="text-xs text-zinc-300 mt-2 font-light">Tái tạo âm
+								thanh chân thực chuẩn Lossless</p>
+							<div class="mt-4">
+								<span
+									class="inline-flex items-center text-xs font-bold uppercase tracking-wider text-white border-b border-white pb-0.5 group-hover:pr-2 transition-all">Khám
+									phá <i class="fa-solid fa-chevron-right ml-2 text-[10px]"></i>
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Section: Sản phẩm bán chạy -->
+			<section class="py-16 bg-zinc-50 border-t border-b border-zinc-200">
+				<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+					<div class="flex justify-between items-end mb-10">
+						<div>
+							<span
+								class="text-xs font-bold text-zinc-400 uppercase tracking-widest block mb-1">Bestseller</span>
+							<h2
+								class="text-2xl md:text-3xl font-extrabold uppercase tracking-tight text-black">
+								Sản Phẩm Nổi Bật</h2>
+						</div>
+					</div>
+
+					<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+						<!-- Product Card 1 -->
+						<div
+							class="bg-white rounded-2xl p-4 border border-zinc-200 shadow-sm hover:shadow-lg transition-all group relative flex flex-col justify-between">
+							<div
+								class="relative w-full h-56 bg-zinc-100 rounded-xl overflow-hidden flex items-center justify-center p-4">
+								<span
+									class="absolute top-3 left-3 bg-black text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">Mới</span>
+								<img
+									src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=400&auto=format&fit=crop"
+									class="max-h-full object-contain group-hover:scale-105 transition-all duration-300" />
+							</div>
+							<div class="mt-4 space-y-2">
+								<span
+									class="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">Tai
+									Nghe</span>
+								<h4
+									class="text-sm font-bold text-black group-hover:text-zinc-600 transition-colors line-clamp-1">
+									AudioLab Studio Wireless Pro</h4>
+								<div class="flex items-center space-x-2">
+									<span class="text-sm font-extrabold text-black">8.990.000₫</span>
+									<span class="text-xs text-zinc-400 line-through">10.500.000₫</span>
+								</div>
+								<button
+									class="w-full mt-3 bg-black text-white text-xs font-bold py-2.5 rounded-xl hover:bg-zinc-800 transition-colors uppercase tracking-wider">
+									Thêm Vào Giỏ</button>
+							</div>
+						</div>
+
+						<!-- Product Card 2 -->
+						<div
+							class="bg-white rounded-2xl p-4 border border-zinc-200 shadow-sm hover:shadow-lg transition-all group relative flex flex-col justify-between">
+							<div
+								class="relative w-full h-56 bg-zinc-100 rounded-xl overflow-hidden flex items-center justify-center p-4">
+								<img
+									src="https://images.unsplash.com/photo-1545454675-3531b543be5d?q=80&w=400&auto=format&fit=crop"
+									class="max-h-full object-contain group-hover:scale-105 transition-all duration-300" />
+							</div>
+							<div class="mt-4 space-y-2">
+								<span
+									class="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">Loa
+									Bluetooth</span>
+								<h4
+									class="text-sm font-bold text-black group-hover:text-zinc-600 transition-colors line-clamp-1">
+									SoundBar Hi-End Master III</h4>
+								<div class="flex items-center space-x-2">
+									<span class="text-sm font-extrabold text-black">14.500.000₫</span>
+								</div>
+								<button
+									class="w-full mt-3 bg-black text-white text-xs font-bold py-2.5 rounded-xl hover:bg-zinc-800 transition-colors uppercase tracking-wider">
+									Thêm Vào Giỏ</button>
+							</div>
+						</div>
+
+						<!-- Product Card 3 -->
+						<div
+							class="bg-white rounded-2xl p-4 border border-zinc-200 shadow-sm hover:shadow-lg transition-all group relative flex flex-col justify-between">
+							<div
+								class="relative w-full h-56 bg-zinc-100 rounded-xl overflow-hidden flex items-center justify-center p-4">
+								<span
+									class="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">-15%</span>
+								<img
+									src="https://images.unsplash.com/photo-1590658268037-6bf12165a8df?q=80&w=400&auto=format&fit=crop"
+									class="max-h-full object-contain group-hover:scale-105 transition-all duration-300" />
+							</div>
+							<div class="mt-4 space-y-2">
+								<span
+									class="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">Amply
+									& Dac</span>
+								<h4
+									class="text-sm font-bold text-black group-hover:text-zinc-600 transition-colors line-clamp-1">
+									AudioLab Dac X-Lossless</h4>
+								<div class="flex items-center space-x-2">
+									<span class="text-sm font-extrabold text-black">18.200.000₫</span>
+									<span class="text-xs text-zinc-400 line-through">21.500.000₫</span>
+								</div>
+								<button
+									class="w-full mt-3 bg-black text-white text-xs font-bold py-2.5 rounded-xl hover:bg-zinc-800 transition-colors uppercase tracking-wider">
+									Thêm Vào Giỏ</button>
+							</div>
+						</div>
+
+						<!-- Product Card 4 -->
+						<div
+							class="bg-white rounded-2xl p-4 border border-zinc-200 shadow-sm hover:shadow-lg transition-all group relative flex flex-col justify-between">
+							<div
+								class="relative w-full h-56 bg-zinc-100 rounded-xl overflow-hidden flex items-center justify-center p-4">
+								<img
+									src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=400&auto=format&fit=crop"
+									class="max-h-full object-contain group-hover:scale-105 transition-all duration-300" />
+							</div>
+							<div class="mt-4 space-y-2">
+								<span
+									class="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">Tai
+									Nghe Studio</span>
+								<h4
+									class="text-sm font-bold text-black group-hover:text-zinc-600 transition-colors line-clamp-1">
+									AudioLab Reference Monitor</h4>
+								<div class="flex items-center space-x-2">
+									<span class="text-sm font-extrabold text-black">12.000.000₫</span>
+								</div>
+								<button
+									class="w-full mt-3 bg-black text-white text-xs font-bold py-2.5 rounded-xl hover:bg-zinc-800 transition-colors uppercase tracking-wider">
+									Thêm Vào Giỏ</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+	</div>
+</body>
+</html>

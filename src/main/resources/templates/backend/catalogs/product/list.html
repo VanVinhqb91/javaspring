@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{backend/fragments/head :: htmlHeadProduct}"></head>
+<body class="text-slate-700 antialiased min-h-screen flex flex-col">
+    <div class="flex flex-1">
+        <div th:replace="~{backend/fragments/leftsidebar :: htmlLeftSideBar}"></div>
+        <main class="ml-24 flex-1 bg-[#f5f5f5] p-6 overflow-x-auto">
+            <div th:replace="~{backend/fragments/header :: htmlHeader}"></div>
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                <div>
+                    <h1 class="text-2xl font-light text-slate-800">
+                    	<b>Catalogs / Product - ([[${total_pro}]] records)</b>
+                    </h1>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button class="bg-[#e3e3e3] hover:bg-[#d5d5d5] text-slate-700 font-semibold text-xs px-4 py-2.5 rounded shadow-sm border border-slate-300 transition flex items-center gap-2">
+                        <i class="fa-solid fa-file-export"></i> Export
+                    </button>
+                    <button class="bg-[#eb5202] hover:bg-[#ba4102] text-white font-semibold text-xs px-4 py-2.5 rounded shadow-sm transition flex items-center gap-2">
+                    	<a th:href="@{/backend/catalogs/product/create}">
+                        	<span>Create Product</span>
+                        	<i class="fa-solid fa-caret-down"></i>
+                       	</a>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="success-message" th:if="${successMessage}">
+			    <span>[[${successMessage}]]</span>
+			</div>
+			<div class="error-message" th:if="${errorMessage}">
+			    <span>[[${errorMessage}]]</span>
+			</div>
+			
+            <div class="bg-white border border-slate-300 rounded-t shadow-sm">
+                <div class="p-3 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3 text-xs">
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <div class="flex items-center">
+                            <select class="bg-white border text-slate-700 rounded-l px-3 py-1.5 focus:outline-none focus:border-slate-400">
+                                <option value="">Actions</option>
+                                <option value="delete">Delete</option>
+                                <option value="change_status">Change Status</option>
+                                <option value="update_attributes">Update Attributes</option>
+                            </select>
+                            <button class="bg-[#f0f0f0] border border-l-0 hover:bg-slate-200 text-slate-700 font-semibold px-3 py-1.5 rounded-r">
+                                Submit
+                            </button>
+                        </div>
+                        <span class="text-slate-400">|</span>
+                        <div class="relative w-64">
+                            <input type="text" placeholder="Search by keyword" class="w-full pl-3 pr-8 py-1.5 border rounded text-xs focus:outline-none focus:border-orange-500">
+                            <i class="fa-solid fa-magnifying-glass absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        </div>
+                        <!-- Active Filters Count -->
+                        <button class="text-slate-600 hover:text-orange-600 flex items-center gap-1.5 font-semibold">
+                            <i class="fa-solid fa-filter text-orange-500"></i> Filters
+                        </button>
+                    </div>
+                    <!-- Right System Controls (Columns, Default View) -->
+                    <div class="flex items-center gap-4 text-slate-600">
+                        <button class="hover:text-slate-900 flex items-center gap-1" title="Default View">
+                            <span>Default View</span>
+                            <i class="fa-solid fa-caret-down text-[10px]"></i>
+                        </button>
+                        <button class="hover:text-slate-900 flex items-center gap-1" title="Columns Toggle">
+                            <i class="fa-solid fa-table-columns"></i>
+                            <span>Columns</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="border-b border-slate-300 text-slate-200 font-semibold tracking-wider">
+                                <th class="p-3 w-10 text-center bg-[#413c38]">
+                                    <input type="checkbox" class="rounded border-slate-300 text-orange-600 focus:ring-orange-500">
+                                </th>
+                                <th class="p-3 border-r border-slate-200 bg-[#413c38] text-white">ID 
+                                	<a th:href="@{'/backend/catalogs/product?page='+${currentPage}+'&sortBy=id&sortDir='+${reverseSortDir}}"><i class="fa-solid fa-arrow-down text-[10px] text-orange-500"></i></a>
+                                </th>
+                                <th class="p-3 border-r border-slate-200 bg-[#413c38] text-white">Thumbnail</th>
+                                <th class="p-3 border-r border-slate-200 bg-[#413c38] text-white">Name
+                                	<a th:href="@{'/backend/catalogs/product?page='+${currentPage}+'&sortBy=name&sortDir='+${reverseSortDir}}"><i class="fa-solid fa-arrow-down text-[10px] text-orange-500"></i></a>
+                                </th>
+                                <th class="p-3 border-r border-slate-200 bg-[#413c38] text-white">Sku</th>
+                                <th class="p-3 border-r border-slate-200 bg-[#413c38] text-white">Price</th>
+                                <th class="p-3 border-r border-slate-200 bg-[#413c38] text-white">Quantity</th>
+                                <th class="p-3 border-r border-slate-200 bg-[#413c38] text-white">Status</th>
+                                <th class="p-3 text-center bg-[#413c38] text-white">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 bg-white">
+                            <tr th:each="product:${products}" class="hover:bg-amber-50/50 transition">
+                                <td class="p-3 text-center">
+                                    <input type="checkbox" class="rounded border-slate-300 text-orange-600 focus:ring-orange-500">
+                                </td>
+                                <td class="p-3 font-medium text-slate-800">[[${product.id}]]</td>
+                                <td class="p-3">
+                                    <img th:src="@{/image_product/} + ${product.urlImage}" class="w-10 h-10 object-cover border border-slate-200 rounded" alt="Thumb">
+                                </td>
+                                <td class="p-3 font-semibold text-slate-800">[[${product.name}]]</td>
+                                <td class="p-3 text-slate-600 font-mono">[[${product.sku}]]</td>
+                                <td class="p-3 text-slate-600 text-slate-800">[[${product.price}]]</td>
+                                <td class="p-3 text-slate-600">[[${product.qty}]]</td>
+                                <td class="p-3">
+                                    <span th:if="${product.status == 1}" class="inline-block px-2 py-0.5 text-[10px] font-bold uppercase rounded bg-emerald-100 text-emerald-800">Enabled</span>
+                                    <span th:if="${product.status != 1}" class="inline-block px-2 py-0.5 text-[10px] font-bold uppercase rounded bg-emerald-100 text-emerald-800">Disabled</span>
+                                </td>
+                                <td class="p-3 text-center">
+                                    <a th:href="@{/backend/catalogs/product/update/{id}(id=${product.id})}" class="text-blue-600 hover:underline font-semibold">Edit</a><span> | </span>
+                                    <a th:href="@{/backend/catalogs/product/delete/{id}(id=${product.id})}" class="text-blue-600 hover:underline font-semibold" onclick="return confirm('Bạn có muốn Xóa Sản Phẩm này không?.');">Delete</a>
+                                </td>
+                            </tr>
+                            <tr th:if="${products.empty}">
+                				<td colspan="9" class="text-center">Không có dữ liệu thương hiệu nào.</td>
+            				</tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Magento Pagination & Footer Bar -->
+                <div class="p-3 border-t border-slate-200 bg-white flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-600">
+                    <div class="flex items-center gap-2">
+                        <span>[[${total_pro}]] records found</span>
+                        <span class="text-slate-300">|</span>
+                        <div class="flex items-center gap-1">
+                            <span>Show</span>
+                            <select id="sizeSelect" onchange="changePageSize()" class="border border-slate-300 rounded px-2 py-1 focus:outline-none">
+                                <option value="10" th:selected="${size == 10}">10</option>
+                                <option value="20" th:selected="${size == 20}">20</option>
+                                <option value="30" th:selected="${size == 30}">30</option>
+                                <option value="50" th:selected="${size == 50}">50</option>
+                                <option value="100" th:selected="${size == 100}">100</option>
+                            </select>
+                            <span>per page</span>
+                        </div>
+                    </div>
+					<div class="flex items-center justify-between gap-4 bg-white px-4 py-3 rounded-lg border border-slate-100 shadow-sm">
+					    <!-- KHỐI BÊN TRÁI: THÔNG TIN TRANG (Tùy chọn hiển thị nếu cần) -->
+					    <div class="text-sm text-slate-500">
+					        Hiển thị trang <span class="font-medium text-slate-800" th:text="${currentPage + 1}">1</span> / <span class="font-medium text-slate-800" th:text="${totalPages}">10</span>
+					    </div>
+					
+					    <!-- KHỐI BÊN PHẢI: ĐIỀU HƯỚNG PHÂN TRANG -->
+					    <nav aria-label="Pagination" class="flex items-center gap-2">
+					        <!-- Nút Trang trước (Sử dụng Icon mũi tên trái) -->
+					        <a th:href="@{'/backend/catalogs/product?page=' + ${currentPage - 1} + '&size=' + ${size} + '&sortBy=' + ${sortBy} + '&sortDir=' + ${sortDir}}"
+					           th:classappend="${currentPage == 0} ? 'pointer-events-none opacity-40 bg-slate-50 text-slate-400 border-slate-200' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50 hover:border-slate-400 hover:text-slate-900 active:scale-95'"
+					           class="inline-flex items-center justify-center w-9 h-9 border rounded-lg transition-all duration-200 shadow-sm">
+					            <!-- Icon Chevron Left SVG -->
+					            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+					            </svg>
+					        </a>
+					
+					        <!-- Danh sách các số trang lẻ (1, 2, 3...) -->
+					        <div class="flex items-center gap-1.5">
+					            <a th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+					               th:href="@{'/backend/catalogs/product?page=' + ${i} + '&size=' + ${size} + '&sortBy=' + ${sortBy} + '&sortDir=' + ${sortDir}}"
+					               th:text="${i + 1}"
+					               th:style="${currentPage == i} ? 'background-color: #eb5202; border-color: #eb5202;' : ''"
+					               th:classappend="${currentPage == i} ? 'bg-slate-900 text-white border-slate-900 font-semibold shadow-md shadow-slate-900/10' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50 hover:border-slate-400 hover:text-slate-900 active:scale-95'"
+					               class="inline-flex items-center justify-center min-w-[36px] h-9 px-2 text-sm font-medium border rounded-lg transition-all duration-200 shadow-sm">
+					                1
+					            </a>
+					        </div>
+					
+					        <!-- Nút Trang sau (Sử dụng Icon mũi tên phải) -->
+					        <a th:href="@{'/backend/catalogs/product?page=' + ${currentPage + 1} + '&size=' + ${size} + '&sortBy=' + ${sortBy} + '&sortDir=' + ${sortDir}}"
+					           th:classappend="${currentPage + 1 == totalPages} ? 'pointer-events-none opacity-40 bg-slate-50 text-slate-400 border-slate-200' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50 hover:border-slate-400 hover:text-slate-900 active:scale-95'"
+					           class="inline-flex items-center justify-center w-9 h-9 border rounded-lg transition-all duration-200 shadow-sm">
+					            <!-- Icon Chevron Right SVG -->
+					            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+					            </svg>
+					        </a>
+					    </nav>
+					</div>
+                </div>
+            </div>
+        </main>
+    </div>
+<script th:inline="javascript">
+	function changePageSize() {
+	    // Lấy giá trị size vừa chọn từ thẻ select
+	    const selectedSize = document.getElementById("sizeSelect").value;
+	    
+	    // Lấy các tham số hiện tại từ Thymeleaf (nếu chưa có thì lấy giá trị mặc định)
+	    const sortBy = /*[[${sortBy}]]*/ 'id';
+	    const sortDir = /*[[${sortDir}]]*/ 'asc';
+	    
+	    // Tạo URL mới và chuyển hướng trang (quay về trang đầu tiên là 0 khi đổi size)
+	    window.location.href = '/backend/catalogs/product?page=0&size=' + selectedSize + '&sortBy=' + sortBy + '&sortDir=' + sortDir;
+	}
+</script>
+</body>
+</html>

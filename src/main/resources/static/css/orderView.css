@@ -1,0 +1,367 @@
+/* --- Khung chứa thanh công cụ chính (Dải màu xám nhạt) --- */
+.page-main-actions {
+    background-color: #f5f5f5; /* Màu nền xám nhạt như trong hình */
+    padding: 24px 24px;
+    border-bottom: 1px solid #e3e3e3;
+    display: flex;
+    align-items: center;
+	margin-bottom: 30px;
+}
+
+.page-actions-placeholder {
+	width: 30%;
+	display: flex;
+	justify-content: flex-start;
+	font-size: 18px;
+	font-weight: 600;
+}
+
+.page-actions {
+	width: 70%;	
+}
+
+/* Mặc định ẩn tất cả nội dung của các tab */
+.tab-content {
+    display: none;
+}
+
+/* Chỉ hiển thị khối nội dung nào có class active */
+.tab-content.active {
+    display: block;
+}
+
+/* Hỗ trợ cuộn ngang mượt mà khi thu nhỏ màn hình */
+.actions-scrollable {
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+}
+
+.page-actions-inner {
+    display: flex;
+    align-items: center;
+	justify-content: flex-end;
+}
+
+/* --- Khung chứa nhóm nút bấm --- */
+.page-actions-buttons {
+    display: flex;
+    gap: 32px; /* Khoảng cách rộng giữa các nút như trong ảnh */
+    align-items: center;
+}
+
+/* --- Định dạng nút bấm dạng văn bản phẳng (Flat/Plain Button) --- */
+.action-default.scalable {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600; /* Chữ đậm vừa phải */
+    color: #41362f;   /* Màu chữ xám đen đặc trưng của Magento */
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    transition: color 0.2s ease;
+}
+
+/* Hiệu ứng hover nhẹ khi di chuột vào chữ */
+.action-default.scalable:hover {
+    color: #000000;
+}
+
+/* Loại bỏ hoàn toàn các icon mặc định ở các nút khác, chỉ giữ lại icon mũi tên cho nút Back */
+.action-default::before {
+    display: none; 
+}
+
+/* --- Xử lý riêng cho nút Back (Có icon mũi tên bên trái) --- */
+.action-default.back {
+    display: inline-flex;
+    align-items: center;
+}
+
+.action-default.back::before {
+    display: inline-block;
+    content: "\f060"; /* Mã mũi tên fa-arrow-left của Font Awesome */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 8px; /* Khoảng cách giữa mũi tên và chữ Back */
+    font-size: 13px;
+    color: #41362f;
+}
+
+/* --- Khởi tạo cơ bản --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #ffffff;
+    color: #333333;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.order-view-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #ffffff;
+}
+
+/* --- MENU SIDEBAR BÊN TRÁI --- */
+.sidebar-menu {
+    width: 240px;
+    background-color: #f5f5f5;
+    border-right: 1px solid #e3e3e3;
+    padding: 0;
+}
+
+.sidebar-header {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e3e3e3;
+    color: #222222;
+}
+
+.nav-tabs {
+    list-style: none;
+}
+
+.tab-item {
+    padding: 18px 20px;
+    color: #555555;
+    cursor: pointer;
+    transition: all 0.1s ease;
+    position: relative;
+	font-size: 16px;
+}
+
+.tab-item:hover {
+    background-color: #ebebeb;
+    color: #111111;
+}
+
+/* Tab đang được chọn (Có vạch cam bên trái) */
+.tab-item.active {
+    background-color: #ffffff;
+    color: #111111;
+    font-weight: 600;
+    width: calc(100% + 1px); /* Đè lên viền phải của sidebar */
+}
+
+.tab-item.active::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background-color: #eb5e28; /* Màu cam đặc trưng Magento */
+}
+
+/* --- KHU VỰC NỘI DUNG CHÍNH --- */
+.main-content {
+    flex: 1;
+    padding: 24px 32px;
+}
+
+.page-title {
+    font-size: 18px;
+    font-weight: 400;
+    color: #222222;
+    margin-bottom: 16px;
+}
+
+.section-break {
+    margin-top: 35px;
+    border-top: 1px solid #dfdfdf;
+    padding-top: 25px;
+}
+
+/* --- BỐ CỤC LƯỚI THÔNG TIN (2 CỘT) --- */
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+/* Hộp thông tin nhỏ */
+.info-box {
+    border: 1px solid #e3e3e3;
+    padding: 0;
+}
+
+/* Biến thể hộp không nền (dùng cho Address Information) */
+.info-box.clear-bg {
+    background-color: transparent;
+    border: none;
+}
+
+.box-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #333333;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Đường gạch dưới tiêu đề cho phần Address */
+.box-title.line-style {
+    padding: 0 0 10px 0;
+    border-bottom: 1px solid #dfdfdf;
+    margin-bottom: 12px;
+}
+
+/* --- ĐỊNH DẠNG LINK VÀ BẢNG --- */
+.edit-link {
+    font-size: 13px;
+    color: #0076d6;
+    text-decoration: none;
+    font-weight: 400;
+}
+
+.edit-link:hover, .user-link:hover {
+    text-decoration: underline;
+}
+
+.user-link {
+    color: #0076d6;
+    text-decoration: none;
+}
+
+.info-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+}
+
+.info-table td {
+    padding: 10px 16px;
+    border-top: 1px solid #e3e3e3;
+    vertical-align: top;
+}
+
+.info-table tr td:first-child {
+    width: 35%;
+    border-right: 1px solid #e3e3e3;
+    color: #555555;
+}
+
+.info-table tr td:last-child {
+    background-color: #ffffff;
+    text-align: right;
+}
+
+/* Text hiển thị địa chỉ */
+.address-text {
+    line-height: 1.6;
+    color: #444444;
+}
+
+/* Trạng thái đơn hàng */
+.status-badge {
+    font-weight: 600;
+}
+
+/* --- Khối Payment & Shipping Method --- */
+.method-text {
+    color: #333333;
+    line-height: 1.6;
+}
+
+.method-primary {
+    font-weight: 400;
+    margin-bottom: 4px;
+}
+
+.method-sub {
+    color: #666666;
+    font-size: 13px;
+}
+
+/* --- Khối Bảng Danh Sách Sản Phẩm (Items Ordered) --- */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto; /* Hỗ trợ cuộn ngang nếu bảng quá rộng trên màn hình nhỏ */
+}
+
+.items-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+/* Header của bảng */
+.items-table th {
+    background-color: #ffffff;
+    color: #222222;
+    text-align: left;
+    padding: 12px 10px;
+    font-weight: 600;
+    border-bottom: 1px solid #dfdfdf;
+}
+
+/* Các ô dữ liệu trong bảng */
+.items-table td {
+    padding: 16px 10px;
+    border-bottom: 1px solid #e3e3e3;
+    vertical-align: top;
+    color: #333333;
+}
+
+/* Cột thông tin sản phẩm */
+.product-info-cell {
+    max-width: 250px;
+}
+
+.product-name {
+    color: #0076d6; /* Tên sản phẩm dạng link đặc trưng */
+    font-weight: 400;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.product-meta {
+    font-size: 13px;
+    color: #555555;
+    line-height: 1.6;
+}
+
+.product-meta span {
+    display: block;
+}
+
+/* Cột hiển thị số lượng (Qty) phân dòng thẳng hàng */
+.qty-cell div {
+    display: flex;
+    justify-content: space-between;
+    max-width: 90px;
+    margin-bottom: 4px;
+    color: #555555;
+}
+
+.qty-cell div span:first-child {
+    margin-right: 12px;
+}
+
+.qty-cell div span:last-child {
+    font-weight: 600;
+    color: #222222;
+}
+
+/* Cột tổng số tiền cuối cùng (Row Total) đậm hơn */
+.row-total-cell {
+    font-weight: 600;
+    color: #111111;
+}

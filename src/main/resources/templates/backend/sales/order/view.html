@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Quản Lý Danh Mục</title>
+    <th:block th:replace="~{backend/fragments/head :: htmlHead}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/orderView.css}">
+</head>
+
+<body class="text-slate-700 antialiased min-h-screen flex flex-col">
+	<div class="flex flex-1">
+		<div th:replace="~{backend/fragments/leftsidebar :: htmlLeftSideBar}"></div>
+		<main class="ml-24 flex-1 bg-[#f5f5f5] p-6 overflow-x-auto">
+			<div th:replace="~{backend/fragments/header :: htmlHeader}"></div>
+			<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+				<div>
+					<h1 class="text-2xl font-light text-slate-800">
+						<b>Sales / Order / View</b>
+					</h1>
+				</div>
+			</div>
+			<div class="page-main-actions actions-scrollable">
+				<div class="page-actions-placeholder">Order ID: #[[${orderId}]]</div>
+				<div class="page-actions" data-ui-id="page-actions-toolbar-content-header">
+					<div class="page-actions-inner">
+						<div class="page-actions-buttons">
+							<a th:href="@{/backend/sales/order}">
+								<button id="back" title="Back" type="button" class="action-default scalable back"
+									backend-button-widget-hook-id="buttonIdoDFtGu6a7f"
+									data-ui-id="sales-order-ready-for-pickup-back-button">
+									<span>Back</span>
+								</button>
+							</a>
+							<button id="guest_to_customer" title="Login as Customer" type="button"
+								class="action-default scalable reset" backend-button-widget-hook-id="buttonIdlP46gCht5g"
+								data-ui-id="sales-order-ready-for-pickup-guest-to-customer-button">
+								<span>Login as Customer</span>
+							</button>
+							<a th:href="@{/backend/sales/order/email/{id}(id=${orderId})}">
+								<button id="send_notification" title="Send Email" type="button"
+									class="action-default scalable send-email"
+									backend-button-widget-hook-id="buttonIdsYEb7JDGwK"
+									data-ui-id="sales-order-ready-for-pickup-send-notification-button">
+									<span>Send Email</span>
+								</button>
+							</a>
+							<button id="order_creditmemo" title="Credit Memo" type="button"
+								class="action-default scalable credit-memo"
+								backend-button-widget-hook-id="buttonIdcYmRSc2LuS"
+								data-ui-id="sales-order-ready-for-pickup-order-creditmemo-button">
+								<span>Credit Memo</span>
+							</button>
+							<button id="order-view-hold-button" title="Hold" type="button"
+								class="action-default scalable hold" backend-button-widget-hook-id="buttonIdgnJm1icAyg"
+								data-url="https://magento2-demo.magebit.com/admin/sales/order/hold/order_id/1/key/ad2dcf51dc867988115f40fbf69642b1854e858e57e63f211b2bd3653dad8a3c/"
+								data-ui-id="sales-order-ready-for-pickup-order-view-hold-button-button">
+								<span>Hold</span>
+							</button>
+							<button id="order_reorder" title="Reorder" type="button"
+								class="action-default scalable reorder"
+								backend-button-widget-hook-id="buttonIdhEPkjIyMp6"
+								data-ui-id="sales-order-ready-for-pickup-order-reorder-button">
+								<span>Reorder</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="order-view-container">
+			    
+			    <!-- SIDEBAR MENU BÊN TRÁI -->
+			    <aside class="sidebar-menu">
+			        <div class="sidebar-header">ORDER VIEW</div>
+			        <ul class="nav-tabs">
+			            <li class="tab-item active" data-tab="information">Information</li>
+			            <li class="tab-item" data-tab="invoices">Invoices</li>
+			            <li class="tab-item" data-tab="creditmemos">Credit Memos</li>
+			            <li class="tab-item" data-tab="shipments">Shipments</li>
+			            <li class="tab-item" data-tab="comments">Comments History</li>
+			        </ul>
+			    </aside>
+
+			    <!-- NỘI DUNG CHÍNH BÊN PHẢI -->
+			    <main class="main-content">
+					<div id="tab-information" class="tab-content active">
+						
+				        <h1 class="page-title">Order & Account Information</h1>
+				        <!-- KHỐI THÔNG TIN ĐƠN HÀNG & TÀI KHOẢN -->
+				        <section class="info-grid">
+				            <!-- Cột trái: Order Information -->
+				            <div class="info-box">
+				                <h2 class="box-title">Order # [[${orderId}]] (The order confirmation email is not sent)</h2>
+				                <table class="info-table">
+				                    <tr>
+				                        <td>Order Date</td>
+				                        <td th:text="${order.createdAt}"></td>
+				                    </tr>
+				                    <tr>
+				                        <td>Order Status</td>
+				                        <td><span class="status-badge" th:text="${order.status}"></span></td>
+				                    </tr>
+				                </table>
+				            </div>
+				            <!-- Cột phải: Account Information -->
+				            <div class="info-box">
+				                <h2 class="box-title">Account Information <a href="#" class="edit-link">Edit Customer</a></h2>
+				                <table class="info-table">
+				                    <tr>
+				                        <td>Customer Name</td>
+				                        <td><a href="#" class="user-link">Veronica Costello</a></td>
+				                    </tr>
+				                    <tr>
+				                        <td>Email</td>
+				                        <td><a href="mailto:roni_cost@example.com" class="user-link">roni_cost@example.com</a></td>
+				                    </tr>
+				                </table>
+				            </div>
+				        </section>
+	
+				        <h1 class="page-title section-break">Address Information</h1>
+				        <!-- KHỐI THÔNG TIN ĐỊA CHỈ -->
+				        <section class="info-grid">
+				            <!-- Địa chỉ thanh toán -->
+				            <div class="info-box clear-bg">
+				                <h2 class="box-title line-style">Billing Address <a href="#" class="edit-link">Edit</a></h2>
+				                <div class="address-text">
+				                    [[${order.billingAddress}]]
+				                </div>
+				            </div>
+				            <!-- Địa chỉ giao hàng -->
+				            <div class="info-box clear-bg">
+				                <h2 class="box-title line-style">Shipping Address <a href="#" class="edit-link">Edit</a></h2>
+				                <div class="address-text">
+				                    [[${order.shippingAddress}]]
+				                </div>
+				            </div>
+				        </section>
+						
+						<!-- KHỐI PHƯƠNG THỨC THANH TOÁN & VẬN CHUYỂN -->
+						<h1 class="page-title section-break">Payment & Shipping Method</h1>
+						<section class="info-grid">
+						    <!-- Cột trái: Payment Information -->
+						    <div class="info-box clear-bg">
+						        <h2 class="box-title line-style">Payment Information</h2>
+						        <div class="method-text">
+						            <p class="method-primary">Check / Money order</p>
+						            <p class="method-sub">The order was placed using EUR.</p>
+						        </div>
+						    </div>
+						    <!-- Cột phải: Shipping & Handling Information -->
+						    <div class="info-box clear-bg">
+						        <h2 class="box-title line-style">Shipping & Handling Information</h2>
+						        <div class="method-text">
+						            <p class="method-primary">Flat Rate - Fixed €5.00</p>
+						        </div>
+						    </div>
+						</section>
+	
+						<!-- KHỐI DANH SÁCH SẢN PHẨM ĐÃ ĐẶT (ITEMS ORDERED) -->
+						<h1 class="page-title section-break">Items Ordered</h1>
+						<section class="table-responsive">
+						    <table class="items-table">
+						        <thead>
+						            <tr>
+						                <th>Product</th>
+						                <th>Item Status</th>
+						                <th>Original Price</th>
+						                <th>Price</th>
+						                <th>Qty</th>
+						                <th>Subtotal</th>
+						                <th>Tax Amount</th>
+						                <th>Tax Percent</th>
+						                <th>Discount Amount</th>
+						                <th>Row Total</th>
+						            </tr>
+						        </thead>
+						        <tbody>
+						            <tr>
+						                <!-- Thông tin sản phẩm -->
+						                <td class="product-info-cell">
+						                    <span class="product-name">Iris Workout Top</span>
+						                    <div class="product-meta">
+						                        <span><strong>SKU:</strong> WS03-XS-Red</span>
+						                        <span><strong>Size:</strong> XS</span>
+						                        <span><strong>Color:</strong> Red</span>
+						                    </div>
+						                </td>
+						                <!-- Trạng thái -->
+						                <td>Shipped</td>
+						                <!-- Giá gốc -->
+						                <td>€29.00</td>
+						                <!-- Giá bán -->
+						                <td>€29.00</td>
+						                <!-- Số lượng chi tiết -->
+						                <td class="qty-cell">
+						                    <div><span>Ordered</span> <span>1</span></div>
+						                    <div><span>Invoiced</span> <span>1</span></div>
+						                    <div><span>Shipped</span> <span>1</span></div>
+						                </td>
+						                <!-- Thành tiền trước thuế -->
+						                <td>€29.00</td>
+						                <!-- Tiền thuế -->
+						                <td>€2.39</td>
+						                <!-- Phần trăm thuế -->
+						                <td>8.25%</td>
+						                <!-- Tiền giảm giá -->
+						                <td>€0.00</td>
+						                <!-- Tổng cộng dòng -->
+						                <td class="row-total-cell">€31.39</td>
+						            </tr>
+						        </tbody>
+						    </table>
+						</section>
+						
+						<!-- KHỐI TỔNG KẾT ĐƠN HÀNG (ORDER TOTAL) -->
+						<h1 class="text-xl font-normal text-[#222222] mt-9 border-t border-[#dfdfdf] pt-6 mb-4">Order Total</h1>
+						<section class="grid grid-cols-2 gap-8 items-start mb-10 text-sm">
+						    <!-- Cột trái: Notes for this Order -->
+						    <div class="text-[#333333]">
+						        <h2 class="text-base font-semibold mb-4 text-[#222222]">Notes for this Order</h2>
+						        <!-- Trạng thái đơn hàng (Status) -->
+								<form id="update-status" th:action="@{/backend/sales/order/view/{id}(id=${orderId})}" method="POST">
+							        <div class="mb-4">
+							            <label for="order-status" class="block font-semibold mb-1.5">Status</label>
+							            <div class="relative w-48">
+							                <select id="order-status" name="status" class="w-full bg-[#ffffff] border border-[#adadad] rounded-sm p-1.5 px-3 pr-8 appearance-none cursor-pointer outline-none focus:border-gray-500">
+							                    <option value="PROCESSING" th:selected="${order.status == 'PROCESSING'}">Processing</option>
+							                    <option value="PENDING" th:selected="${order.status == 'PENDING'}">Pending</option>
+							                    <option value="COMPLETE" th:selected="${order.status == 'COMPLETE'}">Complete</option>
+							                    <option value="CLOSED" th:selected="${order.status == 'CLOSED'}">Closed</option>
+							                </select>
+							                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 border-l border-[#adadad] bg-[#e3e3e3]">
+							                    <i class="fa-solid fa-caret-down text-gray-600 text-xs"></i>
+							                </div>
+							            </div>
+							        </div>
+							        <!-- Khung nhập bình luận (Comment) -->
+							        <div class="mb-2">
+							            <label for="order-comment" class="block font-semibold mb-1.5">Admin Note</label>
+							            <textarea id="order-comment" name="note" rows="4" class="w-full max-w-lg border border-[#adadad] rounded-sm p-2 outline-none focus:border-gray-500 resize-y" th:text="${order.note}"></textarea>
+							        </div>
+							        <p class="text-xs text-[#666666] italic mb-4">A status change or comment text is required to submit a comment.</p>
+		
+							        <!-- Các tùy chọn Checkbox -->
+							        <div class="flex flex-col gap-2 mb-5">
+							            <label class="inline-flex items-center cursor-pointer">
+							                <input type="checkbox" name="notifyCustomer" class="w-3.5 h-3.5 border-[#adadad] rounded-sm accent-[#41362f]">
+							                <span class="ml-2 text-[#333333]">Notify Customer by Email</span>
+							            </label>
+							            <label class="inline-flex items-center cursor-pointer">
+							                <input type="checkbox" name="visibleOnStorefront" class="w-3.5 h-3.5 border-[#adadad] rounded-sm accent-[#41362f]">
+							                <span class="ml-2 text-[#333333]">Visible on Storefront</span>
+							            </label>
+							        </div>
+									
+							        <!-- Nút bấm Cập nhật -->
+							        <button type="submit" id="btn-update-status" class="bg-[#514943] text-white font-semibold p-2 px-5 rounded-sm hover:bg-[#41362f] transition-colors shadow-sm">
+							            Update
+							        </button>
+								</form>
+						    </div>
+	
+						    <!-- Cột phải: Order Totals (Bảng tính tiền) -->
+						    <div class="text-[#333333]">
+						        <h2 class="text-base font-semibold mb-4 text-[#222222]">Order Totals</h2>
+						        
+						        <div class="border border-[#e3e3e3] rounded-sm overflow-hidden bg-white">
+						            <table class="w-full border-collapse">
+						                <!-- Subtotal -->
+						                <tr class="bg-[#f5f5f5] border-b border-[#e3e3e3]">
+						                    <td class="p-2.5 px-4 text-[#555555]">Subtotal</td>
+						                    <td class="p-2.5 px-4 text-right font-normal">€29.00</td>
+						                </tr>
+						                <!-- Shipping & Handling -->
+						                <tr class="border-b border-[#e3e3e3]">
+						                    <td class="p-2.5 px-4 text-[#555555]">Shipping & Handling</td>
+						                    <td class="p-2.5 px-4 text-right font-normal">€5.00</td>
+						                </tr>
+						                <!-- Tax -->
+						                <tr class="bg-[#f5f5f5] border-b border-[#e3e3e3]">
+						                    <td class="p-2.5 px-4 text-[#555555]">Tax</td>
+						                    <td class="p-2.5 px-4 text-right font-normal">€2.39</td>
+						                </tr>
+						                <!-- Grand Total -->
+						                <tr class="border-b border-[#e3e3e3] text-base">
+						                    <td class="p-2.5 px-4 font-bold text-[#222222]">Grand Total</td>
+						                    <td class="p-2.5 px-4 text-right font-bold text-[#222222]">€36.39</td>
+						                </tr>
+						                <!-- Total Paid -->
+						                <tr class="border-b border-[#e3e3e3]">
+						                    <td class="p-2.5 px-4 font-bold text-[#222222]">Total Paid</td>
+						                    <td class="p-2.5 px-4 text-right font-bold text-[#222222]">€36.39</td>
+						                </tr>
+						                <!-- Total Refunded -->
+						                <tr class="border-b border-[#e3e3e3]">
+						                    <td class="p-2.5 px-4 font-semibold text-[#555555]">Total Refunded</td>
+						                    <td class="p-2.5 px-4 text-right font-semibold text-[#555555]">€0.00</td>
+						                </tr>
+						                <!-- Total Due -->
+						                <tr>
+						                    <td class="p-2.5 px-4 font-bold text-[#222222]">Total Due</td>
+						                    <td class="p-2.5 px-4 text-right font-bold text-[#222222]">€0.00</td>
+						                </tr>
+						            </table>
+						        </div>
+						    </div>
+						</section>
+					</div>
+					
+					<!-- ================= TAB 2: INVOICES ================= -->
+					<div id="tab-invoices" class="tab-content">
+					    <!-- Bảng dữ liệu Grid của Invoices -->
+					    <div class="grid-table-container">
+					        <table class="data-grid-table">
+					            <thead>
+					                <tr>
+					                    <th class="col-checkbox"><div class="checkbox-dropdown"><input type="checkbox"><i class="fa-solid fa-caret-down"></i></div></th>
+					                    <th>Invoice <i class="fa-solid fa-arrow-down-long"></i></th>
+					                    <th>Invoice Date</th>
+					                    <th>Order #</th>
+					                    <th>Order Date</th>
+					                    <th>Bill-to Name</th>
+					                    <th>Status</th>
+					                    <th>Amount</th>
+					                    <th class="col-action">Action</th>
+					                </tr>
+					            </thead>
+					            <tbody>
+					                <tr>
+					                    <td class="col-checkbox"><input type="checkbox"></td>
+					                    <td>000000001</td>
+					                    <td>gfn</td>
+					                    <td>000000001</td>
+					                    <td>dgdgd</td>
+					                    <td>Veronica Costello</td>
+					                    <td>Paid</td>
+					                    <td class="col-amount">€36.39</td>
+					                    <td class="col-action"><a href="#" class="view-link">View</a></td>
+					                </tr>
+					            </tbody>
+					        </table>
+					    </div>
+					</div>
+					
+					<!-- ================= TAB 3: creditmemos ================= -->
+					<div id="tab-creditmemos" class="tab-content">
+					    <!-- Bảng dữ liệu Grid của Invoices -->
+					    <div class="grid-table-container">
+					        <table class="data-grid-table">
+					            <thead>
+					                <tr>
+					                    <th class="col-checkbox">
+											<div class="checkbox-dropdown">
+												<input type="checkbox"><i class="fa-solid fa-caret-down"></i>
+											</div>
+										</th>
+					                    <th>creditmemos <i class="fa-solid fa-arrow-down-long"></i></th>
+					                    <th>creditmemos Date</th>
+					                    <th>Order #</th>
+					                    <th>Order Date</th>
+					                    <th>Bill-to Name</th>
+					                    <th>Status</th>
+					                    <th>Amount</th>
+					                    <th class="col-action">Action</th>
+					                </tr>
+					            </thead>
+					            <tbody>
+					                <tr>
+					                    <td class="col-checkbox"><input type="checkbox"></td>
+					                    <td>000000001</td>
+					                    <td>gfn</td>
+					                    <td>000000001</td>
+					                    <td>dgdgd</td>
+					                    <td>Veronica Costello</td>
+					                    <td>Paid</td>
+					                    <td class="col-amount">€36.39</td>
+					                    <td class="col-action">
+											<a href="#" class="view-link">View</a>
+										</td>
+					                </tr>
+					            </tbody>
+					        </table>
+					    </div>
+					</div>
+			    </main>
+			</div>
+		</main>
+	</div>
+	<script type="text/javascript">
+		document.addEventListener("DOMContentLoaded", function () {
+		    const tabItems = document.querySelectorAll(".tab-item");
+		    const tabContents = document.querySelectorAll(".tab-content");
+
+		    tabItems.forEach(item => {
+		        item.addEventListener("click", function () {
+		            // 1. Xử lý đổi trạng thái active trên Sidebar Menu
+		            tabItems.forEach(tab => tab.classList.remove("active"));
+		            this.classList.add("active");
+
+		            // 2. Ẩn toàn bộ nội dung các tab cũ
+		            tabContents.forEach(content => content.classList.remove("active"));
+
+		            // 3. Lấy giá trị data-tab của mục vừa click (ví dụ: "invoices")
+		            const targetTabId = this.getAttribute("data-tab");
+
+		            // 4. Tìm khối nội dung tương ứng (ví dụ: #tab-invoices) và hiển thị lên
+		            const targetContent = document.getElementById(`tab-${targetTabId}`);
+		            if (targetContent) {
+		                targetContent.classList.add("active");
+		            }
+		        });
+		    });
+		});
+	</script>
+</body>
+</html>

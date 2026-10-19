@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{backend/fragments/head :: htmlHeadCategory}"></head>
+<body class="text-slate-700 antialiased min-h-screen flex flex-col">
+	
+	<div class="flex flex-1">
+		<div th:replace="~{backend/fragments/leftsidebar :: htmlLeftSideBar}"></div>
+
+		<!-- Main Content Area -->
+		<main class="ml-24 flex-1 bg-[#f5f5f5] p-6 overflow-x-auto">
+			<div th:replace="~{backend/fragments/header :: htmlHeader}"></div>
+			<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+				<div>
+					<h1 class="text-2xl font-light text-slate-800">
+						<b>Catalogs / Category / Update - ID: [[${id}]]</b>
+					</h1>
+				</div>
+			</div>
+
+			<!-- Main Code Here -->
+			<div class="bg-white border border-slate-300 rounded-t shadow-sm">
+			
+				<div class="admin-container">
+					<!-- Left Category Tree -->
+					<aside class="category-tree-panel">
+						<div class="tree-actions">
+							<a th:href="@{/backend/catalogs/category}" class="btn btn-primary">Create Category | Sub Category</a>
+						</div>
+						
+						<ul class="tree-list" style="padding-left: 0;">
+							<li>
+								<span class="tree-item">📁 Default Store View</span>
+								<ul class="tree-list">
+									<li th:each="category:${categories}">
+										<a th:href="@{/backend/catalogs/category/update/{id}(id=${category.id})}" class="cate-parent">
+											<span class="tree-item active">📂 [[${category.name}]]</span>
+										</a>
+										<ul th:each="sub:${category.children}" class="tree-list">
+											<li>
+												<a th:href="@{/backend/catalogs/category/update/{id}(id=${sub.id})}" class="cate-children">
+													<span class="tree-item">📄 [[${sub.name}]]</span>
+												</a>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</aside>
+
+					<!-- Main Content -->
+					<form th:action="@{'/backend/catalogs/category/update/' + ${id}}" th:object="${cateUpdateForm}" class="category-content" method="POST">
+						<div class="page-main-actions">
+							<h2 class="page-title">📂 [[${cateUpdateForm.name}]] - ID: [[${id}]]</h2>
+							<div>
+								<a th:href="@{/backend/catalogs/category/delete/{id}(id=${id})}" class="btn btn-secondary del-cate" onclick="return confirm('Bạn có muốn Xóa Danh Mục này không?.');">Delete</a>
+								<button class="btn btn-primary">Update Category</button>
+							</div>
+						</div>
+
+						<!-- General Information Section -->
+						<div class="fieldset-wrapper">
+							<div class="fieldset-title">General Information</div>
+							<div class="fieldset-content">
+								<div class="admin-field">
+									<label class="required">Enable Category</label>
+									<div class="admin-field-control">
+										<label class="switch-control"> 
+										<input type="checkbox" name="status" value="1"
+										th:checked="*{status == 1}"/> <span class="slider"></span>
+										</label>
+									</div>
+								</div>
+								<div class="admin-field">
+									<label class="required">Category Name</label>
+									<div class="admin-field-control">
+										<input type="text" th:field="*{name}" placeholder="Category Name" required="required"/>
+										<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" 
+										style="color: red; font-size: 13px; font-style: oblique;"></span>
+									</div>
+								</div>
+								<div class="admin-field">
+									<label class="required">Parent Category</label>
+									<div class="admin-field-control">
+										<select th:field="*{parent}" class="form-control" multiple style="height: 100px;" required>
+											<option value="">Root Category</option>
+											<option th:each="cate:${flatCate}" th:value="${cate.id}" th:text="${cate.name}"></option>
+										</select>
+									</div>
+								</div>
+								<div class="admin-field">
+									<label>URL Category</label>
+									<div class="admin-field-control">
+										<input type="text" th:field="*{cateUrl}"/>
+									</div>
+								</div>
+								<div class="admin-field">
+									<label>Description</label>
+									<div class="admin-field-control">
+										<textarea rows="4" th:field="*{description}" placeholder="Danh mục thời trang nữ cao cấp."></textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Search Engine Optimization Section -->
+						<div class="fieldset-wrapper">
+							<div class="fieldset-title">Search Engine Optimization</div>
+							<div class="fieldset-content">
+								<div class="admin-field">
+									<label>Meta Title</label>
+									<div class="admin-field-control">
+										<input type="text" th:field="*{metaTitle}">
+									</div>
+								</div>
+								<div class="admin-field">
+									<label>Meta Keywords</label>
+									<div class="admin-field-control">
+										<textarea rows="2" th:field="*{metaKeywords}"></textarea>
+									</div>
+								</div>
+							</div>
+						</div>
+						<input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+					</form>
+				</div>
+			</div>
+		</main>
+	</div>
+</body>
+</html>

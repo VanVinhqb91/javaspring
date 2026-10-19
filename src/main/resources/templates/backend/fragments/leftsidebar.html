@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<aside th:fragment="htmlLeftSideBar" class="fixed z-50 top-0 left-0 h-screen w-24 bg-[#302c29] text-slate-300 flex flex-col items-center py-2 space-y-1 select-none flex-shrink-0">
+		<a th:href="@{/backend/dashboard}"
+			class="w-full flex flex-col items-center py-2.5 hover:bg-[#413c38] hover:text-white transition"
+			th:classappend="${activeMenu == 'dashboard'} ? 'bg-[#413c38] border-l-4 border-[#eb5202]' : ''">
+			<i class="fa-solid fa-chart-line text-lg mb-1"
+			th:classappend="${activeMenu == 'dashboard'} ? 'text-[#eb5202]' : ''"></i> 
+			<span class="text-[10px]">DASH BOARD</span>
+		</a>
+		<div class="w-full relative group z-[150]">
+			<a th:href="@{/backend/catalogs/category}"
+				class="w-full flex flex-col items-center py-2.5 hover:bg-[#413c38] hover:text-white transition group"
+				th:classappend="${activeMenu == 'catalogs'} ? 'bg-[#413c38] border-l-4 border-[#eb5202]' : ''">
+				<i class="fa-solid fa-box-archive text-lg mb-1 group-hover:scale-110 transition"
+				th:classappend="${activeMenu == 'catalogs'} ? 'text-[#eb5202]' : ''"></i>
+				<span class="text-[10px]">CATALOGS</span>
+			</a> 
+			<div class="hidden group-hover:block fixed left-24 top-0 h-screen w-48 bg-[#413c38] shadow-xl !z-50">
+		        <ul class="flex flex-col py-1 text-xs text-slate-300 ml-[10px]">
+		            <li>
+		                <span class="mb-6 mt-4 block px-4 py-2 transition text-white" style="font-size: 22px; font-weight: bold;">Catalogs</span>
+		            </li>
+		            <li>
+		                <a th:href="@{/backend/catalogs/category}" class="text-sm block px-4 py-2 hover:bg-[#302c29] text-white transition">
+		                    Categories
+		                </a>
+		            </li>
+		            <li>
+		                <a th:href="@{/backend/catalogs/product}" class="text-sm block px-4 py-2 hover:bg-[#302c29] text-white transition">
+		                    Products
+		                </a>
+		            </li>
+		            <li>
+		                <a th:href="@{/backend/catalogs/brand}" class="text-sm block px-4 py-2 hover:bg-[#302c29] text-white transition">
+		                    Brands
+		                </a>
+		            </li>
+		        </ul>
+		    </div>
+		</div>
+		<div class="w-full relative group">
+			<a th:href="@{/backend/sales/order}"
+				class="w-full flex flex-col items-center py-2.5 hover:bg-[#413c38] hover:text-white transition group"
+				th:classappend="${activeMenu == 'sales'} ? 'bg-[#413c38] border-l-4 border-[#eb5202]' : ''">
+				<i class="fa-solid fa-cart-shopping text-lg mb-1 group-hover:scale-110 transition"
+				th:classappend="${activeMenu == 'sales'} ? 'text-[#eb5202]' : ''"></i>
+				<span class="text-[10px]">SALES</span>
+			</a> 
+			<div class="hidden group-hover:block fixed left-24 top-0 h-screen w-48 bg-[#413c38] shadow-xl z-50 !z-[9999]">
+		        <ul class="flex flex-col py-1 text-xs text-slate-300 ml-[10px]">
+		            <li>
+		                <span class="mb-6 mt-4 block px-4 py-2 transition text-white" style="font-size: 22px; font-weight: bold;">Sales</span>
+		            </li>
+		            <li>
+		                <a th:href="@{/backend/sales/order}" class="text-sm block px-4 py-2 hover:bg-[#302c29] text-white transition">
+		                    Orders
+		                </a>
+		            </li>
+		            <li>
+		                <a th:href="@{/backend/sales/payment_services}" class="text-sm block px-4 py-2 hover:bg-[#302c29] text-white transition">
+		                    Payment Services
+		                </a>
+		            </li>
+		            <li>
+		                <a th:href="@{/backend/sales/invoices}" class="text-sm block px-4 py-2 hover:bg-[#302c29] text-white transition">
+		                    Invoices
+		                </a>
+		            </li>
+		            <li>
+		                <a th:href="@{/backend/sales/shipments}" class="text-sm block px-4 py-2 hover:bg-[#302c29] text-white transition">
+		                    Shipments
+		                </a>
+		            </li>
+		            <li>
+		                <a th:href="@{/backend/sales/credit_memos}" class="text-sm block px-4 py-2 hover:bg-[#302c29] text-white transition">
+		                    Credit Memos
+		                </a>
+		            </li>
+		            <li>
+		                <a th:href="@{/backend/sales/billing_agreements}" class="text-sm block px-4 py-2 hover:bg-[#302c29] text-white transition">
+		                    Billing Agreements
+		                </a>
+		            </li>
+		            <li>
+		                <a th:href="@{/backend/sales/transactions}" class="text-sm block px-4 py-2 hover:bg-[#302c29] text-white transition">
+		                    Transactions
+		                </a>
+		            </li>
+		        </ul>
+		    </div>
+		</div>
+		<div class="w-full relative group">
+			<a th:href="@{/backend/customers/user}"
+				class="w-full flex flex-col items-center py-2.5 hover:bg-[#413c38] hover:text-white transition group"
+				th:classappend="${activeMenu == 'customers'} ? 'bg-[#413c38] border-l-4 border-[#eb5202]' : ''">
+				<i class="fa-solid fa-users text-lg mb-1 group-hover:scale-110 transition"
+					th:classappend="${activeMenu == 'customers'} ? 'text-[#eb5202]' : ''"></i>
+				<span class="text-[10px]">CUSTOMERS</span>
+			</a> 
+			<div class="hidden group-hover:block fixed left-24 top-0 h-screen w-48 bg-[#413c38] shadow-xl z-50 !z-[9999]">
+		        <ul class="flex flex-col py-1 text-xs text-slate-300 ml-[10px]">
+		            <li>
+		                <span class="mb-6 mt-4 block px-4 py-2 transition text-white" style="font-size: 22px; font-weight: bold;">Customers</span>
+		            </li>
+		            <li>
+		                <a th:href="@{/backend/customers/user}" class="text-sm block px-4 py-2 hover:bg-[#302c29] text-white transition">
+		                    All Customers
+		                </a>
+		            </li>
+		            <li>
+		                <a th:href="@{/backend/customers/user_online}" class="text-sm block px-4 py-2 hover:bg-[#302c29] text-white transition">
+		                    Now Online
+		                </a>
+		            </li>
+		            <li>
+		                <a th:href="@{/backend/customers/list}" class="text-sm block px-4 py-2 hover:bg-[#302c29] text-white transition">
+		                    Login as Customer Log
+		                </a>
+		            </li>
+		            <li>
+		                <a th:href="@{/backend/customers/custom_group}" class="text-sm block px-4 py-2 hover:bg-[#302c29] text-white transition">
+		                    Customer Group
+		                </a>
+		            </li>
+		        </ul>
+		    </div>
+		</div>
+		<div class="w-full relative group">
+			<a th:href="@{/backend/marketings/url_rewrite}"
+				class="w-full flex flex-col items-center py-2.5 hover:bg-[#413c38] hover:text-white transition group">
+				<i
+				class="fa-solid fa-bullhorn text-lg mb-1 group-hover:scale-110 transition"></i>
+				<span class="text-[10px]">MARKETINGS</span>
+			</a> 
+			<div class="hidden group-hover:block fixed left-24 top-0 h-screen w-48 bg-[#413c38] shadow-xl z-50 !z-[9999]">
+		        <ul class="flex flex-col py-1 text-xs text-slate-300 ml-[10px]">
+		            <li>
+		                <span class="mb-6 mt-4 block px-4 py-2 transition text-white" style="font-size: 22px; font-weight: bold;">Marketings</span>
+		            </li>
+		            <li>
+		                <a th:href="@{/backend/marketings/url_rewrite}" class="text-sm block px-4 py-2 hover:bg-[#302c29] text-white transition">
+		                    URL Rewrites
+		                </a>
+		            </li>
+		            <li>
+		                <a th:href="@{/backend/marketings/email_template}" class="text-sm block px-4 py-2 hover:bg-[#302c29] text-white transition">
+		                    Email Template
+		                </a>
+		            </li>
+					<li>
+					    <a th:href="@{/backend/marketings/admin_chatbox}" class="text-sm block px-4 py-2 hover:bg-[#302c29] text-white transition">
+					        Rabbit MQ Chat Box
+					    </a>
+					</li>
+		            <li>
+		                <a th:href="@{/backend/category/list}" class="text-sm block px-4 py-2 hover:bg-[#302c29] text-white transition">
+		                    Site Map
+		                </a>
+		            </li>
+		        </ul>
+		    </div>
+		</div>
+		<a href="#"
+			class="w-full flex flex-col items-center py-2.5 hover:bg-[#413c38] hover:text-white transition group">
+			<i
+			class="fa-solid fa-chart-column text-lg mb-1 group-hover:scale-110 transition"></i>
+			<span class="text-[10px]">REPORTS</span>
+		</a> <a href="#"
+			class="w-full flex flex-col items-center py-2.5 hover:bg-[#413c38] hover:text-white transition group">
+			<i
+			class="fa-solid fa-gear text-lg mb-1 group-hover:scale-110 transition"></i>
+			<span class="text-[10px]">CONTENTS</span>
+		</a>
+		<div class="w-full relative group">
+			<a th:href="@{/backend/systems/setting}"
+				class="w-full flex flex-col items-center py-2.5 hover:bg-[#413c38] hover:text-white transition group"
+				th:classappend="${activeMenu == 'systems'} ? 'bg-[#413c38] border-l-4 border-[#eb5202]' : ''">
+				<i class="fa-solid fa-screwdriver-wrench text-lg mb-1 group-hover:scale-110 transition"
+					th:classappend="${activeMenu == 'setting'} ? 'text-[#eb5202]' : ''"></i>
+				<span class="text-[10px]">SYSTEMS</span>
+			</a>    
+			<div class="hidden group-hover:block fixed left-24 top-0 h-screen w-48 bg-[#413c38] shadow-xl !z-50">
+		        <ul class="flex flex-col py-1 text-xs text-slate-300 ml-[10px]">
+		        	<li>
+		                <span class="mb-6 mt-4 block px-4 py-2 transition text-white" style="font-size: 22px; font-weight: bold;">Systems</span>
+		            </li>
+		        	<li>
+		                <a th:href="@{/backend/systems/setting}" class="text-sm block px-4 py-2 hover:bg-[#302c29] text-white transition">
+		                    Setting Default
+		                </a>
+		            </li>
+		            <li>
+		                <a th:href="@{/backend/systems/cronjob}" class="text-sm block px-4 py-2 hover:bg-[#302c29] text-white transition">
+		                    Cron Job RunTime
+		                </a>
+		            </li>
+		            <li>
+		                <a th:href="@{/backend/systems/logoWeb}" class="text-sm block px-4 py-2 hover:bg-[#302c29] text-white transition">
+		                    Upload Logo Website
+		                </a>
+		            </li>
+		            <li>
+		                <a th:href="@{/backend/systems/banner}" class="text-sm block px-4 py-2 hover:bg-[#302c29] text-white transition">
+		                    Upload Banner Website
+		                </a>
+		            </li>
+		        </ul>
+		    </div>
+		</div>
+	</aside>
+</body>
+</html>

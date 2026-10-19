@@ -1,0 +1,225 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		Helvetica, Arial, sans-serif;
+}
+
+body {
+	background-color: #f2f2f2;
+	color: #333;
+	font-size: 14px;
+}
+
+/* Header Bar */
+.page-header {
+	background: #fff;
+	padding: 15px 0px;
+	border-bottom: 0px solid #cccccc;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	position: sticky;
+	top: 0;
+	z-index: 100;
+}
+
+.page-title {
+	font-size: 20px;
+	font-weight: 600;
+	color: #41362f;
+}
+
+.action-buttons button {
+	padding: 10px 16px;
+	font-weight: 600;
+	border: none;
+	cursor: pointer;
+	border-radius: 3px;
+	font-size: 13px;
+}
+
+.btn-secondary {
+	background: #e0e0e0;
+	color: #333;
+	margin-right: 8px;
+}
+
+.btn-secondary:hover {
+	background: #d0d0d0;
+}
+
+.btn-primary {
+	background: #eb5202;
+	color: #fff;
+}
+
+.btn-primary:hover {
+	background: #ba4000;
+}
+
+/* Main Container */
+.container {
+	display: flex;
+	padding: 25px 30px;
+	gap: 25px;
+}
+
+.main-content {
+	flex: 1;
+	width: 100%;
+	border-style: none;
+}
+.border-slate-300{
+	border-color: white!important;
+}
+
+/* Panel & Accordion Style */
+.panel {
+	background: #fff;
+	border: 1px solid #d6d6d6;
+	margin-bottom: 20px;
+	border-radius: 1px;
+}
+
+.panel-header {
+	padding: 15px 20px;
+	background: #fafafa;
+	border-bottom: 1px solid #e3e3e3;
+	font-weight: 600;
+	color: #41362f;
+	font-size: 15px;
+	cursor: pointer;
+	display: flex;
+	justify-content: space-between;
+}
+
+.panel-header::after {
+	content: '▲';
+	font-size: 10px;
+	color: #666;
+}
+
+.panel.collapsed .panel-header::after {
+	content: '▼';
+}
+
+.panel.collapsed .panel-body {
+	display: none;
+}
+
+.panel-body {
+	padding: 20px;
+}
+
+/* Form Fields */
+.form-group {
+	margin-bottom: 18px;
+	display: flex;
+}
+
+.form-group.required label::after {
+	content: " *";
+	color: #e02b27;
+}
+
+.form-group label {
+	font-weight: 600;
+	font-size: 13px;
+	color: #303030;
+	margin-bottom: 6px;
+}
+
+.form-control {
+	padding: 8px 12px;
+	border: 1px solid #adadad;
+	border-radius: 2px;
+	font-size: 13px;
+	width: 100%;
+	outline: none;
+}
+
+.form-control:focus {
+	border-color: #007bdb;
+}
+
+textarea.form-control {
+	resize: vertical;
+	min-height: 80px;
+}
+
+/* Toggle Switch Style */
+.switch-container {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 44px;
+	height: 22px;
+}
+
+.switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	transition: .3s;
+	border-radius: 22px;
+}
+
+.slider:before {
+	position: absolute;
+	content: "";
+	height: 16px;
+	width: 16px;
+	left: 3px;
+	bottom: 3px;
+	background-color: white;
+	transition: .3s;
+	border-radius: 50%;
+}
+
+input:checked+.slider {
+	background-color: #79a542;
+}
+
+input:checked+.slider:before {
+	transform: translateX(22px);
+}
+
+/* Drop zone Upload */
+.upload-zone {
+	border: 2px dashed #cccccc;
+	padding: 30px;
+	text-align: center;
+	background: #fafafa;
+	color: #666;
+	cursor: pointer;
+	border-radius: 2px;
+}
+
+.upload-zone:hover {
+	border-color: #eb5202;
+	background: #fff;
+}
+
+/* Helper text */
+.field-note {
+	font-size: 11px;
+	color: #666;
+	margin-top: 4px;
+}

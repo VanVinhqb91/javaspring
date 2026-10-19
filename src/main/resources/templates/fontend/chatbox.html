@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Chủ Website (Có Box Chat)</title>
+    
+	<script th:src="@{/js/sockjs.min.js}"></script>
+	<script th:src="@{/js/stomp.min.js}"></script>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* --- NÚT BẤM MỞ BOX CHAT (GÓC PHẢI) --- */
+        .chat-launcher {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 9999;
+            transition: transform 0.2s ease;
+        }
+        .chat-launcher:hover { transform: scale(1.05); }
+
+        /* --- KHUNG HỘP CHAT CHÍNH --- */
+        .chat-box {
+            position: fixed;
+            bottom: 95px;
+            right: 20px;
+            width: 350px;
+            height: 450px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 9999;
+            transition: all 0.3s ease;
+            transform: translateY(20px);
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        /* Trạng thái khi hiển thị Box Chat */
+        .chat-box.open {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* --- TIÊU ĐỀ BOX CHAT --- */
+        .chat-header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+        }
+        .chat-header .status {
+            font-size: 12px;
+            font-weight: normal;
+            opacity: 0.8;
+        }
+        .chat-header .close-btn {
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        /* --- VÙNG HIỂN THỊ TIN NHẮN --- */
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* Định dạng bong bóng tin nhắn */
+        .message {
+            max-width: 75%;
+            padding: 10px 14px;
+            border-radius: 15px;
+            font-size: 14px;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+        /* Tin nhắn của khách hàng (Bên phải, màu xanh) */
+        .message.customer {
+            background-color: #007bff;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+        /* Tin nhắn của hệ thống/nhân viên (Bên trái, màu xám) */
+        .message.admin {
+            background-color: #e4e6eb;
+            color: #050505;
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+        }
+        /* Tin nhắn trạng thái hệ thống (Căn giữa) */
+        .message.system {
+            background-color: transparent;
+            color: #8c8c8c;
+            font-size: 12px;
+            align-self: center;
+            text-align: center;
+        }
+
+        /* --- THANH NHẬP LIỆU GỬI TIN --- */
+        .chat-footer {
+            padding: 10px;
+            border-top: 1px solid #e4e6eb;
+            display: flex;
+            gap: 8px;
+            background-color: white;
+        }
+        .chat-footer input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccd0d5;
+            border-radius: 20px;
+            outline: none;
+            font-size: 14px;
+        }
+        .chat-footer button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 0 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .chat-footer button:hover { background-color: #0056b3; }
+    </style>
+</head>
+<body>
+
+    <!-- Nội dung mô phỏng website của bạn -->
+    <h1>Chào mừng đến với Cửa hàng của chúng tôi</h1>
+    <p>Nội dung website bán hàng hiển thị tại đây...</p>
+
+    <!-- 1. NÚT TRÒN ĐỂ MỞ BOX CHAT -->
+    <div class="chat-launcher" id="chatLauncher" onclick="toggleChat()">💬</div>
+
+    <!-- 2. KHUNG HỘP CHAT CHÍNH -->
+    <div class="chat-box" id="chatBox">
+        <div class="chat-header">
+            <div>
+                <div>Hỗ trợ trực tuyến</div>
+                <div class="status" id="guestLabel">Đang kết nối...</div>
+            </div>
+            <span class="close-btn" onclick="toggleChat()">×</span>
+        </div>
+        
+        <!-- Vùng cuộn tin nhắn -->
+        <div class="chat-messages" id="chatMessages">
+            <div class="message system">Hệ thống: Vui lòng đợi trong giây lát...</div>
+        </div>
+
+        <!-- Ô nhập dữ liệu -->
+        <div class="chat-footer">
+            <input type="text" id="btnInput" placeholder="Nhập tin nhắn tại đây..." onkeypress="handleKeyPress(event)" />
+            <button onclick="sendChatMessage()">Gửi</button>
+        </div>
+    </div>
+
+    <!-- 3. LOGIC JAVASCRIPT XỬ LÝ KẾT NỐI -->
+	<script>
+	    // --- 1. ĐỊNH NGHĨA THƯ VIỆN STOMP CHUẨN CHẠY ĐỘC LẬP (ĐỒNG BỘ VỚI RABBITMQ) ---
+	    window.Stomp = {
+	        over: function (wsConnection) {
+	            var client = { ws: wsConnection, counter: 0, connected: false, subscriptions: {} };
+	            
+	            client.connect = function (headers, connectCallback) {
+	                client.ws.onopen = function () { client.ws.send("CONNECT\naccept-version:1.1,1.2\n\n\0"); };
+	                if (client.ws.readyState === 1) { client.ws.send("CONNECT\naccept-version:1.1,1.2\n\n\0"); }
+	                
+	                client.ws.onmessage = function (evt) {
+	                    var data = evt.data || "";
+	                    if (data.startsWith("CONNECTED")) {
+	                        client.connected = true;
+	                        if (connectCallback) connectCallback();
+	                    } else {
+	                        // Phân phối tin nhắn cho các kênh lắng nghe
+	                        Object.keys(client.subscriptions).forEach(function (subId) {
+	                            client.subscriptions[subId](evt);
+	                        });
+	                    }
+	                };
+	            };
+
+	            client.subscribe = function (destination, callback) {
+	                var id = "sub-" + client.counter++;
+	                client.ws.send("SUBSCRIBE\nid:" + id + "\ndestination:" + destination + "\n\n\0");
+	                
+	                client.subscriptions[id] = function (evt) {
+	                    var data = evt.data || "";
+	                    // Bóc tách JSON chính xác tuyệt đối bằng ký tự móc nhọn
+	                    var jsonStartIndex = data.indexOf("{");
+	                    var jsonEndIndex = data.lastIndexOf("}");
+	                    if (jsonStartIndex !== -1 && jsonEndIndex !== -1) {
+	                        var bodyData = data.substring(jsonStartIndex, jsonEndIndex + 1);
+	                        if (callback) callback({ body: bodyData });
+	                    }
+	                };
+	                return { id: id };
+	            };
+
+	            client.send = function (destination, headers, body) {
+	                client.ws.send("SEND\ndestination:" + destination + "\n\n" + body + "\0");
+	            };
+	            return client;
+	        }
+	    };
+
+	    // --- 2. LOGIC XỬ LÝ CHAT PHÍA KHÁCH HÀNG ---
+	    let stompClient = null;
+	    let roomId = null;
+
+	    // Tự tạo mã định danh duy nhất (Guest ID) nếu chưa có trong LocalStorage
+	    function initGuestSession() {
+	        roomId = localStorage.getItem('GUEST_CHAT_ID');
+	        if (!roomId) {
+	            roomId = 'GUEST_' + Math.random().toString(36).substring(2, 10).toUpperCase();
+	            localStorage.setItem('GUEST_CHAT_ID', roomId);
+	        }
+	        document.getElementById('guestLabel').textContent = "Mã số của bạn: " + roomId;
+	    }
+
+	    // Bật / Ẩn hộp chat khi bấm vào nút
+	    function toggleChat() {
+	        const chatBox = document.getElementById('chatBox');
+	        chatBox.classList.toggle('open');
+	    }
+
+	    // Thiết lập kết nối WebSocket thông qua STOMP
+	    function connectWebSocket() {
+	        initGuestSession();
+
+	        // Kết nối động dựa theo tên miền hiện hành để tránh lỗi CORS
+	        const baseEndpoint = window.location.protocol + "//" + window.location.host + "/ws-chat";
+	        const socket = new SockJS(baseEndpoint);
+	        stompClient = Stomp.over(socket);
+
+	        stompClient.connect({}, function () {
+	            // Đăng ký nhận tin nhắn từ phòng riêng của Khách này (Dùng dấu chấm phân cấp của RabbitMQ)
+	            stompClient.subscribe('/topic/room.' + roomId, function (response) {
+	                const message = JSON.parse(response.body);
+	                displayMessage(message);
+	            });
+
+	            // Gửi tín hiệu thông báo cho bên Admin biết có khách vãng lai mới vào phòng
+	            const joinMessage = { sender: roomId, content: '', type: 'JOIN' };
+	            stompClient.send("/app/chat.toRoom/" + roomId, {}, JSON.stringify(joinMessage));
+	        });
+	    }
+
+	    // Gửi tin nhắn lên Server Spring Boot
+	    function sendChatMessage() {
+	        const inputElement = document.getElementById('btnInput');
+	        const content = inputElement.value.trim();
+
+	        if (content && stompClient) {
+	            const chatMessage = {
+	                sender: roomId,
+	                content: content,
+	                type: 'CHAT'
+	            };
+
+	            // Bắn tin nhắn lên Endpoint xử lý của Spring Boot theo ID phòng
+	            stompClient.send("/app/chat.toRoom/" + roomId, {}, JSON.stringify(chatMessage));
+	            inputElement.value = ''; // Xóa sạch ô nhập sau khi gửi
+	        }
+	    }
+
+	    // Hỗ trợ bấm phím Enter để gửi tin nhanh
+	    function handleKeyPress(event) {
+	        if (event.key === 'Enter') {
+	            sendChatMessage();
+	        }
+	    }
+
+	    // Tạo phần tử HTML để đưa tin nhắn hiển thị lên màn hình
+	    function displayMessage(message) {
+	        const messageArea = document.getElementById('chatMessages');
+	        const msgElement = document.createElement('div');
+
+	        if (message.type === 'JOIN') {
+	            msgElement.className = "message system";
+	            msgElement.textContent = "Hệ thống: Kết nối thành công. Nhân viên sẽ hỗ trợ bạn ngay.";
+	        } else {
+	            // Nếu người gửi trùng với mã Guest hiện tại -> Tin nhắn của Khách (Bên phải)
+	            if (message.sender === roomId) {
+	                msgElement.className = "message customer";
+	                msgElement.textContent = message.content;
+	            } 
+	            // Nếu là phản hồi từ Admin -> Tin nhắn của Nhân viên (Bên trái)
+	            else {
+	                msgElement.className = "message admin";
+	                msgElement.textContent = message.content;
+	            }
+	        }
+
+	        messageArea.appendChild(msgElement);
+	        messageArea.scrollTop = messageArea.scrollHeight; // Tự động cuộn xuống tin nhắn mới nhất
+	    }
+
+	    // Tự động kích hoạt kết nối WebSocket ngay khi trang web được tải xong
+	    window.onload = connectWebSocket;
+	</script>
+
+</body>
+</html>

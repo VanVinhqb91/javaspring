@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 - Không Tìm Thấy Trang | Vhysound</title>
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://googleapis.com">
+<link rel="preconnect" href="https://gstatic.com" crossorigin>
+<link
+	href="https://googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap"
+	rel="stylesheet">
+
+<style>
+:root {
+	--primary-color: #6366f1;
+	--primary-hover: #4f46e5;
+	--text-main: #0f172a;
+	--text-muted: #64748b;
+	--bg-color: #f8fafc;
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: 'Plus Jakarta Sans', sans-serif;
+	background-color: var(--bg-color);
+	color: var(--text-main);
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+}
+
+.error-container {
+	text-align: center;
+	padding: 2rem;
+	max-width: 600px;
+	width: 100%;
+	z-index: 10;
+}
+
+/* Hiệu ứng số 404 lớn nghệ thuật */
+.error-code {
+	font-size: clamp(8rem, 15vw, 12rem);
+	font-weight: 800;
+	line-height: 1;
+	background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	margin-bottom: 1rem;
+	position: relative;
+	animation: float 6s ease-in-out infinite;
+}
+
+.error-title {
+	font-size: clamp(1.5rem, 4vw, 2.25rem);
+	font-weight: 700;
+	color: var(--text-main);
+	margin-bottom: 1rem;
+}
+
+.error-message {
+	font-size: 1.125rem;
+	color: var(--text-muted);
+	margin-bottom: 2.5rem;
+	line-height: 1.6;
+}
+
+/* Nút quay lại trang chủ chuyên nghiệp */
+.btn-home {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	background-color: var(--primary-color);
+	color: white;
+	padding: 0.875rem 2rem;
+	border-radius: 50px;
+	font-weight: 600;
+	font-size: 1rem;
+	text-decoration: none;
+	box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.3);
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-home:hover {
+	background-color: var(--primary-hover);
+	transform: translateY(-2px);
+	box-shadow: 0 20px 25px -5px rgba(99, 102, 241, 0.4);
+}
+
+.btn-home:active {
+	transform: translateY(0);
+}
+
+/* Khối trang trí nền (Background Shapes) */
+.bg-shape {
+	position: absolute;
+	border-radius: 50%;
+	filter: blur(80px);
+	z-index: 1;
+	opacity: 0.5;
+}
+
+.shape-1 {
+	top: 10%;
+	left: 15%;
+	width: 300px;
+	height: 300px;
+	background-color: rgba(99, 102, 241, 0.2);
+	animation: pulse 8s infinite alternate;
+}
+
+.shape-2 {
+	bottom: 15%;
+	right: 15%;
+	width: 400px;
+	height: 400px;
+	background-color: rgba(168, 85, 247, 0.2);
+	animation: pulse 12s infinite alternate-reverse;
+}
+
+/* Animations */
+@keyframes float { 0%, 100% {
+	transform: translateY(0);
+}
+
+50%
+{
+transform
+:
+translateY(
+-15px
+);
+}
+}
+@keyframes pulse { 0% {
+	transform: scale(1) translate(0, 0);
+}
+100%{
+transform
+:
+scale(1.2)
+translate(20px,20px);}
+}
+</style>
+</head>
+<body>
+
+	<!-- Các khối màu chuyển động mờ ở nền phía sau -->
+	<div class="bg-shape shape-1"></div>
+	<div class="bg-shape shape-2"></div>
+
+	<!-- Nội dung chính của trang -->
+	<div class="error-container">
+		<div class="error-code">404</div>
+		<h1 class="error-title">Không tìm thấy trang</h1>
+		<p class="error-message">Xin lỗi, trang bạn đang cố gắng truy cập
+			không tồn tại, đã bị xóa hoặc đường dẫn đã được thay đổi.</p>
+		<a href="/" class="btn-home"> <!-- Icon mũi tên quay lại vẽ bằng SVG gọn nhẹ -->
+			<svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+				stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+				stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg> Quay lại trang chủ
+		</a>
+	</div>
+
+</body>
+</html>

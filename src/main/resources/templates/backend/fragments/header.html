@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<header th:fragment="htmlHeader" class="mb-8 text-black h-12 flex items-center justify-between px-4 text-xs select-none">
+		<div class="flex items-center gap-3"></div>
+		<div class="flex items-center gap-6 relative">
+			<button
+				class="hover:text-amber-500 transition flex items-center gap-1.5">
+				<i class="fa-solid fa-magnifying-glass"></i> <span>Global
+					Search</span>
+			</button>
+			<button class="hover:text-amber-500 transition relative">
+				<i class="fa-regular fa-bell text-sm"></i> <span
+					class="absolute -top-1 -right-1 bg-red-500 text-white w-3.5 h-3.5 rounded-full flex items-center justify-center text-[9px] font-bold">3</span>
+			</button>
+			
+			<div id="userMenuBtn"
+				class="flex items-center gap-2 border-l border-slate-600 pl-4 cursor-pointer">
+				<div
+					class="w-6 h-6 rounded-full bg-[#eb5202] flex items-center justify-center font-bold text-white text-[10px]" th:text="${#strings.toUpperCase(#strings.substring(session.username, 0, 1))}">
+					</div>
+				<span th:text="${session.username}"></span> 
+				<i class="fa-solid fa-caret-down text-[10px] text-slate-400"></i>
+			</div>
+			
+		    <div id="userDropdown" style="top: 25px; left: 155px;"
+		         class="hidden absolute right-0 bg-[#413c38] mt-2 w-48 rounded-md shadow-lg border ring-1 ring-black ring-opacity-5 z-50">
+		        <div class="py-1" role="menu" aria-orientation="vertical">
+		            <!-- Các lựa chọn trong menu -->
+		            <a href="/profile" class="flex items-center gap-2 px-4 py-2 text-sm text-slate-200 hover:text-amber-500" role="menuitem">
+		                <i class="fa-regular fa-user w-4"></i> Tài khoản của tôi
+		            </a>
+		            <a href="/settings" class="flex items-center gap-2 px-4 py-2 text-sm text-slate-200 hover:text-amber-500" role="menuitem">
+		                <i class="fa-solid fa-gear w-4"></i> Cài đặt
+		            </a>
+		            <a th:href="@{/backend/logout}" class="flex items-center gap-2 px-4 py-2 text-sm text-red-400 hover:text-red-300" role="menuitem">
+		                <i class="fa-solid fa-right-from-bracket w-4"></i> Đăng xuất
+		            </a>
+		        </div>
+		    </div>
+		</div>
+
+		<script type="text/javascript">
+		    const menuBtn = document.getElementById('userMenuBtn');
+		    const dropdown = document.getElementById('userDropdown');
+		
+		    menuBtn.addEventListener('click', (e) => {
+		        e.stopPropagation();
+		        dropdown.classList.toggle('hidden');
+		    });
+		
+		    document.addEventListener('click', (e) => {
+		        if (!dropdown.contains(e.target) && !menuBtn.contains(e.target)) {
+		            dropdown.classList.add('hidden');
+		        }
+		    });
+		</script>
+	</header>
+</body>
+</html>

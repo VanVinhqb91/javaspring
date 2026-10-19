@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{backend/fragments/head :: htmlHeadUser}"></head>
+<body class="text-slate-700 antialiased min-h-screen flex flex-col">
+    <div class="flex flex-1">
+        <div th:replace="~{backend/fragments/leftsidebar :: htmlLeftSideBar}"></div>
+        <main class="ml-24 flex-1 bg-[#f5f5f5] p-6 overflow-x-auto">
+        	<div th:replace="~{backend/fragments/header :: htmlHeader}"></div>
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                <div>
+                    <h1 class="text-2xl font-light text-slate-800">
+						<b>Systems / Setting</b>
+					</h1>
+                </div>
+            </div>
+            
+            <div class="success-message" th:if="${successMessage}">
+			    <span>[[${successMessage}]]</span>
+			</div>
+			<div class="error-message" th:if="${errorMessage}">
+			    <span>[[${errorMessage}]]</span>
+			</div>
+
+            <div class="bg-white border border-slate-300 rounded-t shadow-sm">
+                <div class="p-3 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3 text-xs">
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <div class="relative w-64">
+                            <input type="text" placeholder="Search by keyword" class="w-full pl-3 pr-8 py-1.5 border border-slate-300 rounded text-xs focus:outline-none focus:border-orange-500">
+                            <i class="fa-solid fa-magnifying-glass absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        </div>
+                        <!-- Active Filters Count -->
+                        <button class="text-slate-600 hover:text-orange-600 flex items-center gap-1.5 font-semibold">
+                            <i class="fa-solid fa-filter text-orange-500"></i> Filters
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product Data Table -->
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-[#f8f8f8] border-b border-slate-300 text-slate-600 font-semibold tracking-wider">
+                                <th class="p-3 w-10 text-center">
+                                    <input type="checkbox" class="rounded border-slate-300 text-orange-600 focus:ring-orange-500">
+                                </th>
+                                <th class="p-3 border-r border-slate-200">STT
+                                	<i class="fa-solid fa-arrow-down text-[10px] text-orange-500"></i>
+                                </th>
+                                <th class="p-3 border-r border-slate-200">Setting Key</th>
+                                <th class="p-3 border-r border-slate-200">Setting Value</th>
+                                <th class="p-3 text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 bg-white">
+                            <tr class="hover:bg-amber-50/50 transition" th:each="setting, stt : ${settings}">
+                                <td class="p-3 text-center">
+                                    <input type="checkbox" value="" class="rounded border-slate-300 text-orange-600 focus:ring-orange-500">
+                                </td>
+                                <td class="p-3 font-medium text-slate-800" th:text="${stt.count}">ID</td>
+                                <td class="p-3 font-medium text-slate-800" th:text="${setting.settingKey}">key</td>
+                                <td class="p-3 font-semibold text-slate-800" th:text="${setting.settingValue}">value</td>
+                                <td class="p-3 text-center">
+                                    <a th:href="@{/backend/systems/setting/update/{key}(key=${setting.settingKey})}" class="text-blue-600 hover:underline font-semibold">Edit</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Magento Pagination & Footer Bar -->
+                <div class="p-3 border-t border-slate-200 bg-white flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-600">
+                    <div class="flex items-center gap-2">
+                        <span>20 records found</span>
+                        <span class="text-slate-300">|</span>
+                        <div class="flex items-center gap-1">
+                            <span>Show</span>
+                            <select class="border border-slate-300 rounded px-2 py-1 focus:outline-none">
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                            <span>per page</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <button class="p-1.5 border border-slate-300 rounded text-slate-400 cursor-not-allowed"><i class="fa-solid fa-angle-left"></i></button>
+                        <input type="text" value="1" class="w-8 text-center border border-slate-300 rounded py-1 focus:outline-none">
+                        <span>of 1</span>
+                        <button class="p-1.5 border border-slate-300 rounded text-slate-400 cursor-not-allowed"><i class="fa-solid fa-angle-right"></i></button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

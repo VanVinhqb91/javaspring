@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{backend/fragments/head :: htmlHeadUser}"></head>
+<body class="text-slate-700 antialiased min-h-screen flex flex-col">
+	<div class="flex flex-1">
+		<div th:replace="~{backend/fragments/leftsidebar :: htmlLeftSideBar}"></div>
+		
+		<main class="ml-24 flex-1 bg-[#f5f5f5] p-6 overflow-x-auto">
+			<div th:replace="~{backend/fragments/header :: htmlHeader}"></div>
+
+			<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+				<div>
+					<h1 class="text-2xl font-light text-slate-800">
+						<b>Customers / User / View</b>
+					</h1>
+				</div>
+				<div class="action-buttons">
+					<button class="btn-secondary">
+						<a th:href="@{/backend/customers/user_online}">Back</a>
+					</button>
+				</div>
+			</div>
+			
+			<div id="user-info" class="tab-pane active">
+				<h2 class="fieldset-title">Account Information</h2>
+
+				<div class="form-group required">
+					<label for="username">User Name</label>
+					<div class="form-control-wrapper">
+						
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="dob">Birthday: </label>
+					
+				</div>
+
+				<div class="form-group required">
+					<label for="interface-locale">Interface Locale</label>
+					<div class="form-control-wrapper">
+						
+					</div>
+				</div>
+
+				<div class="form-group required active">
+					<label for="user-role-select active">Assigned Role</label>
+					<div class="form-control-wrapper">
+						
+					</div>
+				</div>
+			</div>
+		</main>
+	</div>
+</body>
+</html>
