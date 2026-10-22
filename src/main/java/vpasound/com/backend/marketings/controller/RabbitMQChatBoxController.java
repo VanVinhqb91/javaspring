@@ -14,6 +14,6 @@ public class RabbitMQChatBoxController {
 	@GetMapping("/admin_chatbox")
 	public String adminChatBoxSupport() {
 		
-		return "";
+		return "/backend/marketings/chatbox/list";
 	}
 }

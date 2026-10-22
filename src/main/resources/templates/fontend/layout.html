@@ -1,36 +1,34 @@
 <!doctype html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://ultraq.net.nz">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title layout:title-pattern="$LAYOUT_TITLE | $CONTENT_TITLE">VPA SOUND</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-<style>
-@import
-	url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap")
-	;
 
-body {
-	font-family: "Montserrat", sans-serif;
-}
-</style>
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title layout:title-pattern="$LAYOUT_TITLE | $CONTENT_TITLE">VPA SOUND</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<link rel="stylesheet" th:href="@{/css/fontendchatbox.css}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+	<style>
+		@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap");
+
+		body {
+			font-family: "Montserrat", sans-serif;
+		}
+	</style>
+	<script th:src="@{/js/sockjs.min.js}"></script>
+	<script th:src="@{/js/stomp.min.js}"></script>
 </head>
+
 <body class="bg-white text-zinc-900 min-h-screen">
-	<header
-		class="bg-white/90 text-zinc-900 sticky top-0 z-40 border-b border-zinc-200 backdrop-blur-md">
+	<header class="bg-white/90 text-zinc-900 sticky top-0 z-40 border-b border-zinc-200 backdrop-blur-md">
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 			<div class="flex items-center justify-between h-20">
 				<!-- Logo -->
-				<div
-					class="flex-shrink-0 flex items-center space-x-3 cursor-pointer">
-					<div
-						class="w-10 h-10 bg-black rounded-full flex items-center justify-center text-white">
+				<div class="flex-shrink-0 flex items-center space-x-3 cursor-pointer">
+					<div class="w-10 h-10 bg-black rounded-full flex items-center justify-center text-white">
 						<i class="fa-solid fa-sliders text-lg"></i>
 					</div>
-					<span
-						class="text-xl font-extrabold tracking-widest uppercase text-black">
+					<span class="text-xl font-extrabold tracking-widest uppercase text-black">
 						AUDIO<span class="text-zinc-400 font-light">LAB</span>
 					</span>
 				</div>
@@ -38,13 +36,11 @@ body {
 				<!-- Action Icons & Search -->
 				<div class="flex items-center space-x-4">
 					<!-- KHỐI TÌM KIẾM ĐỘNG ELASTICSEARCH ĐÃ ĐƯỢC CHỈNH SỬA -->
-					<div id="trigger-search-desktop"
-						class="hidden lg:flex items-center relative z-50">
-						<input type="text" id="elastic-search-input"
-							placeholder="Tìm kiếm thiết bị..." autocomplete="off"
+					<div id="trigger-search-desktop" class="hidden lg:flex items-center relative z-50">
+						<input type="text" id="elastic-search-input" placeholder="Tìm kiếm thiết bị..."
+							autocomplete="off"
 							class="bg-zinc-100 text-xs text-zinc-900 placeholder-zinc-400 pl-4 pr-10 py-2.5 rounded-full border border-zinc-200 cursor-pointer focus:outline-none focus:bg-white focus:border-black hover:border-zinc-400 w-60 transition-all" />
-						<i
-							class="fa-solid fa-magnifying-glass absolute right-3.5 text-zinc-400 text-xs"></i>
+						<i class="fa-solid fa-magnifying-glass absolute right-3.5 text-zinc-400 text-xs"></i>
 
 						<!-- Hộp hiển thị danh sách kết quả gợi ý thả xuống (Dropdown Box) -->
 						<ul id="elastic-suggestion-box"
@@ -52,17 +48,14 @@ body {
 							style="display: none"></ul>
 					</div>
 
-					<button id="trigger-search-mobile"
-						class="lg:hidden text-zinc-700 hover:text-black p-2">
+					<button id="trigger-search-mobile" class="lg:hidden text-zinc-700 hover:text-black p-2">
 						<i class="fa-solid fa-magnifying-glass text-lg"></i>
 					</button>
 				</div>
 
 				<!-- Nav Menu Desktop với Mega Dropdown hiện đại -->
-				<nav
-					class="hidden md:flex space-x-8 text-sm font-semibold tracking-wide">
-					<a href="#"
-						class="text-zinc-600 hover:text-black py-7 transition-colors">Trang
+				<nav class="hidden md:flex space-x-8 text-sm font-semibold tracking-wide">
+					<a href="#" class="text-zinc-600 hover:text-black py-7 transition-colors">Trang
 						Chủ</a>
 
 					<!-- MEGA MENU SẢN PHẨM -->
@@ -70,15 +63,14 @@ body {
 						<a href="#"
 							class="text-zinc-600 hover:text-black py-7 transition-colors flex items-center space-x-1.5">
 							<span>Sản Phẩm</span> <i
-							class="fa-solid fa-chevron-down text-[10px] transition-transform duration-300 group-hover:rotate-180 text-zinc-400 group-hover:text-black"></i>
+								class="fa-solid fa-chevron-down text-[10px] transition-transform duration-300 group-hover:rotate-180 text-zinc-400 group-hover:text-black"></i>
 						</a>
 
 						<!-- Dropdown Box (Mega Menu Card) -->
 						<div
 							class="absolute top-full -left-12 w-[680px] bg-white border border-zinc-200/80 rounded-2xl shadow-2xl opacity-0 invisible translate-y-3 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 ease-out p-6 grid grid-cols-12 gap-6 overflow-hidden">
 							<!-- Cột 1 & 2: Danh mục sản phẩm -->
-							<div
-								class="col-span-7 grid grid-cols-2 gap-4 border-r border-zinc-100 pr-6">
+							<div class="col-span-7 grid grid-cols-2 gap-4 border-r border-zinc-100 pr-6">
 								<div>
 									<span
 										class="text-[10px] font-extrabold uppercase tracking-widest text-zinc-400 block mb-3">Loa
@@ -91,8 +83,7 @@ body {
 												<i class="fa-solid fa-podcast text-xs"></i>
 											</div>
 											<div>
-												<p
-													class="text-xs font-bold text-zinc-800 group-hover/item:text-black">
+												<p class="text-xs font-bold text-zinc-800 group-hover/item:text-black">
 													Loa Bluetooth</p>
 												<span class="text-[10px] text-zinc-400 block">Di
 													động & Chống nước</span>
@@ -104,8 +95,7 @@ body {
 												<i class="fa-solid fa-record-vinyl text-xs"></i>
 											</div>
 											<div>
-												<p
-													class="text-xs font-bold text-zinc-800 group-hover/item:text-black">
+												<p class="text-xs font-bold text-zinc-800 group-hover/item:text-black">
 													Loa Hi-End</p>
 												<span class="text-[10px] text-zinc-400 block">Âm
 													thanh phòng nghe</span>
@@ -143,8 +133,7 @@ body {
 												<i class="fa-solid fa-microchip text-xs"></i>
 											</div>
 											<div>
-												<p
-													class="text-xs font-bold text-zinc-800 group-hover/item:text-black">
+												<p class="text-xs font-bold text-zinc-800 group-hover/item:text-black">
 													Amply & DAC</p>
 												<span class="text-[10px] text-zinc-400 block">Giải
 													mã Lossless</span>
@@ -157,8 +146,7 @@ body {
 							<!-- Cột 3: Banner gợi ý xem trước (Preview Card) -->
 							<div
 								class="col-span-5 flex flex-col justify-between bg-zinc-900 rounded-xl p-4 text-white relative overflow-hidden group/card">
-								<img
-									src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=400&auto=format&fit=crop"
+								<img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=400&auto=format&fit=crop"
 									class="absolute -right-4 -bottom-4 w-32 h-32 object-contain opacity-40 group-hover/card:scale-110 group-hover/card:opacity-60 transition-all duration-500" />
 								<div class="relative z-10 space-y-1">
 									<span
@@ -172,20 +160,18 @@ body {
 								<div class="relative z-10 pt-4">
 									<a href="#"
 										class="inline-flex items-center text-[11px] font-bold uppercase tracking-wider text-white hover:underline">
-										Xem chi tiết <i
-										class="fa-solid fa-arrow-right ml-1.5 text-[9px]"></i>
+										Xem chi tiết <i class="fa-solid fa-arrow-right ml-1.5 text-[9px]"></i>
 									</a>
 								</div>
 							</div>
 						</div>
 					</div>
 
-					<a href="#"
-						class="text-zinc-600 hover:text-black py-7 transition-colors">Studio
+					<a href="#" class="text-zinc-600 hover:text-black py-7 transition-colors">Studio
 						& Thu Âm</a> <a href="#"
 						class="text-zinc-600 hover:text-black py-7 transition-colors flex items-center space-x-1">
 						<span>Khuyến Mãi</span> <span
-						class="bg-red-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full uppercase">New</span>
+							class="bg-red-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full uppercase">New</span>
 					</a>
 				</nav>
 
@@ -194,8 +180,7 @@ body {
 					<div class="relative group">
 						<button id="open-login-btn"
 							class="flex items-center space-x-2 text-zinc-700 hover:text-black p-2 rounded-full hover:bg-zinc-100 transition-colors">
-							<i class="fa-regular fa-user text-xl"></i> <span
-								th:text="${session.username}"></span> <span
+							<i class="fa-regular fa-user text-xl"></i> <span th:text="${session.username}"></span> <span
 								class="hidden xl:inline text-xs font-semibold">Tài Khoản</span>
 						</button>
 
@@ -209,8 +194,7 @@ body {
 								class="w-full text-left px-3 py-2 text-xs font-medium text-zinc-600 hover:bg-zinc-100 hover:text-black rounded-lg transition-colors">
 								Tạo Tài Khoản Mới</button>
 							<div class="border-t border-zinc-100 my-1"></div>
-							<a href="#"
-								class="block px-3 py-1.5 text-[11px] text-zinc-500 hover:text-black">Đơn
+							<a href="#" class="block px-3 py-1.5 text-[11px] text-zinc-500 hover:text-black">Đơn
 								hàng của tôi</a> <a href="#"
 								class="block px-3 py-1.5 text-[11px] text-zinc-500 hover:text-black">Sản
 								phẩm đã lưu</a>
@@ -226,23 +210,19 @@ body {
 	</header>
 
 	<main layout:fragment="content" class="container">
-		
+
 	</main>
 
 	<!-- 5. FOOTER (BACKGROUND TRẮNG CHUẨN SANG TRỌNG) -->
-	<footer
-		class="bg-white text-zinc-800 border-t border-zinc-200 pt-16 pb-12">
-		<div
-			class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-10">
+	<footer class="bg-white text-zinc-800 border-t border-zinc-200 pt-16 pb-12">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-10">
 			<!-- Col 1: Thông tin thương hiệu -->
 			<div class="space-y-4">
 				<div class="flex items-center space-x-3">
-					<div
-						class="w-8 h-8 bg-black rounded-full flex items-center justify-center text-white">
+					<div class="w-8 h-8 bg-black rounded-full flex items-center justify-center text-white">
 						<i class="fa-solid fa-sliders text-xs"></i>
 					</div>
-					<span
-						class="text-lg font-extrabold tracking-widest uppercase text-black">
+					<span class="text-lg font-extrabold tracking-widest uppercase text-black">
 						AUDIO<span class="text-zinc-400 font-light">LAB</span>
 					</span>
 				</div>
@@ -252,18 +232,17 @@ body {
 				<div class="flex space-x-3 pt-2">
 					<a href="#"
 						class="w-8 h-8 rounded-full bg-zinc-100 flex items-center justify-center text-zinc-600 hover:bg-black hover:text-white transition-all text-xs"><i
-						class="fa-brands fa-facebook-f"></i></a> <a href="#"
+							class="fa-brands fa-facebook-f"></i></a> <a href="#"
 						class="w-8 h-8 rounded-full bg-zinc-100 flex items-center justify-center text-zinc-600 hover:bg-black hover:text-white transition-all text-xs"><i
-						class="fa-brands fa-instagram"></i></a> <a href="#"
+							class="fa-brands fa-instagram"></i></a> <a href="#"
 						class="w-8 h-8 rounded-full bg-zinc-100 flex items-center justify-center text-zinc-600 hover:bg-black hover:text-white transition-all text-xs"><i
-						class="fa-brands fa-youtube"></i></a>
+							class="fa-brands fa-youtube"></i></a>
 				</div>
 			</div>
 
 			<!-- Col 2: Liên kết nhanh -->
 			<div>
-				<h4
-					class="text-xs font-bold uppercase tracking-wider text-black mb-4">Danh
+				<h4 class="text-xs font-bold uppercase tracking-wider text-black mb-4">Danh
 					Mục Sản Phẩm</h4>
 				<ul class="space-y-2.5 text-xs text-zinc-600">
 					<li><a href="#" class="hover:text-black transition-colors">Loa
@@ -281,8 +260,7 @@ body {
 
 			<!-- Col 3: Hỗ trợ khách hàng -->
 			<div>
-				<h4
-					class="text-xs font-bold uppercase tracking-wider text-black mb-4">Chính
+				<h4 class="text-xs font-bold uppercase tracking-wider text-black mb-4">Chính
 					Sách & Hỗ Trợ</h4>
 				<ul class="space-y-2.5 text-xs text-zinc-600">
 					<li><a href="#" class="hover:text-black transition-colors">Hướng
@@ -300,8 +278,7 @@ body {
 
 			<!-- Col 4: Đăng ký nhận tin -->
 			<div>
-				<h4
-					class="text-xs font-bold uppercase tracking-wider text-black mb-4">Đăng
+				<h4 class="text-xs font-bold uppercase tracking-wider text-black mb-4">Đăng
 					Ký Nhận Khuyến Mãi</h4>
 				<p class="text-xs text-zinc-500 mb-3">Nhận ngay voucher giảm giá
 					10% cho đơn hàng đầu tiên.</p>
@@ -329,8 +306,7 @@ body {
 	<!-- POPUP MODAL ĐĂNG NHẬP / ĐĂNG KÝ SAN TRỌNG -->
 	<div id="auth-modal"
 		class="fixed inset-0 bg-black/60 z-50 invisible opacity-0 transition-all duration-300 backdrop-blur-sm flex items-center justify-center p-4">
-		<div
-			class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden relative border border-zinc-200 transform scale-95 transition-all duration-300"
+		<div class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden relative border border-zinc-200 transform scale-95 transition-all duration-300"
 			id="auth-modal-card">
 			<!-- Nút Đóng -->
 			<button id="close-auth-btn"
@@ -350,8 +326,8 @@ body {
 				</div>
 
 				<!-- FORM ĐĂNG NHẬP -->
-				<form th:object="${formLogin}" th:action="@{/fontend/login}"
-					method="POST" id="form-login" class="space-y-4">
+				<form th:object="${formLogin}" th:action="@{/fontend/login}" method="POST" id="form-login"
+					class="space-y-4">
 					<div>
 						<label
 							class="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Email</label>
@@ -360,10 +336,8 @@ body {
 					</div>
 					<div>
 						<div class="flex justify-between items-center mb-1">
-							<label
-								class="block text-[10px] font-bold uppercase tracking-wider text-zinc-500">Mật
-								Khẩu</label> <a href="#"
-								class="text-[10px] text-zinc-400 hover:text-black">Quên mật
+							<label class="block text-[10px] font-bold uppercase tracking-wider text-zinc-500">Mật
+								Khẩu</label> <a href="#" class="text-[10px] text-zinc-400 hover:text-black">Quên mật
 								khẩu?</a>
 						</div>
 						<input type="text" th:field="*{password}" placeholder="••••••••"
@@ -377,20 +351,17 @@ body {
 				<!-- FORM ĐĂNG KÝ -->
 				<form method="POST" id="form-register" class="space-y-4 hidden">
 					<div>
-						<label
-							class="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Họ
+						<label class="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Họ
 							và Tên</label> <input type="text" placeholder="Nguyễn Văn A"
 							class="w-full bg-zinc-50 border border-zinc-200 rounded-xl px-4 py-3 text-xs text-black focus:outline-none focus:border-black transition-colors" />
 					</div>
 					<div>
-						<label
-							class="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Địa
+						<label class="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Địa
 							chỉ Email</label> <input type="email" placeholder="nam@example.com"
 							class="w-full bg-zinc-50 border border-zinc-200 rounded-xl px-4 py-3 text-xs text-black focus:outline-none focus:border-black transition-colors" />
 					</div>
 					<div>
-						<label
-							class="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Mật
+						<label class="block text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-1">Mật
 							Khẩu</label> <input type="password" placeholder="Tối thiểu 6 ký tự"
 							class="w-full bg-zinc-50 border border-zinc-200 rounded-xl px-4 py-3 text-xs text-black focus:outline-none focus:border-black transition-colors" />
 					</div>
@@ -401,8 +372,7 @@ body {
 
 				<!-- Đăng nhập Mạng xã hội -->
 				<div class="mt-6 pt-6 border-t border-zinc-100 text-center">
-					<span
-						class="text-[10px] text-zinc-400 block mb-3 uppercase tracking-wider">Hoặc
+					<span class="text-[10px] text-zinc-400 block mb-3 uppercase tracking-wider">Hoặc
 						tiếp tục với</span>
 					<div class="grid grid-cols-2 gap-3">
 						<button
@@ -419,193 +389,34 @@ body {
 		</div>
 	</div>
 
+	<div class="chat-launcher" id="chatLauncher" onclick="toggleChat()">💬</div>
+	<!-- 2. KHUNG HỘP CHAT CHÍNH -->
+	<div class="chat-box" id="chatBox">
+		<div class="chat-header">
+			<div>
+				<div>Hỗ trợ trực tuyến</div>
+				<div class="status" id="guestLabel">Đang kết nối...</div>
+			</div>
+			<span class="close-btn" onclick="toggleChat()">×</span>
+		</div>
+
+		<!-- Vùng cuộn tin nhắn -->
+		<div class="chat-messages" id="chatMessages">
+			<div class="message system">Vui lòng đợi trong giây lát, <br>sẽ có nhân viên liên hệ hỗ trợ bạn ngay.</div>
+		</div>
+
+		<!-- Ô nhập dữ liệu -->
+		<div class="chat-footer">
+			<input type="text" id="btnInput" placeholder="Nhập tin nhắn tại đây..."
+				onkeypress="handleKeyPress(event)" />
+			<button onclick="sendChatMessage()">Gửi</button>
+		</div>
+	</div>
+
 	<!-- SCRIPT ĐIỀU KHIỂN SLIDER RTL & SEARCH MODAL -->
-	<script>
-            const track = document.getElementById("slider-track");
-            const prevBtn = document.getElementById("prev-btn");
-            const nextBtn = document.getElementById("next-btn");
-            const dots = document.querySelectorAll(".dot");
-            const totalSlides = 3;
-            let currentIndex = 0;
-
-            function updateSlider() {
-                track.style.transform = `translateX(-${currentIndex * 100}%)`;
-
-                dots.forEach((dot, index) => {
-                    if (index === currentIndex) {
-                        dot.className = "dot w-8 h-1.5 bg-black rounded-full transition-all duration-300";
-                    } else {
-                        dot.className = "dot w-3 h-1.5 bg-zinc-300 rounded-full transition-all duration-300";
-                    }
-                });
-            }
-
-            function nextSlideRTL() {
-                currentIndex = (currentIndex + 1) % totalSlides;
-                updateSlider();
-            }
-
-            function prevSlideRTL() {
-                currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-                updateSlider();
-            }
-
-            function goToSlide(index) {
-                currentIndex = index;
-                updateSlider();
-            }
-
-            nextBtn.addEventListener("click", nextSlideRTL);
-            prevBtn.addEventListener("click", prevSlideRTL);
-
-            let autoPlay = setInterval(nextSlideRTL, 4000);
-
-            const sliderSection = document.querySelector("section");
-            sliderSection.addEventListener("mouseenter", () => clearInterval(autoPlay));
-            sliderSection.addEventListener("mouseleave", () => (autoPlay = setInterval(nextSlideRTL, 4000)));
-
-            // Dang nhap, dang ky
-            const authModal = document.getElementById("auth-modal");
-            const authModalCard = document.getElementById("auth-modal-card");
-            const openLoginBtn = document.getElementById("open-login-btn");
-            const closeAuthBtn = document.getElementById("close-auth-btn");
-            const formLogin = document.getElementById("form-login");
-            const formRegister = document.getElementById("form-register");
-            const tabLoginBtn = document.getElementById("tab-login-btn");
-            const tabRegisterBtn = document.getElementById("tab-register-btn");
-
-            function openAuthModal(tab = "login") {
-                switchTab(tab);
-                authModal.classList.remove("invisible", "opacity-0");
-                authModal.classList.add("visible", "opacity-100");
-                authModalCard.classList.remove("scale-95");
-                authModalCard.classList.add("scale-100");
-            }
-
-            function closeAuthModal() {
-                authModal.classList.remove("visible", "opacity-100");
-                authModal.classList.add("invisible", "opacity-0");
-                authModalCard.classList.remove("scale-100");
-                authModalCard.classList.add("scale-95");
-            }
-
-            function switchTab(tab) {
-                if (tab === "login") {
-                    formLogin.classList.remove("hidden");
-                    formRegister.classList.add("hidden");
-                    tabLoginBtn.className =
-                        "pb-3 text-sm font-extrabold uppercase tracking-wider border-b-2 border-black text-black w-1/2 text-center transition-colors";
-                    tabRegisterBtn.className =
-                        "pb-3 text-sm font-extrabold uppercase tracking-wider border-b-2 border-transparent text-zinc-400 hover:text-black w-1/2 text-center transition-colors";
-                } else {
-                    formLogin.classList.add("hidden");
-                    formRegister.classList.remove("hidden");
-                    tabRegisterBtn.className =
-                        "pb-3 text-sm font-extrabold uppercase tracking-wider border-b-2 border-black text-black w-1/2 text-center transition-colors";
-                    tabLoginBtn.className =
-                        "pb-3 text-sm font-extrabold uppercase tracking-wider border-b-2 border-transparent text-zinc-400 hover:text-black w-1/2 text-center transition-colors";
-                }
-            }
-
-            openLoginBtn?.addEventListener("click", () => openAuthModal("login"));
-            closeAuthBtn?.addEventListener("click", closeAuthModal);
-            authModal?.addEventListener("click", (e) => {
-                if (e.target === authModal) closeAuthModal();
-            });
-        </script>
-
-	<script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const searchInput = document.getElementById("elastic-search-input");
-                const suggestionBox = document.getElementById("elastic-suggestion-box");
-
-                // Hàm Debounce kiểm soát tần suất gửi request lên hệ thống
-                function debounce(func, delay) {
-                    let timeoutId;
-                    return function (...args) {
-                        if (timeoutId) {
-                            clearTimeout(timeoutId);
-                        }
-                        timeoutId = setTimeout(() => {
-                            func.apply(this, args);
-                        }, delay);
-                    };
-                }
-
-                // Hàm gọi API ngầm tới Spring Boot để lấy danh sách gợi ý
-                function getAutocomplete(keyword) {
-                    // Chỉ thực hiện gọi tìm kiếm khi người dùng nhập từ 2 ký tự trở lên
-                    if (keyword.length < 2) {
-                        suggestionBox.style.display = "none";
-                        return;
-                    }
-
-                    // Gọi tới API công khai mà chúng ta thiết lập ở tầng Backend
-                    fetch(`/api/public/products/suggest?keyword=${encodeURIComponent(keyword)}`)
-                        .then((response) => response.json())
-                        .then((products) => {
-                            suggestionBox.innerHTML = "";
-
-                            if (products && products.length > 0) {
-                                products.forEach((product) => {
-                                    const li = document.createElement("li");
-                                    // Style các phần tử con theo chuẩn giao diện gọn gàng của Tailwind
-                                    li.className =
-                                        "flex items-center justify-between px-4 py-3 hover:bg-zinc-50 cursor-pointer border-b border-zinc-100 last:border-b-0 transition-colors";
-
-                                    // Định dạng hiển thị tên và giá tiền sản phẩm trực quan
-                                    li.innerHTML = `
-                                <div class="flex flex-col pr-2">
-                                    <span class="text-xs font-semibold text-zinc-800 tracking-wide truncate max-w-[180px]">${product.name}</span>
-                                    <span class="text-[10px] text-zinc-400">Thiết bị âm thanh</span>
-                                </div>
-                                <span class="text-[11px] font-bold text-black bg-zinc-100 px-2 py-0.5 rounded-md flex-shrink-0">
-                                    ${product.price ? product.price.toLocaleString("vi-VN") + " đ" : "Liên hệ"}
-                                </span>
-                            `;
-
-                                    // Sự kiện khi người dùng click trực tiếp vào một dòng gợi ý
-                                    li.addEventListener("click", function () {
-                                        searchInput.value = product.name;
-                                        suggestionBox.style.display = "none";
-
-                                        // CHÚ Ý: Chuyển hướng người dùng sang trang chi tiết sản phẩm dựa vào ID
-                                        window.location.href = `/product/detail/${product.id}`;
-                                    });
-
-                                    suggestionBox.appendChild(li);
-                                });
-                                suggestionBox.style.display = "block";
-                            } else {
-                                // Ẩn hộp nếu không tìm thấy bất kỳ sản phẩm nào tương ứng
-                                suggestionBox.style.display = "none";
-                            }
-                        })
-                        .catch((error) => console.error("Lỗi đồng bộ hệ thống gợi ý Elastic:", error));
-                }
-
-                // Lắng nghe sự kiện người dùng nhập dữ liệu, áp dụng bộ trễ 300ms
-                searchInput.addEventListener(
-                    "input",
-                    debounce(function () {
-                        getAutocomplete(this.value.trim());
-                    }, 300)
-                );
-
-                // Tự động đóng hộp gợi ý khi người dùng nhấn chuột ra khu vực bên ngoài thanh tìm kiếm
-                document.addEventListener("click", function (e) {
-                    if (!searchInput.contains(e.target) && !suggestionBox.contains(e.target)) {
-                        suggestionBox.style.display = "none";
-                    }
-                });
-
-                // Hiển thị lại hộp gợi ý khi người dùng focus chuột lại vào ô input (nếu có sẵn chữ)
-                searchInput.addEventListener("focus", function () {
-                    if (this.value.trim().length >= 2 && suggestionBox.children.length > 0) {
-                        suggestionBox.style.display = "block";
-                    }
-                });
-            });
-        </script>
+	<script th:src="@{/js/slider_login.js}"></script>
+	<script th:src="@{/js/elasticsearch.js}"></script>
+	<script th:src="@{/js/fontendchatbox.js}"></script>
 </body>
+
 </html>

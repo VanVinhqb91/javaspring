@@ -59,7 +59,7 @@ let selectedRoomId = null;
 const activeRooms = new Set(); 
 
 function connectAdminDashboard() {
-    // Tự động lấy cấu thức protocol (http/https) và tên miền hiện tại của trình duyệt để nối vào endpoint
+    // Tự động lấy cấu trúc protocol (http/https) và tên miền hiện tại của trình duyệt để nối vào endpoint
     const baseEndpoint = window.location.protocol + "//" + window.location.host + "/ws-chat";
     
     const socket = new SockJS(baseEndpoint);
@@ -67,10 +67,25 @@ function connectAdminDashboard() {
 
     stompClient.connect({}, function () {
         console.log("Admin Dashboard đã kết nối WebSocket thành công!");
+        
+        // 1. Đăng ký lắng nghe nhận tin nhắn của các phòng chat như cũ
         stompClient.subscribe('/topic/room.*', function (response) {
             const message = JSON.parse(response.body);
             handleIncomingSystemMessage(message);
         });
+
+        // 2. ĐĂNG KÝ MỚI: Lắng nghe kênh nổ phòng chat mới thời gian thực khi Admin đang mở máy trực trực tuyến
+        stompClient.subscribe('/topic/admin.newRoom', function(messageOutput) {
+            var newRoomData = JSON.parse(messageOutput.body);
+            console.log("Phát hiện khách vãng lai mới gõ câu đầu tiên:", newRoomData.roomId);
+            if (!activeRooms.has(newRoomData.roomId)) {
+                activeRooms.add(newRoomData.roomId);
+                updateCustomerSidebar(); // Gọi hàm tự động vẽ phòng mới lên sidebar Admin tức thì
+            }
+        });
+
+        // 3. KÍCH HOẠT: Đồng bộ hốt toàn bộ danh sách phòng khách đang chờ trên RAM hệ thống về Sidebar luôn
+        loadActiveRoomsFromServer();
     });
 }
 
@@ -98,16 +113,68 @@ function handleIncomingSystemMessage(message) {
 
 function updateCustomerSidebar() {
     const listContainer = document.getElementById('customerList');
+    if (!listContainer) return;
+    
     listContainer.innerHTML = '';
-    document.getElementById('countActive').textContent = activeRooms.size;
+    document.getElementById('countActive').textContent = activeRooms.size - 1;
 
     activeRooms.forEach(roomId => {
-        const li = document.createElement('li');
-        li.className = `customer-item ${roomId === selectedRoomId ? 'active' : ''}`;
-        li.onclick = () => selectCustomerRoom(roomId);
-        li.innerHTML = `<span>👤 Khách vãng lai (${roomId.substring(6, 12)})</span><span class="badge-online"></span>`;
-        listContainer.appendChild(li);
+		if (roomId) {
+			const li = document.createElement('li');
+			li.className = `customer-item ${roomId === selectedRoomId ? 'active' : ''}`;
+			li.onclick = () => selectCustomerRoom(roomId);
+			li.innerHTML = `<span>👤 Khách vãng lai (${roomId})</span><span class="badge-online"></span>`;
+			listContainer.appendChild(li);
+		}
     });
+}
+
+function loadActiveRoomsFromServer() {
+    fetch('/api/chat/active-rooms')
+        .then(response => response.json())
+        .then(rooms => {
+            console.log("Dữ liệu Server trả về:", rooms);
+            
+            // 1. Nạp dữ liệu vào Set activeRooms để quản lý
+            Object.keys(rooms).forEach(roomId => {
+                if (!activeRooms.has(roomId)) {
+                    activeRooms.add(roomId);
+                }
+            });
+
+            // 2. GIẢI PHÁP ÉP HIỂN THỊ CHUẨN XÁC
+            let listContainer = document.getElementById('customerList');
+            if (!listContainer) {
+                listContainer = document.querySelector('.sidebar-menu, ul, .customer-list');
+            }
+
+            let countElement = document.getElementById('countActive');
+            if (!countElement) {
+                countElement = document.querySelector('.badge, span, #count');
+            }
+
+            // 3. THỰC HIỆN VÀ VÁ ĐOẠN CODE BỊ THIẾU CŨ ĐỂ VẼ LÊN SÀN
+            if (listContainer) {
+                listContainer.innerHTML = '';
+                if (countElement) {
+                    countElement.textContent = activeRooms.size;
+                }
+
+                activeRooms.forEach(roomId => {
+					if (roomId) {
+						const li = document.createElement('li');
+						li.className = `customer-item ${roomId === selectedRoomId ? 'active' : ''}`;
+						li.style.cursor = 'pointer';
+						li.onclick = () => selectCustomerRoom(roomId);
+						li.innerHTML = `<span>👤 Khách vãng lai (${roomId.substring(6, 14)})</span><span class="badge-online"></span>`;
+						listContainer.appendChild(li);
+					}
+                });
+            } else {
+                console.error("LỖI GIAO DIỆN: Không tìm thấy bất kỳ thẻ HTML nào để chèn danh sách khách!");
+            }
+        })
+        .catch(error => console.error("Lỗi đồng bộ danh sách phòng từ RAM Server:", error));
 }
 
 function selectCustomerRoom(roomId) {
@@ -121,7 +188,7 @@ function selectCustomerRoom(roomId) {
     const messageArea = document.getElementById('chatMessages');
     messageArea.innerHTML = '<div class="message system">Hệ thống: Đã kết nối vào phòng chat riêng của khách.</div>';
 	
-	// 2. ĐỌC VÀ ĐẨY NGƯỢC LẠI TOÀN BỘ TIN NHẮN CŨ TRONG KHO LƯU TRỮ TẠM LÊN MÀN HÌNH
+	// ĐỌC VÀ ĐẨY NGƯỢC LẠI TOÀN BỘ TIN NHẮN CŨ TRONG KHO LƯU TRỮ TẠM LÊN MÀN HÌNH
 	if (chatHistory.has(roomId)) {
 	    const history = chatHistory.get(roomId);
 	    history.forEach(msg => {
@@ -148,19 +215,38 @@ document.getElementById('adminInput').addEventListener('keypress', function(even
 
 function displayMessageInArea(message) {
     const messageArea = document.getElementById('chatMessages');
+	if (!messageArea) return;
     const msgElement = document.createElement('div');
+	
+	// 1. Tạo thẻ span nhỏ chứa nhãn tên người gửi
+	const nameLabel = document.createElement('span');
+	nameLabel.style.fontSize = '10px';
+	nameLabel.style.display = 'block';
+	nameLabel.style.marginBottom = '4px'; // Tăng khoảng cách một chút cho đẹp
+	
+	// 2. Tạo một thẻ span/div riêng biệt để chứa nội dung văn bản chat (Tránh dùng thẳng textContent lên thẻ cha)
+	const textContainer = document.createElement('div');
+	textContainer.style.display = 'inline-block';
+	textContainer.style.wordBreak = 'break-word';
 
     if (message.type === 'JOIN') {
         msgElement.className = "message system";
         msgElement.textContent = `Hệ thống: Khách hàng ${message.sender} đã trực tuyến.`;
+		// Tin nhắn hệ thống không cần hiện chữ Bạn hoặc Admin
+		msgElement.appendChild(textContainer);
     } else {
         if (message.sender === 'ADMIN_STAFF') {
             msgElement.className = "message admin";
-            msgElement.textContent = message.content;
+            textContainer.textContent = message.content;
+			nameLabel.textContent = "Admin Support";
         } else {
             msgElement.className = "message customer";
-            msgElement.textContent = message.content;
+            textContainer.textContent = message.content;
+			nameLabel.textContent = `Khách: ${message.sender}`;
         }
+		// Bỏ nhãn tên và nội dung chữ vào trong bong bóng chat theo đúng thứ tự
+		msgElement.appendChild(nameLabel);
+		msgElement.appendChild(textContainer);
     }
     messageArea.appendChild(msgElement);
     messageArea.scrollTop = messageArea.scrollHeight; 

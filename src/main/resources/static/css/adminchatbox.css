@@ -9,19 +9,20 @@ body {
 
 /* --- CỘT TRÁI: DANH SÁCH KHÁCH HÀNG --- */
 .sidebar {
-    width: 300px;
+    width: 25%;
+	float: left;
     background-color: white;
     border-right: 1px solid #e4e6eb;
     display: flex;
     flex-direction: column;
 }
 .sidebar-header {
-    padding: 20px;
-    font-size: 18px;
-    font-weight: bold;
-    border-bottom: 1px solid #e4e6eb;
-    background-color: #007bff;
-    color: white;
+	padding: 20px 54px;
+	font-size: 18px;
+	font-weight: bold;
+	border-bottom: 1px solid #e4e6eb;
+	background-color: #413c38;
+	color: white;
 }
 .customer-list {
     flex: 1;
@@ -31,7 +32,7 @@ body {
     margin: 0;
 }
 .customer-item {
-    padding: 15px 20px;
+    padding: 15px 27px;
     border-bottom: 1px solid #f0f2f5;
     cursor: pointer;
     transition: background-color 0.2s;
@@ -54,10 +55,11 @@ body {
 
 /* --- KHUNG BÊN PHẢI: NỘI DUNG CHAT CHI TIẾT --- */
 .chat-area {
+	width: 75%;
+	float: right;
     flex: 1;
     display: flex;
     flex-direction: column;
-    background-color: #f0f2f5;
 }
 .chat-header {
     padding: 18px 20px;
@@ -121,7 +123,7 @@ body {
     border-radius: 24px;
     outline: none;
     font-size: 14px;
-    background-color: #f0f2f5;
+    background-color: white;
 }
 .chat-footer input:focus {
     background-color: white;

@@ -1,0 +1,136 @@
+.chat-launcher {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 9999;
+    transition: transform 0.2s ease;
+}
+.chat-launcher:hover { transform: scale(1.05); }
+
+/* --- KHUNG HỘP CHAT CHÍNH --- */
+.chat-box {
+    position: fixed;
+    bottom: 95px;
+    right: 20px;
+    width: 350px;
+    height: 450px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 9999;
+    transition: all 0.3s ease;
+    transform: translateY(20px);
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Trạng thái khi hiển thị Box Chat */
+.chat-box.open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+}
+
+/* --- TIÊU ĐỀ BOX CHAT --- */
+.chat-header {
+    background-color: #007bff;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+}
+.chat-header .status {
+    font-size: 12px;
+    font-weight: normal;
+    opacity: 0.8;
+}
+.chat-header .close-btn {
+    cursor: pointer;
+    font-size: 20px;
+}
+
+/* --- VÙNG HIỂN THỊ TIN NHẮN --- */
+.chat-messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background-color: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Định dạng bong bóng tin nhắn */
+.message {
+    max-width: 90%;
+    padding: 10px 14px;
+    border-radius: 15px;
+    font-size: 14px;
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+/* Tin nhắn của khách hàng (Bên phải, màu xanh) */
+.message.customer {
+    background-color: #007bff;
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 2px;
+}
+/* Tin nhắn của hệ thống/nhân viên (Bên trái, màu xám) */
+.message.admin {
+    background-color: #e4e6eb;
+    color: #050505;
+    align-self: flex-start;
+    border-bottom-left-radius: 2px;
+}
+/* Tin nhắn trạng thái hệ thống (Căn giữa) */
+.message.system {
+    background-color: transparent;
+    color: #8c8c8c;
+    font-size: 12px;
+    align-self: center;
+    text-align: center;
+}
+
+/* --- THANH NHẬP LIỆU GỬI TIN --- */
+.chat-footer {
+    padding: 10px;
+    border-top: 1px solid #e4e6eb;
+    display: flex;
+    gap: 8px;
+    background-color: white;
+}
+.chat-footer input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccd0d5;
+    border-radius: 20px;
+    outline: none;
+    font-size: 14px;
+}
+.chat-footer button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 0 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.chat-footer button:hover { background-color: #0056b3; }
