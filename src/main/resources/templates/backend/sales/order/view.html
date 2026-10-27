@@ -18,6 +18,14 @@
 					</h1>
 				</div>
 			</div>
+			
+			<div class="success-message" th:if="${successMessage}">
+			    <span>[[${successMessage}]]</span>
+			</div>
+			<div class="error-message" th:if="${errorMessage}">
+			    <span>[[${errorMessage}]]</span>
+			</div>
+			
 			<div class="page-main-actions actions-scrollable">
 				<div class="page-actions-placeholder">Order ID: #[[${orderId}]]</div>
 				<div class="page-actions" data-ui-id="page-actions-toolbar-content-header">

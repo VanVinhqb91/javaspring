@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Dashboard / Magento Admin</title>
+	<link href="https://googleapis.com" rel="stylesheet">
+	<link rel="stylesheet" href="https://cloudflare.com">
+
+	<style>
+		:root {
+			--m2-orange: #eb5e28;
+			--m2-sidebar-bg: #303030;
+			--m2-sidebar-active: #222222;
+			--m2-bg: #f5f5f5;
+			--m2-text-main: #333333;
+			--m2-text-muted: #666666;
+			--m2-border: #cccccc;
+			--m2-blue: #007dbd;
+		}
+
+		* {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+			font-family: 'Open Sans', sans-serif;
+		}
+
+		body {
+			background-color: var(--m2-bg);
+			color: var(--m2-text-main);
+			display: flex;
+			flex-direction: column;
+			height: 100vh;
+			overflow: hidden;
+		}
+
+		.app-container {
+			display: flex;
+			flex: 1;
+			overflow: hidden;
+		}
+
+		/* 1. Thanh thông báo hệ thống màu vàng đỉnh đầu */
+		.system-message-bar {
+			background-color: #fffbbb;
+			border-bottom: 1px solid #f2e3aa;
+			padding: 10px 20px;
+			font-size: 13px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.message-content {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			color: #333;
+		}
+
+		.message-content i {
+			color: #f47321;
+			font-size: 16px;
+		}
+
+		.view-details-link {
+			color: var(--m2-blue);
+			text-decoration: underline;
+			cursor: pointer;
+		}
+
+		.system-dropdown {
+			cursor: pointer;
+			font-weight: 600;
+		}
+		.m2-sidebar {
+		    width: 90px;
+		    background-color: var(--m2-sidebar-bg);
+		    display: flex;
+		    flex-direction: column;
+		    align-items: center;
+		    overflow-y: auto;
+		}
+		.m2-logo-box {
+		    width: 100%;
+		    padding: 15px 0;
+		    display: flex;
+		    justify-content: center;
+		    background-color: #222222;
+		}
+		.m2-logo {
+		    width: 40px;
+		    height: 40px;
+		    background-color: var(--m2-orange);
+		    color: white;
+		    font-weight: bold;
+		    font-size: 22px;
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;
+		    border-radius: 3px;
+		}
+		.sidebar-menu { width: 100%; list-style: none; }
+		.menu-item a {
+		    display: flex;
+		    flex-direction: column;
+		    align-items: center;
+		    padding: 12px 5px;
+		    color: #b3b3b3;
+		    text-decoration: none;
+		    font-size: 10px;
+		    font-weight: 600;
+		    text-transform: uppercase;
+		    border-left: 3px solid transparent;
+		    transition: all 0.15s;
+		}
+		.menu-item a i { font-size: 18px; margin-bottom: 5px; color: #a3a3a3; }
+		.menu-item.active a, .menu-item a:hover { background-color: var(--m2-sidebar-active); color: #ffffff; }
+		.menu-item.active a { border-left-color: var(--m2-orange); }
+		.menu-item.active a i { color: var(--m2-orange); }
+		.main-content { flex: 1; display: flex; flex-direction: column; overflow-y: auto; background-color: #ffffff; }
+		.content-header { padding: 20px 30px; border-bottom: 1px solid #e3e3e3; }
+		.top-title-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+		.top-title-row h1 { font-size: 26px; font-weight: 300; color: #333; }
+		.header-right-actions { display: flex; align-items: center; gap: 20px; font-size: 14px; }
+		.header-icon-btn { color: #555; cursor: pointer; font-size: 16px; }
+		.user-profile-toggle { font-weight: 600; cursor: pointer; color: #333; }
+
+		.scope-and-actions { display: flex; justify-content: space-between; align-items: center; }
+		.scope-selector { display: flex; align-items: center; gap: 10px; font-size: 13px; }
+		.scope-select { padding: 5px 10px; border: 1px solid var(--m2-border); background-color: #fff; outline: none; }
+		.btn-reload { background-color: #ff5a00; color: white; border: none; padding: 10px 24px; font-size: 14px; font-weight: bold; cursor: pointer; border-radius: 3px; }
+		.btn-reload:hover { background-color: #e04f00; }
+		.dashboard-body { padding: 30px; display: flex; flex-direction: column; gap: 30px; }
+		.advanced-reporting-card {
+		    border: 1px solid var(--m2-border);
+		    padding: 20px;
+		    display: flex;
+		    justify-content: space-between;
+		    align-items: center;
+		    background-color: #ffffff;
+		}
+		.reporting-info h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; color: #333; }
+		.reporting-info p { font-size: 13px; color: var(--m2-text-muted); line-height: 1.5; max-width: 700px; }
+		.btn-go-reporting { background-color: var(--m2-blue); color: white; border: none; padding: 10px 20px; font-size: 14px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 8px; border-radius: 3px; }
+		.btn-go-reporting:hover { background-color: #006699; }
+		.sales-stats-container { display: flex; gap: 30px; align-items: flex-start; }
+		.sales-summary-side { width: 250px; display: flex; flex-direction: column; gap: 20px; }
+		.summary-box .label { font-size: 14px; font-weight: bold; color: #333; margin-bottom: 5px; }
+		.summary-box .value { font-size: 26px; font-weight: bold; color: #eb5e28; }
+
+		.sales-grid-side { flex: 1; }
+		.mini-tabs { display: flex; gap: 2px; list-style: none; margin-bottom: 15px; }
+		.mini-tab-item { padding: 6px 16px; background-color: #e3e3e3; font-size: 13px; cursor: pointer; border: 1px solid #ccc; }
+		.mini-tab-item.active { background-color: #ffffff; font-weight: bold; border-bottom-color: transparent; }
+
+		.time-filter-select { padding: 5px 10px; font-size: 13px; border: 1px solid var(--m2-border); width: 120px; margin-bottom: 15px; }
+		.no-data-text { font-size: 13px; color: var(--m2-text-muted); font-style: italic; margin-bottom: 20px; }
+
+		.grid-totals-row { display: flex; gap: 40px; border-top: 1px solid #eeeeee; padding-top: 15px; }
+		.total-item { display: flex; flex-direction: column; gap: 40px; min-width: 100px; }
+		.total-item .title { font-size: 12px; font-weight: 600; color: #333; }
+		.total-item .num { font-size: 18px; font-weight: bold; color: #ff5a00; }
+		.total-item .num.zero { color: #333; }
+		.bottom-grids-container { display: grid; grid-template-columns: 1fr 1.5fr; gap: 40px; margin-top: 15px; }
+		.grid-card-box h4 { font-size: 15px; font-weight: bold; color: #333; margin-bottom: 12px; }
+
+		.m2-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 25px; }
+		.m2-table th { text-align: left; padding: 8px 10px; font-weight: bold; border-bottom: 2px solid var(--m2-border); color: #333; }
+		.m2-table td { padding: 10px; border-bottom: 1px solid #eeeeee; color: #555; }
+
+		.bestseller-tabs { display: flex; border-bottom: 1px solid var(--m2-border); list-style: none; margin-bottom: 15px; }
+		.bestseller-tab-link { padding: 8px 16px; font-size: 13px; cursor: pointer; border: 1px solid transparent; margin-bottom: -1px; }
+		.bestseller-tab-link.active { background-color: #ffffff; border: 1px solid var(--m2-border); border-bottom-color: #fff; font-weight: 600; }
+	</style>
+</head>
+
+<body>
+
+	<!-- HTML Thanh thông báo hệ thống -->
+	<div class="system-message-bar">
+		<div class="message-content">
+			<i class="fa-solid fa-circle-info"></i>
+			<span>Task "Image resize: /5/4/5469-12-en...": 1 item(s) have been scheduled for update. <span
+					class="view-details-link">View Details</span></span>
+		</div>
+		<div class="system-dropdown">System Messages: 169 <i class="fa-solid fa-caret-down"></i></div>
+	</div>
+
+	<div class="app-container">
+		<!-- HTML Sidebar -->
+		<aside class="m2-sidebar">
+			<div class="m2-logo-box">
+				<div class="m2-logo">M</div>
+			</div>
+			<ul class="sidebar-menu">
+				<li class="menu-item active"><a href="#"><i class="fa-solid fa-gauge"></i>Dashboard</a></li>
+				<li class="menu-item"><a href="#"><i class="fa-solid fa-dollar-sign"></i>Sales</a></li>
+				<li class="menu-item"><a href="#"><i class="fa-solid fa-box-open"></i>Catalog</a></li>
+				<li class="menu-item"><a href="#"><i class="fa-solid fa-user-group"></i>Customers</a></li>
+				<li class="menu-item"><a href="#"><i class="fa-solid fa-bullhorn"></i>Marketing</a></li>
+				<li class="menu-item"><a href="#"><i class="fa-solid fa-rectangle-list"></i>Content</a></li>
+				<li class="menu-item"><a href="#"><i class="fa-solid fa-chart-simple"></i>Reports</a></li>
+				<li class="menu-item"><a href="#"><i class="fa-solid fa-store"></i>Stores</a></li>
+				<li class="menu-item"><a href="#"><i class="fa-solid fa-gear"></i>System</a></li>
+			</ul>
+		</aside>
+
+		<main class="main-content">
+			<div class="content-header">
+				<div class="top-title-row">
+					<h1>Dashboard</h1>
+					<div class="header-right-actions">
+						<i class="fa-solid fa-magnifying-glass header-icon-btn"></i>
+						<i class="fa-solid fa-bell header-icon-btn"></i>
+						<div class="user-profile-toggle"><i class="fa-solid fa-user" style="margin-right: 5px;"></i>
+							meetanshi <i class="fa-solid fa-caret-down"></i></div>
+					</div>
+				</div>
+				<div class="scope-and-actions">
+					<div class="scope-selector">
+						<span>Scope:</span>
+						<select class="scope-select">
+							<option>All Store Views</option>
+						</select>
+						<i class="fa-solid fa-circle-question" style="color: #666; cursor: pointer;"></i>
+					</div>
+					<button class="btn-reload">Reload Data</button>
+				</div>
+			</div>
+
+			<!-- HTML Advanced Reporting -->
+			<div class="dashboard-body">
+				<section class="advanced-reporting-card">
+					<div class="reporting-info">
+						<h3>Advanced Reporting</h3>
+						<p>Gain new insights and take command of your business' performance, using our dynamic product,
+							order, and customer reports tailored to your customer data.</p>
+					</div>
+					<a href="#" class="btn-go-reporting">Go to Advanced Reporting <i
+							class="fa-solid fa-arrow-up-right-from-square"></i></a>
+				</section>
+
+
+				<!-- HTML Sales Blocks & Tabs -->
+				<section class="sales-stats-container">
+					<div class="sales-summary-side">
+						<div class="summary-box">
+							<div class="label">Lifetime Sales</div>
+							<div class="value">$13,332.87</div>
+						</div>
+						<div class="summary-box">
+							<div class="label">Average Order</div>
+							<div class="value" style="color: #333;">$148.14</div>
+						</div>
+					</div>
+
+					<div class="sales-grid-side">
+						<ul class="mini-tabs">
+							<li class="mini-tab-item active">Orders</li>
+							<li class="mini-tab-item">Amounts</li>
+						</ul>
+						<select class="time-filter-select">
+							<option>Today</option>
+						</select>
+						<div class="no-data-text">No Data Found</div>
+
+						<div class="grid-totals-row">
+							<div class="total-item"><span class="title">Revenue</span><span class="num">$0.00</span>
+							</div>
+							<div class="total-item"><span class="title">Tax</span><span class="num zero">$0.00</span>
+							</div>
+							<div class="total-item"><span class="title">Shipping</span><span
+									class="num zero">$0.00</span></div>
+							<div class="total-item"><span class="title">Quantity</span><span class="num zero">0</span>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- HTML Tables & Dashboard Grids -->
+				<section class="bottom-grids-container">
+					<!-- Cột trái: Đơn hàng & Từ khóa -->
+					<div class="left-tables-stack">
+						<div class="grid-card-box">
+							<h4>Last Orders</h4>
+							<table class="m2-table">
+								<thead>
+									<tr>
+										<th>Customer</th>
+										<th>Items</th>
+										<th>Total</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>santhi krishnan</td>
+										<td>1</td>
+										<td>$50.93</td>
+									</tr>
+									<tr>
+										<td>Ram1 Strm1</td>
+										<td>1</td>
+										<td>$5.66</td>
+									</tr>
+									<tr>
+										<td>lucy test</td>
+										<td>1</td>
+										<td>$65.09</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="grid-card-box">
+							<h4>Last Search Terms</h4>
+							<table class="m2-table">
+								<thead>
+									<tr>
+										<th>Search Term</th>
+										<th>Results</th>
+										<th>Uses</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Erikssen CoolTech™ Fitness ...</td>
+										<td>4</td>
+										<td>2</td>
+									</tr>
+									<tr>
+										<td>Luma</td>
+										<td>5</td>
+										<td>1</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+
+					<!-- Cột phải: Bestsellers với Tabs hệ thống -->
+					<div class="right-tabs-grid">
+						<ul class="bestseller-tabs">
+							<li class="bestseller-tab-link active">Bestsellers</li>
+							<li class="bestseller-tab-link">Most Viewed Products</li>
+							<li class="bestseller-tab-link">New Customers</li>
+							<li class="bestseller-tab-link">Customers</li>
+						</ul>
+
+						<table class="m2-table">
+							<thead>
+								<tr>
+									<th>Product</th>
+									<th style="text-align: right;">Price</th>
+									<th style="text-align: right;">Quantity</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Hero Hoodie-XS-Black</td>
+									<td style="text-align: right;">$54.00</td>
+									<td style="text-align: right;">1103</td>
+								</tr>
+								<tr>
+									<td>Fusion Backpack</td>
+									<td style="text-align: right;">$59.00</td>
+									<td style="text-align: right;">966</td>
+								</tr>
+								<tr>
+									<td>Joust Duffle Bag</td>
+									<td style="text-align: right;">$1,615.00</td>
+									<td style="text-align: right;">106</td>
+								</tr>
+								<tr>
+									<td>Radiant Tee-XL-Purple-DVD</td>
+									<td style="text-align: right;">$0.00</td>
+									<td style="text-align: right;">30</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</section>
+			</div> <!-- Đóng dashboard-body từ Phần 4 -->
+		</main>
+	</div> <!-- Đóng app-container từ Phần 1 -->
+</body>
+
+</html>

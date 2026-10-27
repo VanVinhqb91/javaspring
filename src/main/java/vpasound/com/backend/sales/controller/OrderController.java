@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -47,12 +48,19 @@ public class OrderController {
 	public String updateOrderTotalBlock(
 			@PathVariable @NonNull Long id,
 			@RequestParam(name = "status") String status,
-			@RequestParam(name = "note") String note
+			@RequestParam(name = "note") String note,
+			RedirectAttributes redirectAttributes
 	) {
-		UpdateOrderTotalBlockDto orderTotalBlockDto = new UpdateOrderTotalBlockDto();
-		orderTotalBlockDto.setStatus(status);
-		orderTotalBlockDto.setNote(note);
-		orderService.updateTotalBlock(id, orderTotalBlockDto);
+		try {
+			UpdateOrderTotalBlockDto orderTotalBlockDto = new UpdateOrderTotalBlockDto();
+			orderTotalBlockDto.setStatus(status);
+			orderTotalBlockDto.setNote(note);
+			orderService.updateTotalBlock(id, orderTotalBlockDto);
+			redirectAttributes.addFlashAttribute("successMessage", "Update Status and Note Order Successed");
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("errorMessage", "Error when to Update Status / Note Order: " + e.getMessage());
+		}
+		
 		return "redirect:/backend/sales/order/view/" + id;
 	}
 }

@@ -40,7 +40,7 @@ public class BackendInterceptor implements HandlerInterceptor{
                 activeMenu = "customers";
             } 
             else if (uri.startsWith("/backend/marketings")) {
-                activeMenu = "marketing";
+                activeMenu = "marketings";
             } 
             else if (uri.startsWith("/backend/reports")) {
                 activeMenu = "reports";
