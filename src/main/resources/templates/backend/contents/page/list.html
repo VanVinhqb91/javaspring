@@ -1,213 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{backend/fragments/head :: htmlHeadProduct}"></head>
-<style>
-    /* --- Phần 1: Cấu hình chung & Hệ màu Magento --- */
-    :root {
-        --m2-dark-gray: #514943;  /* Màu nút bấm chính & Tiêu đề bảng */
-        --m2-blue: #007dbd;       /* Màu link & text hành động */
-        --m2-border: #d6d6d6;     /* Màu viền bảng và ô nhập liệu */
-        --m2-bg-light: #f5f5f5;   /* Màu nền thanh phân trang */
-        --text-color: #333333;
-    }
-
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        font-family: 'Open Sans', sans-serif;
-    }
-
-    body {
-        background-color: #fff;
-        padding: 20px;
-        color: var(--text-color);
-    }
-
-    .grid-wrapper {
-        width: 100%;
-        overflow-x: auto;
-    }
-
-    /* --- Phần 2: Thanh công cụ phía trên (Actions & Pagination) --- */
-    .grid-toolbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 0;
-        font-size: 13px;
-        margin-bottom: 5px;
-    }
-
-    .toolbar-left {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-    }
-
-    .btn-search {
-        background-color: var(--m2-dark-gray);
-        color: #fff;
-        border: none;
-        padding: 6px 15px;
-        font-weight: 600;
-        cursor: pointer;
-        border-radius: 2px;
-    }
-
-    .btn-reset {
-        color: var(--m2-blue);
-        text-decoration: none;
-        font-weight: 600;
-    }
-
-    .records-found {
-        color: #666;
-    }
-
-    .toolbar-right {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-    }
-
-    .per-page-select {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-    }
-
-    .per-page-select select {
-        padding: 4px 8px;
-        border: 1px solid var(--m2-border);
-        background: #fff;
-        outline: none;
-    }
-
-    .pagination {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-    }
-
-    .page-btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 26px;
-        height: 26px;
-        background-color: var(--m2-bg-light);
-        border: 1px solid var(--m2-border);
-        color: #999;
-        cursor: not-allowed;
-        text-decoration: none;
-    }
-
-    .page-input {
-        width: 35px;
-        height: 26px;
-        text-align: center;
-        border: 1px solid var(--m2-border);
-        font-size: 13px;
-    }
-
-    /* --- Phần 3: Cấu trúc Bảng dữ liệu (Data Grid Table) --- */
-    .m2-grid-table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 13px;
-        border: 1px solid var(--m2-border);
-    }
-
-    /* Tiêu đề cột */
-    .m2-grid-table th {
-        background-color: var(--m2-dark-gray);
-        color: #fff;
-        font-weight: 600;
-        padding: 10px;
-        text-align: left;
-        border-right: 1px solid #665f59;
-    }
-
-    .m2-grid-table th.sortable {
-        cursor: pointer;
-    }
-
-    .m2-grid-table th.sortable i {
-        margin-left: 5px;
-        font-size: 11px;
-    }
-
-    /* Hàng chứa các ô lọc dữ liệu (Filter Row) */
-    .filter-row {
-        background-color: #ffffff;
-    }
-
-    .filter-row td {
-        padding: 10px 8px;
-        border-bottom: 2px solid var(--m2-border);
-        border-right: 1px solid #e1e1e1;
-    }
-
-    .filter-input {
-        width: 100%;
-        padding: 5px;
-        border: 1px solid var(--m2-border);
-        outline: none;
-    }
-
-    /* Ô nhập khoảng ngày (Date Range Filter) */
-    .date-range-wrapper {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-    }
-
-    .date-input-container {
-        position: relative;
-        display: flex;
-        align-items: center;
-    }
-
-    .date-input-container input {
-        width: 100%;
-        padding: 4px 25px 4px 5px;
-        border: 1px solid var(--m2-border);
-        font-size: 12px;
-        outline: none;
-    }
-
-    .date-input-container i {
-        position: absolute;
-        right: 6px;
-        color: #666;
-        font-size: 14px;
-        cursor: pointer;
-    }
-
-    /* Hàng dữ liệu (Data Row) */
-    .data-row td {
-        padding: 12px 10px;
-        border-bottom: 1px solid var(--m2-border);
-        border-right: 1px solid #e1e1e1;
-        line-height: 1.4;
-    }
-
-    .data-row td a {
-        color: var(--m2-blue);
-        text-decoration: none;
-    }
-
-    .data-row td a:hover {
-        text-decoration: underline;
-    }
-
-    .action-link {
-        color: var(--m2-blue);
-        font-weight: 600;
-        cursor: pointer;
-    }
-</style>
 <body class="text-slate-700 antialiased min-h-screen flex flex-col">
     <div class="flex flex-1">
         <div th:replace="~{backend/fragments/leftsidebar :: htmlLeftSideBar}"></div>
@@ -216,7 +9,7 @@
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                 <div>
                     <h1 class="text-2xl font-light text-slate-800">
-                    	<b>Contents / Page</b>
+                    	<b>Contents / Landing Page</b>
                     </h1>
                 </div>
                 <div class="flex items-center gap-3">
@@ -224,7 +17,7 @@
                         <i class="fa-solid fa-file-export"></i> Export CSV
                     </button>
                     <button class="bg-[#eb5202] hover:bg-[#ba4102] text-white font-semibold text-xs px-4 py-2.5 shadow-sm transition flex items-center gap-2">
-                    	<a th:href="@{/backend/catalogs/product/create}">
+                    	<a th:href="@{/backend/contents/page/create}">
                         	<span>Create Page</span>
                        	</a>
                     </button>
@@ -245,10 +38,11 @@
 					        <thead>
 					            <tr>
 					                <th class="sortable" style="width: 60px;">ID <i class="fa-solid fa-arrow-up"></i></th>
-					                <th>Filename</th>
-					                <th>Path</th>
-					                <th>Link for Google</th>
-					                <th style="width: 140px;">Last Generated</th>
+					                <th>Page Name</th>
+					                <th>Link for Web</th>
+					                <th style="width: 140px;">Created At</th>
+					                <th style="width: 140px;">Updated At</th>
+									<th>Status</th>
 					                <th style="width: 80px;">Action</th>
 					            </tr>
 					        </thead>
@@ -258,30 +52,37 @@
 					                <td><input type="text" class="filter-input"></td>
 					                <td><input type="text" class="filter-input"></td>
 					                <td><input type="text" class="filter-input"></td>
-					                <td><input type="text" class="filter-input"></td>
+					                <td>
+										<div class="date-range-wrapper">
+										    <div class="date-input-container">
+										        <input type="date" placeholder="From">
+										    </div>
+										</div>
+									</td>
 					                <td>
 					                    <div class="date-range-wrapper">
 					                        <div class="date-input-container">
-					                            <input type="text" placeholder="From">
-					                            <i class="fa-regular fa-calendar-days"></i>
-					                        </div>
-					                        <div class="date-input-container">
-					                            <input type="text" placeholder="To">
-					                            <i class="fa-regular fa-calendar-days"></i>
+					                            <input type="date" placeholder="From">
 					                        </div>
 					                    </div>
 					                </td>
-					                <td></td> <!-- Cột Action không có ô filter -->
+					                <td></td>
+									<td></td>
 					            </tr>
 					            
 					            <!-- Hàng hiển thị dữ liệu thực tế (Data Row) -->
-					            <tr class="data-row">
-					                <td>3</td>
-					                <td>sitemap.xml</td>
-					                <td>/</td>
-					                <td><a href="https://meetanshi.in" target="_blank">https://meetanshi.in</a></td>
-					                <td>Jun 10, 2026, 7:57:49 PM</td>
-					                <td><span class="action-link">Generate</span></td>
+					            <tr th:each="page:${pages}" class="data-row">
+					                <td th:text="${page.id}">1</td>
+					                <td th:text="${page.pageName + ' ( ' + page.pageKey + ' )'}">Gioi Thieu</td>
+					                <td>
+										<a th:href="${page.slug}" th:text="${page.slug}"></a>
+									</td>
+					                <td th:text="${page.createdAt}">20/10/2015 20:15:17</td>
+					                <td th:text="${page.updatedAt}">Jun 10, 2026, 7:57:49 PM</td>
+					                <td th:text="${page.status}">Published</td>
+					                <td>
+										<a th:href="@{/backend/contents/page/update/{id}(id=${page.id})}" class="action-link">Update</a>
+									</td>
 					            </tr>
 					        </tbody>
 					    </table>
