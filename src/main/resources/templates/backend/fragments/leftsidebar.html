@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
 	<aside th:fragment="htmlLeftSideBar" class="fixed z-50 top-0 left-0 h-screen w-24 bg-[#302c29] text-slate-300 flex flex-col items-center py-2 space-y-1 select-none flex-shrink-0">
-		<a th:href="@{/backend/dashboard}"
+		<a th:if="${urlSecretKey != null}" 
+		th:href="@{/backend/dashboard(key=${urlSecretKey.generateUrlAdmin('/backend/dashboard')})}"
 			class="w-full flex flex-col items-center py-2.5 hover:bg-[#413c38] hover:text-white transition"
 			th:classappend="${activeMenu == 'dashboard'} ? 'bg-[#413c38] border-l-4 border-[#eb5202]' : ''">
 			<i class="fa-solid fa-chart-line text-lg mb-1"
@@ -22,19 +23,25 @@
 		                <span class="mb-6 mt-4 block px-4 py-2 transition cl-[#fff]" style="font-size: 22px; font-weight: bold;">Catalogs</span>
 		            </li>
 		            <li>
-		                <a th:href="@{/backend/catalogs/category}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
-		                    Categories
-		                </a>
+						<a th:if="${urlSecretKey != null}" 
+						   th:href="@{/backend/catalogs/category(key=${urlSecretKey.generateUrlAdmin('/backend/catalogs/category')})}" 
+						   class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
+						    Categories
+						</a>
 		            </li>
 		            <li>
-		                <a th:href="@{/backend/catalogs/product}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
-		                    Products
-		                </a>
+						<a th:if="${urlSecretKey != null}" 
+						   th:href="@{/backend/catalogs/product(key=${urlSecretKey.generateUrlAdmin('/backend/catalogs/product')})}" 
+						   class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
+						    Products
+						</a>
 		            </li>
 		            <li>
-		                <a th:href="@{/backend/catalogs/brand}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
-		                    Brands
-		                </a>
+						<a th:if="${urlSecretKey != null}" 
+						   th:href="@{/backend/catalogs/brand(key=${urlSecretKey.generateUrlAdmin('/backend/catalogs/brand')})}" 
+						   class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
+						    Brands
+						</a>
 		            </li>
 		        </ul>
 		    </div>

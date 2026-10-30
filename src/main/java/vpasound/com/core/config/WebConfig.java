@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 
 @Configuration
 @RequiredArgsConstructor
-public class CoreConfig implements WebMvcConfigurer{
+public class WebConfig implements WebMvcConfigurer{
 	
 	private final BackendInterceptor backendInterceptor;
 	
@@ -30,6 +30,6 @@ public class CoreConfig implements WebMvcConfigurer{
         // Áp dụng bộ lọc này cho toàn bộ các đường dẫn quản trị bắt đầu bằng /backend/**
         // Tránh áp dụng cho các file tĩnh như css, js, images bằng cách loại trừ nếu cần
         registry.addInterceptor(backendInterceptor)
-                .addPathPatterns("/backend/**"); 
+                .addPathPatterns("/backend/**");
     }
 }

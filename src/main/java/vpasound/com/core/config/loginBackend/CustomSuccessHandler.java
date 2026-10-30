@@ -5,6 +5,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import vpasound.com.core.config.SecretUrlKeyAdmin;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,6 +22,7 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 
 	// Object của Jackson dùng để chuyển đổi Map thành chuỗi JSON 
 	private final ObjectMapper objectMapper = new ObjectMapper();
+	private final SecretUrlKeyAdmin secretUrlKeyAdmin = new SecretUrlKeyAdmin();
 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -35,7 +37,11 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 		// Xác định URL đích dựa vào quyền:
 		// Nếu là Admin (role = 1) -> /backend/index
 		// Nếu là user thường -> về trang chủ /
-		String targetUrl = isAdmin ? "/backend/dashboard" : "/";
+		String targetUri = "/backend/dashboard";
+        // Tự sinh mã key hợp lệ cho trang dashboard dựa trên Session vừa đăng nhập
+        String validKey = secretUrlKeyAdmin.generateUrlAdmin(targetUri);
+        
+		String targetUrl = isAdmin ? "/backend/dashboard?key=" + validKey : "/";
 
 		// Khởi tạo Map dữ liệu trả về khớp 100% với cấu trúc AJAX đang đợi
 		// (response.status và response.data)
