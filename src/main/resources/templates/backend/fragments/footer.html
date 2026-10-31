@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<footer th:fragment="htmlFooter"
+		class="flex justify-between items-center px-8 py-7 bg-[#f8f8f8] border-t border-[#e3e3e3] font-sans text-[16px] text-[#514943]">
+
+		<!-- Khối bên trái: Bản quyền và Logo -->
+		<div class="flex items-center gap-2">
+			<img th:src="@{/images/logo/vpasound.png}" class="w-[50px] h-[50px]"/>
+			<span>Copyright © 2026 Commerce Inc. All rights reserved.</span>
+		</div>
+
+		<!-- Khối bên phải: Phiên bản và Các liên kết -->
+		<div class="text-right leading-relaxed">
+			<div>
+				<strong class="font-bold text-[#333]">VPASOUND</strong>
+				<span class="text-[#7d7d7d]" th:text="${webVersion}"></span>
+			</div>
+			<div class="text-[14px] mt-0.5 flex items-center justify-end gap-1.5 text-[#eb5202]">
+				<a href="#" class="hover:underline">Privacy Policy</a>
+				<span class="text-[#cccccc] font-normal">|</span>
+				<a href="#" class="hover:underline">Account Activity</a>
+				<span class="text-[#cccccc] font-normal">|</span>
+				<a href="#" class="hover:underline">Report an Issue</a>
+			</div>
+		</div>
+	</footer>
+</body>
+</html>

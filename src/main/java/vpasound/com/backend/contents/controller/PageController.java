@@ -6,12 +6,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.AllArgsConstructor;
 import vpasound.com.backend.contents.service.PageService;
+import vpasound.com.core.config.SecretUrlKeyAdmin;
 import vpasound.com.core.entity.PageEntity;
 
 @Controller
@@ -20,12 +20,11 @@ import vpasound.com.core.entity.PageEntity;
 public class PageController {
 
 	private final PageService pageService;
+	private final SecretUrlKeyAdmin secretUrlKeyAdmin;
 	
 	@GetMapping("")
 	public String listPage(Model model) {
-		
 		model.addAttribute("pages", pageService.listAllPage());
-		
 		return "backend/contents/page/list";
 	}
 	
@@ -45,9 +44,9 @@ public class PageController {
 	) {
 		pageService.createPage(pageEntity);
 		if ("saveAndClose".equals(action)) {
-			return "redirect:/backend/contents/page";
+			return "redirect:" + secretUrlKeyAdmin.url("/backend/contents/page");
 		}
-		return "redirect:/backend/contents/page/create";
+		return "redirect:" + secretUrlKeyAdmin.url("/backend/contents/page/create");
 	}
 	
 	@GetMapping("/update/{id}")
@@ -68,8 +67,8 @@ public class PageController {
 	) {
 		pageService.updatePageById(pageEntity, id);
 		if ("saveAndClose".equals(action)) {
-			return "redirect:/backend/contents/page";
+			return "redirect:" + secretUrlKeyAdmin.url("/backend/contents/page");
 		}
-		return "redirect:/backend/contents/page/update/" + id;
+		return "redirect:" + secretUrlKeyAdmin.url("/backend/contents/page/update/" + id);
 	}
 }

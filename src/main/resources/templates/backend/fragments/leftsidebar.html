@@ -3,7 +3,7 @@
 <body>
 	<aside th:fragment="htmlLeftSideBar" class="fixed z-50 top-0 left-0 h-screen w-24 bg-[#302c29] text-slate-300 flex flex-col items-center py-2 space-y-1 select-none flex-shrink-0">
 		<a th:if="${urlSecretKey != null}" 
-		th:href="@{/backend/dashboard(key=${urlSecretKey.generateUrlAdmin('/backend/dashboard')})}"
+		th:href="@{${urlSecretKey.url('/backend/dashboard')}}"
 			class="w-full flex flex-col items-center py-2.5 hover:bg-[#413c38] hover:text-white transition"
 			th:classappend="${activeMenu == 'dashboard'} ? 'bg-[#413c38] border-l-4 border-[#eb5202]' : ''">
 			<i class="fa-solid fa-chart-line text-lg mb-1"
@@ -24,21 +24,21 @@
 		            </li>
 		            <li>
 						<a th:if="${urlSecretKey != null}" 
-						   th:href="@{/backend/catalogs/category(key=${urlSecretKey.generateUrlAdmin('/backend/catalogs/category')})}" 
+						   th:href="@{${urlSecretKey.url('/backend/catalogs/category')}}" 
 						   class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
 						    Categories
 						</a>
 		            </li>
 		            <li>
 						<a th:if="${urlSecretKey != null}" 
-						   th:href="@{/backend/catalogs/product(key=${urlSecretKey.generateUrlAdmin('/backend/catalogs/product')})}" 
+						   th:href="@{${urlSecretKey.url('/backend/catalogs/product')}}"  
 						   class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
 						    Products
 						</a>
 		            </li>
 		            <li>
 						<a th:if="${urlSecretKey != null}" 
-						   th:href="@{/backend/catalogs/brand(key=${urlSecretKey.generateUrlAdmin('/backend/catalogs/brand')})}" 
+						   th:href="@{${urlSecretKey.url('/backend/catalogs/brand')}}" 
 						   class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
 						    Brands
 						</a>
@@ -59,12 +59,12 @@
 		                <span class="mb-6 mt-4 block px-4 py-2 transition cl-[#fff]" style="font-size: 22px; font-weight: bold;">Sales</span>
 		            </li>
 		            <li>
-		                <a th:href="@{/backend/sales/order}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
+		                <a th:href="@{${urlSecretKey.url('/backend/sales/order')}}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
 		                    Orders
 		                </a>
 		            </li>
 		            <li>
-		                <a th:href="@{/backend/sales/payment_services}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
+		                <a th:href="@{${urlSecretKey.url('/backend/sales/payment_services')}}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
 		                    Payment Services
 		                </a>
 		            </li>
@@ -109,22 +109,22 @@
 		                <span class="mb-6 mt-4 block px-4 py-2 transition cl-[#fff]" style="font-size: 22px; font-weight: bold;">Customers</span>
 		            </li>
 		            <li>
-		                <a th:href="@{/backend/customers/user}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
+		                <a th:href="@{${urlSecretKey.url('/backend/customers/user')}}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
 		                    All Customers
 		                </a>
 		            </li>
 		            <li>
-		                <a th:href="@{/backend/customers/user_online}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
+		                <a th:href="@{${urlSecretKey.url('/backend/customers/user_online')}}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
 		                    Now Online
 		                </a>
 		            </li>
 		            <li>
-		                <a th:href="@{/backend/customers/list}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
+		                <a th:href="@{${urlSecretKey.url('/backend/customers/list')}}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
 		                    Login as Customer Log
 		                </a>
 		            </li>
 		            <li>
-		                <a th:href="@{/backend/customers/custom_group}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
+		                <a th:href="@{${urlSecretKey.url('/backend/customers/custom_group')}}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
 		                    Customer Group
 		                </a>
 		            </li>
@@ -154,12 +154,12 @@
 		                </a>
 		            </li>
 					<li>
-					    <a th:href="@{/backend/marketings/admin_chatbox}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
+					    <a th:href="@{${urlSecretKey.url('/backend/marketings/admin_chatbox')}}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
 					        Rabbit MQ Chat Box
 					    </a>
 					</li>
 		            <li>
-		                <a th:href="@{/backend/marketings/sitemap}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
+		                <a th:href="@{${urlSecretKey.url('/backend/marketings/sitemap')}}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
 		                    Site Map
 		                </a>
 		            </li>
@@ -214,14 +214,18 @@
 			            <span class="mb-6 mt-4 block px-4 py-2 transition cl-[#fff]" style="font-size: 22px; font-weight: bold;">Contents</span>
 			        </li>
 			    	<li>
-			            <a th:href="@{/backend/contents/page}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
-			                Landing Pages
-			            </a>
+						<a th:if="${urlSecretKey != null}" 
+						   th:href="@{${urlSecretKey.url('/backend/contents/page')}}" 
+						   class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
+						    Landing Page
+						</a>
 			        </li>
 			        <li>
-			            <a th:href="@{/backend/contents/media_gallery}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
-			                Media Gallery
-			            </a>
+						<a th:if="${urlSecretKey != null}" 
+						   th:href="@{${urlSecretKey.url('/backend/contents/media_gallery')}}" 
+						   class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
+						    Media Gallery
+						</a>
 			        </li>
 			    </ul>
 			</div>
@@ -240,32 +244,32 @@
 		                <span class="mb-6 mt-4 block px-4 py-2 transition cl-[#fff]" style="font-size: 22px; font-weight: bold;">Systems</span>
 		            </li>
 		        	<li>
-		                <a th:href="@{/backend/systems/setting}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
+		                <a th:href="@{${urlSecretKey.url('/backend/systems/setting')}}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
 		                    Setting Default
 		                </a>
 		            </li>
 		            <li>
-		                <a th:href="@{/backend/systems/cronjob}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
+		                <a th:href="@{${urlSecretKey.url('/backend/systems/cronjob')}}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
 		                    Cron Job RunTime
 		                </a>
 		            </li>
 		            <li>
-		                <a th:href="@{/backend/systems/logoWeb}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
+		                <a th:href="@{${urlSecretKey.url('/backend/systems/logoWeb')}}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
 		                    Upload Logo Website
 		                </a>
 		            </li>
 		            <li>
-		                <a th:href="@{/backend/systems/banner}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
+		                <a th:href="@{${urlSecretKey.url('/backend/systems/banner')}}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
 		                    Upload Banner Website
 		                </a>
 		            </li>
 					<li>
-					    <a th:href="@{/backend/systems/import}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
+					    <a th:href="@{${urlSecretKey.url('/backend/systems/import')}}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
 					        Import
 					    </a>
 					</li>
 					<li>
-					    <a th:href="@{/backend/systems/export}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
+					    <a th:href="@{${urlSecretKey.url('/backend/systems/export')}}" class="text-sm block px-4 py-2 hover:bg-[#302c29] cl-[#a79d95] transition">
 					        Export
 					    </a>
 					</li>

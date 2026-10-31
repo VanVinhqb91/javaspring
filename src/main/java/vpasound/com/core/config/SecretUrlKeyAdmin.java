@@ -15,9 +15,7 @@ public class SecretUrlKeyAdmin {
         
         // 1. Tự động lấy Request hiện tại trực tiếp từ bộ nhớ Context của Spring Boot
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        if (attributes == null) {
-            return ""; 
-        }
+        if (attributes == null) return ""; 
         
         HttpServletRequest request = attributes.getRequest();
         
@@ -26,5 +24,9 @@ public class SecretUrlKeyAdmin {
         String urlSalt = sessionId + targetUri + SECRET_SALT;
         
         return DigestUtils.md5DigestAsHex(urlSalt.getBytes());
+    }
+    
+    public String url(String path) {
+    	return path + "?key=" + generateUrlAdmin(path);
     }
 }

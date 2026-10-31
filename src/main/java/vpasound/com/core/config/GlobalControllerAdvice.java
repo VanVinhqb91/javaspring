@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import lombok.RequiredArgsConstructor;
 
-@ControllerAdvice // 🌟 Khai báo hỗ trợ dữ liệu toàn cục cho mọi Controller
+@ControllerAdvice
 @RequiredArgsConstructor
 public class GlobalControllerAdvice {
 
