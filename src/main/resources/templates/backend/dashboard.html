@@ -11,7 +11,82 @@
 				<div class="page-title">
                 	<h1 style="font-weight: bold;">Dashboard</h1>
             	</div>
+				
+				<!-- KHU VỰC 1: RAM & CPU & RABBITMQ (Hiển thị dạng thẻ Card) -->
+				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+				    <!-- CPU Card -->
+				    <div class="g-white p-4 rounded-xl shadow-sm border border-gray-100">
+				        <div class="card metric-card bg-white p-3">
+				            <h6 class="text-muted">CPU TIÊU THỤ</h6>
+				            <h3 id="cpu-text">
+								<span th:text="${metrics.system.cpuUsagePercent}">0</span>%</h3>
+				        </div>
+				    </div>
+					<!-- RAM Card -->
+					<div class="g-white p-4 rounded-xl shadow-sm border border-gray-100">
+					    <div class="card metric-card bg-white p-3">
+					        <h6 class="text-muted">RAM ĐANG DÙNG</h6>
+					        <h3 id="ram-text"><span th:text="${metrics.system.ramUsedMB}">0</span> MB</h3>
+					    </div>
+					</div>
+					<!-- RabbitMQ Ready Messages -->
+					<div class="g-white p-4 rounded-xl shadow-sm border border-gray-100">
+					    <div class="card metric-card bg-primary text-dark p-3">
+					        <h6>RABBITMQ (READY)</h6>
+					        <h3 id="rabbit-ready-text">
+					            <!-- Sử dụng containsKey để kiểm tra sự tồn tại của key trong Map trước -->
+					            <span th:text="${metrics.containsKey('rabbitmq') ? metrics['rabbitmq']['messages_ready'] : '0'}">0</span> tin nhắn
+					        </h3>
+					    </div>
+					</div>
 
+					<!-- RabbitMQ Unacknowledged Messages -->
+					<div class="g-white p-4 rounded-xl shadow-sm border border-gray-100">
+					    <div class="card metric-card bg-warning text-dark p-3">
+					        <h6>RABBITMQ (UNACK)</h6>
+					        <h3 id="rabbit-unack-text">
+					            <!-- Tương tự cho phần unacknowledged -->
+					            <span th:text="${metrics.containsKey('rabbitmq') ? metrics['rabbitmq']['messages_unacknowledged'] : '0'}">0</span> tin nhắn
+					        </h3>
+					    </div>
+					</div>
+				</div>
+				
+				<!-- KHU VỰC 2: DOCKER CONTAINERS (Hiển thị dạng Bảng) -->
+				<div class="card metric-card bg-white p-4">
+				    <h5 class="mb-3">🐳 Trạng thái Docker Containers</h5>
+				    <div class="table-responsive">
+				        <table class="table table-hover align-middle">
+				            <thead class="table-dark">
+				                <tr>
+				                    <th>Tên Container</th>
+				                    <th>Trạng thái chi tiết</th>
+				                    <th>Ram</th>
+				                    <th>Action</th>
+				                </tr>
+				            </thead>
+							<tbody id="docker-table-body" class="divide-y divide-gray-200 bg-white">
+							    <tr th:each="container : ${metrics.docker}">
+							        <!-- Giờ đây container.name đã là một chuỗi String đơn giản, gọi trực tiếp thoải mái -->
+							        <td class="fw-bold" th:text="${container.name}">/mysql</td>
+							        <td class="px-6 py-4 whitespace-nowrap text-sm">
+							            <span th:class="${container.state == 'running' ? 
+										'px-2.5 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800' : 
+										'px-2.5 py-1 text-xs font-medium rounded-full bg-red-100 text-red-800'}" 
+							                  th:text="${container.status}">Up 2 hours</span>
+							        </td>
+									<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono" th:text="${container.memory}">
+									    0.0 MB
+									</td>
+							        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+							            <button class="px-3 py-1 text-xs font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-md transition-all">Logs</button>
+							        </td>
+							    </tr>
+							</tbody>
+				        </table>
+				    </div>
+				</div>
+				<div class="w-[100%] mt-[40px]"><h2>Admin Systems</h2></div>
 	            <!-- Metric Cards -->
 	            <div class="metrics-grid">
 	                <div class="card stat-card">
@@ -59,5 +134,48 @@
 	            </div>
 			</main>
 		</div>
+		<script>
+		    function updateMetricsRealtime() {
+		        fetch('/backend/api/metrics')
+		            .then(response => response.json())
+		            .then(data => {
+		                document.getElementById('cpu-text').innerText = data.system.cpuUsagePercent + '%';
+		                document.getElementById('ram-text').innerText = data.system.ramUsedMB + ' MB';
+		                if (data.rabbitmq) {
+		                    document.getElementById('rabbit-ready-text').innerText = data.rabbitmq.messages_ready + ' tin nhắn';
+		                    document.getElementById('rabbit-unack-text').innerText = data.rabbitmq.messages_unacknowledged + ' tin nhắn';
+		                }
+						const tbody = document.getElementById('docker-table-body');
+						if (tbody) {
+						    tbody.innerHTML = '';
+						    if (data.docker && Array.isArray(data.docker)) {
+								// Tìm đến phần lặp data.docker.forEach trong hàm updateMetricsRealtime() của bạn và thay thế:
+								data.docker.forEach(container => {
+								    const isRunning = container.state === 'running';
+								    const badgeClass = isRunning 
+								        ? 'px-2.5 py-1 text-xs font-medium rounded-full bg-green-100 text-green-800' 
+								        : 'px-2.5 py-1 text-xs font-medium rounded-full bg-red-100 text-red-800';
+
+								    tbody.innerHTML += `
+								        <tr class="hover:bg-gray-50 transition-colors">
+								            <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-700">${container.name || 'Unknown'}</td>
+								            <td class="px-6 py-4 whitespace-nowrap text-sm">
+								                <span class="${badgeClass}">${container.status || container.state}</span>
+								            </td>
+								            <!-- THÊM Ô DỮ LIỆU RAM ĐỘNG VÀO ĐÂY -->
+								            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 font-mono">${container.memory || '0.0 MB'}</td>
+								            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+								                <button class="px-3 py-1 text-xs font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-md">Logs</button>
+								            </td>
+								        </tr>
+								    `;
+								});
+						    }
+						}
+		            })
+		            .catch(error => console.error('Lỗi khi cập nhật dashboard:', error));
+		    }
+		    setInterval(updateMetricsRealtime, 5000);
+		</script>
 	</body>
 </html>

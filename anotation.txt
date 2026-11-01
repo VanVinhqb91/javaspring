@@ -1,0 +1,286 @@
+
+1. Nhóm Đăng Ký Bean (Core DI / IoC)
+Nhóm này báo cho Spring Container biết cần phải quản lý, khởi tạo các Class này thành các Spring Bean.
+
+• @Component: Chú thích chung nhất để đánh dấu một Class là một Spring Bean. 
+Các nhóm dưới (@Service, @Repository, @Controller) đều là bản mở rộng chuyên biệt của @Component.
+
+• @Service: Đánh dấu các lớp chứa logic nghiệp vụ (Business Logic) của ứng dụng.
+
+• @Repository: Đánh dấu các lớp ở tầng DAO / Dữ liệu (Database Access). 
+Nó tự động bắt các ngoại lệ của DB và chuyển thành DataAccessException của Spring.
+
+• @Configuration: Đánh dấu một Class là nơi khai báo, cấu hình các Bean thủ công bằng Java code thay vì file XML.
+
+• @Bean: Được đặt trên các phương thức (method) bên trong lớp @Configuration. 
+Spring sẽ chạy hàm này và lấy đối tượng trả về để đưa vào Container quản lý.
+=====================================================
+
+2. Nhóm Tiêm Phụ Thuộc (Dependency Injection)
+Nhóm này dùng để kết nối, nhúng các Bean lại với nhau.
+
+• @Autowired: Tự động tiêm (inject) một Bean phù hợp vào vị trí cần thiết (Field, Constructor, hoặc Setter).
+
+• @Qualifier: Dùng kèm với @Autowired. Khi có từ 2 Bean trở lên cùng một kiểu, 
+@Qualifier("ten_bean") giúp chỉ định chính xác tên Bean nào bạn muốn dùng.
+
+• @Primary: Khi có nhiều Bean cùng loại, đặt @Primary ở Bean nào thì Spring sẽ 
+ưu tiên chọn Bean đó làm mặc định khi @Autowired.
+
+• @Value: Dùng để inject các giá trị từ file cấu hình (application.properties hoặc application.yml) 
+vào biến trong Java. Ví dụ: @Value("${server.port}").
+======================================================
+
+
+3. Nhóm Xây Dựng REST Web API (@Controller vs @RestController)
+Nhóm này nằm ở tầng giao tiếp để xử lý các request HTTP (GET, POST, PUT, DELETE) gửi từ Client.
+
+• @Controller: Dùng cho mô hình MVC truyền thống (trả về một View/Giao diện như Thymeleaf, HTML).
+
+• @RestController: Là sự kết hợp của @Controller + @ResponseBody. 
+Dùng cho REST API khi bạn muốn trả về dữ liệu thuần (JSON/XML) trực tiếp cho Client.
+
+• @RequestMapping: Định nghĩa đường dẫn URL dùng chung (ở cấp Class) hoặc cấp Method.
+
+• Các shortcut HTTP:
+	• @GetMapping: Xử lý yêu cầu lấy dữ liệu.
+	• @PostMapping: Xử lý yêu cầu tạo mới dữ liệu.
+	• @PutMapping: Xử lý yêu cầu cập nhật (toàn bộ) dữ liệu.
+	• @DeleteMapping: Xử lý yêu cầu xóa dữ liệu.
+	
+• Nhận tham số truyền lên:
+	• @PathVariable: Lấy giá trị trực tiếp từ đường dẫn URL (Ví dụ: /users/{id}).
+	• @RequestParam: Lấy giá trị từ Query Parameter (Ví dụ: /search?query=java).
+	• @RequestBody: Chuyển đổi dữ liệu JSON từ phần thân (Body) của Request thành một đối tượng Java.
+========================================================
+
+4. Nhóm Cấu Hình & Tự Động Hóa (Spring Boot)
+Nhóm này xuất hiện ở file chạy chính hoặc các cấu hình tự động của Spring Boot.
+
+• @SpringBootApplication: Annotation quyền lực nhất nằm ở class Main. Nó là tổ hợp của 3 annotation:
+	• @SpringBootConfiguration: Đánh dấu class cấu hình.
+	• @EnableAutoConfiguration: Bật tính năng tự động cấu hình (Auto-configuration).
+	• @ComponentScan: Tự động quét tất cả các @Component trong package hiện tại và các package con.
+	
+• @ConfigurationProperties: Ánh xạ (bind) một nhóm các cấu hình có chung tiền tố 
+từ file application.yml vào một Class Java một cách an toàn (Type-safe).
+=========================================================
+
+5. Nhóm Xử Lý Dữ Liệu (Spring Data JPA / Hibernate)
+Nhóm này được đặt trên các lớp Entity để cấu hình mapping với các bảng dưới Cơ sở dữ liệu.
+
+• @Entity: Xác định Class này đại diện cho một bảng (Table) trong Database.
+
+• @Table: Chỉ định tên bảng cụ thể trong DB (nếu tên Class khác tên Bảng).
+
+• @Id: Đánh dấu thuộc tính là Khóa chính (Primary Key).
+
+• @GeneratedValue: Cấu hình cách tự động sinh khóa chính (ví dụ: GenerationType.IDENTITY cho auto-increment).
+
+• @Column: Định nghĩa chi tiết cấu trúc cột (tên cột, độ dài, có được null hay không).
+
+• @Transactional: Quản lý giao dịch (Transaction). Đảm bảo một chuỗi các hành 
+động ghi/sửa DB hoặc là thành công hết, hoặc là rollback (hủy bỏ) hết nếu gặp lỗi.
+=========================================================
+
+6. Nhóm Kiểm Tra Dữ Liệu (Validation Annotations)
+Nhóm này thuộc chuẩn Jakarta Bean Validation (trước đây là JSR 380), 
+dùng để kiểm tra tính hợp lệ của dữ liệu đầu vào (Input) từ Client gửi lên trước khi đưa vào xử lý.
+
+• @Valid / @Validated: Đặt trước @RequestBody trong Controller để kích hoạt 
+tính năng kiểm tra dữ liệu của Object đó.
+
+• @NotNull: Giá trị không được phép là null (nhưng chuỗi rỗng "" hoặc "   " vẫn được chấp nhận).
+
+• @NotEmpty: Giá trị không được null và độ dài/kích thước phải lớn hơn 0 (áp dụng cho Chuỗi, List, Map).
+
+• @NotBlank: Chỉ áp dụng cho Chuỗi (String). Chuỗi không được null, 
+không được rỗng và không được chỉ chứa toàn dấu cách ("   ").
+
+• @Size(min=, max=): Giới hạn độ dài của chuỗi hoặc số lượng phần tử của một Collection.
+
+• @Min(value) / @Max(value): Giới hạn giá trị nhỏ nhất / lớn nhất của một số (Integer, Long...).
+
+• @Email: Bắt buộc chuỗi nhập vào phải đúng định dạng email (ví dụ: abc@gmail.com).
+==========================================================
+	
+7. Nhóm Bảo Mật (Spring Security)
+Nếu bạn làm tính năng đăng nhập, phân quyền (ví dụ: Admin mới được xóa dữ liệu, User chỉ được xem), 
+bạn sẽ dùng nhóm này. Để sử dụng, cần bật @EnableMethodSecurity.
+
+• @PreAuthorize: Kiểm tra quyền trước khi hàm được chạy. Nếu không đủ quyền, Spring 
+sẽ chặn lại ngay lập tức và ném lỗi 403 Forbidden.
+	• Ví dụ: @PreAuthorize("hasRole('ADMIN')")
+	
+• @PostAuthorize: Cho phép hàm chạy xong, nhưng kiểm tra quyền dựa trên kết quả trả 
+về của hàm rồi mới quyết định có trả dữ liệu cho Client hay không.
+
+• @AuthenticationPrincipal: Dùng trong Controller để lấy nhanh thông tin của User 
+hiện tại đang đăng nhập (như đã ví dụ ở phần đăng nhập Google/Facebook).
+==========================================================
+
+8. Nhóm Tác Vụ Ngầm (Lập lịch & Bất đồng bộ)
+Dùng khi bạn muốn ứng dụng tự động chạy một việc gì đó theo thời gian, 
+hoặc chạy ngầm để không làm nghẽn trải nghiệm của người dùng.
+
+• @EnableScheduling: Đặt ở class Main để kích hoạt tính năng lập lịch.
+
+• @Scheduled: Đặt trên một hàm để biến hàm đó thành một tác vụ tự động chạy ngầm theo chu kỳ.
+	• fixedRate = 5000: Cứ mỗi 5 giây chạy 1 lần.
+	• cron = "0 0 12 * * ?": Chạy vào đúng 12h trưa mỗi ngày.
+	
+• @EnableAsync & @Async: Biến một hàm thành hàm bất đồng bộ. Khi hàm này được gọi,
+ Spring sẽ ném nó cho một Thread khác xử lý ngầm, còn Thread chính sẽ lập tức trả về kết
+ quả cho Client mà không cần chờ hàm này chạy xong (rất hợp để làm tính năng gửi Email thông báo).
+===========================================================
+
+9. Nhóm Quản Lý Vòng Đời của Bean (Lifecycle)
+Dùng khi bạn muốn can thiệp vào thời điểm một Spring Bean được sinh ra hoặc chuẩn bị bị xóa đi.
+
+• @PostConstruct: Hàm được đánh dấu bằng chú thích này sẽ tự động chạy ngay sau khi Spring khởi 
+tạo xong Bean và tiêm đầy đủ các phụ thuộc (@Autowired). Thường dùng để khởi tạo dữ liệu mẫu.
+
+• @PreDestroy: Hàm sẽ tự động chạy ngay trước khi Spring Container hủy bỏ Bean (ví dụ: khi ứng dụng bị tắt/shutdown). 
+Thường dùng để đóng các kết nối tốn tài nguyên (Close Connection, DB, Socket).
+===========================================================
+
+10. Nhóm Kiểm Thử (Spring Boot Testing)
+Nhóm này nằm trong thư mục src/test/java, dùng để viết các ca kiểm thử tự động (Unit Test / Integration Test).
+
+• @SpringBootTest: Khởi chạy toàn bộ Spring Context để làm kiểm thử 
+tích hợp (Integration Test), mô phỏng ứng dụng chạy thật.
+
+• @WebMvcTest: Chỉ khởi chạy tầng Web (Controller). Dùng để test nhanh các API 
+xem có bắt đúng HTTP Status, kiểm tra Validation đầu vào tốt không mà không cần load tầng Service hay Database.
+
+• @MockBean: Tạo ra một Bean "giả lập" (Mock) và đưa vào 
+Spring Context để thay thế cho Bean thật, giúp cô lập tầng cần test.
+===========================================================
+
+11. Nhóm Điều Kiện Khởi Tạo Bean (@ConditionalOn...)
+Nhóm này cực kỳ quan trọng khi bạn viết thư viện cho Spring (Custom Starter) như chúng ta vừa nói ở câu hỏi trước.
+Nó quyết định một Bean có được tạo hay không dựa trên điều kiện thực tế của hệ thống.
+
+• @ConditionalOnProperty: Chỉ tạo Bean nếu một cấu hình trong application.yml khớp với giá trị mong muốn.
+
+• @ConditionalOnClass: Chỉ tạo Bean nếu một Class cụ thể nào đó có tồn tại trong dự án 
+(Class này nằm trong thư viện khác được nhúng kèm).
+
+• @ConditionalOnMissingBean: Chỉ tạo Bean này nếu trong dự án chưa có ai tự định nghĩa Bean đó. 
+Đây là cách Spring Boot tạo ra các cấu hình mặc định nhưng vẫn cho phép lập trình viên "ghi đè" (override) thoải mái.
+============================================================
+
+12. Nhóm Tối Ưu Hiệu Năng & Bộ Nhớ Đệm (Spring Cache)
+Nhóm này giúp ứng dụng lưu lại kết quả của các hàm xử lý tốn thời gian (hoặc các câu lệnh SQL nặng) 
+vào bộ nhớ tạm (RAM, Redis). Lần gọi sau sẽ lấy luôn từ Cache ra mà không cần tính toán lại. 
+Để dùng, cần bật @EnableCaching.
+
+• @Cacheable: Đặt trên một hàm. Khi hàm được gọi, Spring kiểm tra xem kết quả đã có trong Cache chưa. 
+Nếu có rồi, trả về luôn; nếu chưa, chạy hàm rồi lưu kết quả vào Cache.
+
+• @CachePut: Luôn luôn chạy nội dung hàm, sau đó cập nhật (hoặc ghi đè) kết quả mới vào bộ nhớ Cache. 
+Thường dùng cho các hàm Update dữ liệu.
+
+• @CacheEvict: Xóa dữ liệu khỏi Cache. Thường dùng khi dữ liệu dưới DB bị xóa, ta cần 
+xóa Cache tương ứng để tránh dữ liệu bị lệch (Stale data).
+=============================================================
+
+13. Nhóm Lập Trình Phản Ứng (Spring WebFlux / Reactive)
+Nếu bạn xây dựng hệ thống Non-blocking, xử lý hàng triệu request đồng thời theo 
+mô hình Reactive Stream (thay vì Spring MVC truyền thống), bạn sẽ dùng nhóm này.
+
+• @ControllerAdvice / @RestControllerAdvice: Đây là trung tâm xử lý ngoại lệ toàn 
+cục (Global Exception Handling). Khi bất kỳ Controller nào ném ra lỗi (như NotFoundException), 
+Class này sẽ đứng ra hứng và định dạng lại mã lỗi JSON trả về gọn gàng cho Client.
+
+• @ResponseStatus: Đặt trên một Class Exception tự chế để định nghĩa sẵn mã lỗi HTTP trả 
+về (Ví dụ: @ResponseStatus(HttpStatus.NOT_FOUND)).
+==============================================================
+
+14. Nhóm Giao Tiếp Microservices (Spring Cloud OpenFeign)
+Khi hệ thống được chia nhỏ thành các Microservice và bạn muốn Service A gọi API của 
+Service B một cách mượt mà như gọi một hàm Java nội bộ, bạn dùng nhóm này. Để dùng, cần bật @EnableFeignClients.
+
+• @FeignClient: Đánh dấu một Interface là một HTTP Client. Bạn chỉ cần khai báo interface 
+này kèm các @GetMapping, @PostMapping hướng tới Service B, Spring sẽ tự động sinh code xử lý request ngầm định.
+===============================================================
+
+15. Nhóm Xử Lý Sự Kiện Nội Bộ (Spring Event)
+Dùng để giao tiếp giữa các Component trong cùng một ứng dụng theo mô hình 
+Publish-Subscribe (Pub/Sub) nhằm giảm sự phụ thuộc lẫn nhau (Decoupling) giữa các tầng code.
+
+• @EventListener: Đặt trên một hàm để biến hàm đó thành "người lắng nghe". 
+Khi có một Event tương ứng được bắn ra (qua ApplicationEventPublisher), hàm này sẽ tự động kích hoạt để xử lý.
+================================================================
+
+16. Nhóm API Hiện Đại (Spring GraphQL)
+Nếu dự án của bạn không dùng REST API truyền thống mà chuyển sang dùng GraphQL 
+để Client tự quyết định cấu trúc dữ liệu muốn lấy về, bạn sẽ dùng nhóm này:
+
+• @SchemaMapping: Ánh xạ một hàm Java với một trường (field) cụ thể trong file thiết kế GraphQL Schema.
+
+• @QueryMapping: Viết tắt của @SchemaMapping(typeName = "Query"), xử lý các request lấy dữ liệu.
+
+• @MutationMapping: Viết tắt của @SchemaMapping(typeName = "Mutation"), xử lý các request 
+thay đổi dữ liệu (tương tự POST/PUT/DELETE).
+================================================================
+
+17. Nhóm Annotation Tiện Ích Phổ Biến (Lombok)
+Lưu ý: Đây không phải là Annotation của Spring, nhưng 99% dự án Spring Boot hiện đại 
+đều dùng chung với nó để mã nguồn Java ngắn gọn, sạch sẽ hơn.
+
+• @Getter / @Setter: Tự động sinh ra các hàm Get/Set cho thuộc tính, không cần viết code tay.
+
+• @NoArgsConstructor / @AllArgsConstructor: Tự động sinh Constructor không tham số và Constructor có đầy đủ tham số.
+
+• @Builder: Tự động tạo Builder Pattern giúp khởi tạo Object bằng cú pháp 
+chuỗi rất đẹp (Ví dụ: User.builder().name("A").email("b@gmail.com").build();).
+
+• @Slf4j: Tự động tạo một đối tượng ghi log (log.info(), log.error()), thay vì 
+phải khai báo dài dòng dòng chữ LoggerFactory.getLogger(...).
+=================================================================
+
+18. Nhóm Giao Tiếp Thời Gian Thực (Spring WebSocket)
+Dùng khi bạn xây dựng các ứng dụng cần truyền dữ liệu liên tục không độ trễ 
+giữa Server và Client theo giao thức kết nối hai chiều (như ứng dụng Chat, bảng giá 
+chứng khoán cập nhật liên tục). Để dùng, cần cấu hình @EnableWebSocketMessageBroker.
+
+• @MessageMapping: Tương tự như @RequestMapping của REST API nhưng dành 
+cho các tin nhắn đến từ WebSocket đường truyền STOMP.
+
+• @SendTo: Chỉ định đường truyền (Topic) mà kết quả xử lý của hàm sẽ được tự 
+động phát sóng (Broadcast) gửi tới toàn bộ các Client đang đăng ký lắng nghe đường truyền đó.
+=================================================================
+
+19. Nhóm Annotation Kỹ Thuật Đọc/Ghi Cấu Hình Phụ
+
+• @PropertySource: Dùng kèm với @Configuration để chỉ định tường minh một file cấu hình 
+nằm ngoài tệp cấu hình mặc định (Ví dụ: nạp thêm file @PropertySource("classpath:messages.properties")).
+
+• @DependsOn: Ép buộc Spring Container phải khởi tạo Bean A trước rồi mới được phép khởi tạo Bean B, 
+dùng trong trường hợp Bean B phụ thuộc vào một tiến trình ngầm nào đó của Bean A mà không thể biểu 
+diễn bằng @Autowired thông thường.
+
+• @Lazy: Trì hoãn việc khởi tạo một Bean. Mặc định Spring sẽ tạo tất cả Bean khi khởi 
+động ứng dụng (Eager). Khi đánh dấu @Lazy, Bean đó chỉ được sinh ra trong bộ nhớ vào đúng thời 
+điểm có một hàm nào đó gọi đến nó lần đầu tiên.
+===================================================================
+
+20. Nhóm Quản Trị Hệ Thống & Giám Sát (Spring Boot Actuator / JMX)
+Dùng khi bạn muốn phơi bày (expose) các thông tin nội bộ của ứng dụng (số lượng RAM đang dùng, 
+trạng thái kết nối DB, đổi log level lúc runtime) ra ngoài để các công cụ như Prometheus, 
+Grafana vào thu thập dữ liệu giám sát.
+
+• @Endpoint: Biến một Class Java thành một cổng giám sát tùy biến (Custom Actuator Endpoint). 
+Bạn có thể gọi cổng này qua HTTP hoặc JMX.
+
+• @ReadOperation: Định nghĩa một hàm đọc dữ liệu giám sát (tương đương lệnh GET).
+
+• @WriteOperation: Định nghĩa một hàm ghi/thay đổi trạng thái hệ thống từ xa (tương đương lệnh POST).
+
+• @ManagedResource / @ManagedAttribute: Đánh dấu các Bean và thuộc tính để quản trị tập trung thông qua 
+chuẩn JMX (Java Management Extensions).
+
+
+
+

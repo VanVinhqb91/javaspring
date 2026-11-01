@@ -119,6 +119,23 @@
 		    <artifactId>twilio</artifactId>
 		    <version>9.14.0</version>
 		</dependency>
+		<!-- 1. Spring Boot Actuator để lấy RAM, CPU -->
+	    <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-actuator</artifactId>
+	    </dependency>
+	
+	    <!-- 2. Thư viện kết nối Docker API -->
+	    <dependency>
+	        <groupId>com.github.docker-java</groupId>
+	        <artifactId>docker-java-core</artifactId>
+	        <version>3.4.0</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>com.github.docker-java</groupId>
+	        <artifactId>docker-java-transport-httpclient5</artifactId>
+	        <version>3.4.0</version>
+	    </dependency>
 	</dependencies>
 
 	<build>
