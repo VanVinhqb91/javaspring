@@ -4,4 +4,5 @@ import java.util.Map;
 
 public interface DashboardService {
 	public Map<String, Object> getMetrics();
+	public Map<String, Long> getTrafficStats();
 }

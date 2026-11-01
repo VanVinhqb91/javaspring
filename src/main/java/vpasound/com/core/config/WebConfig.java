@@ -6,12 +6,14 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import lombok.RequiredArgsConstructor;
+import vpasound.com.core.helper.TrafficInterceptor;
 
 @Configuration
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer{
 	
 	private final BackendInterceptor backendInterceptor;
+	private final TrafficInterceptor trafficInterceptor;
 	
 	@Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -31,5 +33,8 @@ public class WebConfig implements WebMvcConfigurer{
         // Tránh áp dụng cho các file tĩnh như css, js, images bằng cách loại trừ nếu cần
         registry.addInterceptor(backendInterceptor)
                 .addPathPatterns("/backend/**");
+        
+        registry.addInterceptor(trafficInterceptor)
+        		.addPathPatterns("/backend/**");
     }
 }

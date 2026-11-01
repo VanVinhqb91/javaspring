@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 	<head th:replace="~{backend/fragments/head :: htmlHead}"></head>
+    
 	<body class="text-slate-700 antialiased min-h-screen flex flex-col">
 		
 		<div class="flex flex-1">
@@ -87,6 +88,38 @@
 				    </div>
 				</div>
 				<div class="w-[100%] mt-[40px]"><h2>Admin Systems</h2></div>
+                
+                <div class="container mx-auto mt-12 px-4">
+                    <h2 class="mb-8 text-center text-2xl font-bold text-black-600">Lưu Lượng Truy Cập Website</h2>
+                    
+                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                        <!-- Thống kê Ngày -->
+                        <div class="transform rounded-lg bg-white p-6 text-center shadow-sm transition duration-200 hover:scale-105">
+                            <h6 class="text-xs font-semibold uppercase tracking-wider text-gray-400">Hôm Nay</h6>
+                            <h2 class="mt-2 text-3xl font-extrabold text-green-600" th:text="${#numbers.formatInteger(todayCount, 1, 'DEFAULT')} + ''">0</h2>
+                        </div>
+
+                        <!-- Thống kê Tuần -->
+                        <div class="transform rounded-lg bg-white p-6 text-center shadow-sm transition duration-200 hover:scale-105">
+                            <h6 class="text-xs font-semibold uppercase tracking-wider text-gray-400">Tuần Này</h6>
+                            <h2 class="mt-2 text-3xl font-extrabold text-cyan-600" th:text="${#numbers.formatInteger(weekCount, 1, 'DEFAULT')} + ''">0</h2>
+                        </div>
+
+                        <!-- Thống kê Tháng -->
+                        <div class="transform rounded-lg bg-white p-6 text-center shadow-sm transition duration-200 hover:scale-105">
+                            <h6 class="text-xs font-semibold uppercase tracking-wider text-gray-400">Tháng Này</h6>
+                            <h2 class="mt-2 text-3xl font-extrabold text-amber-500" th:text="${#numbers.formatInteger(monthCount, 1, 'DEFAULT')} + ''">0</h2>
+                        </div>
+
+                        <!-- Thống kê Năm -->
+                        <div class="transform rounded-lg bg-white p-6 text-center shadow-sm transition duration-200 hover:scale-105">
+                            <h6 class="text-xs font-semibold uppercase tracking-wider text-gray-400">Năm Nay</h6>
+                            <h2 class="mt-2 text-3xl font-extrabold text-red-600" th:text="${#numbers.formatInteger(yearCount, 1, 'DEFAULT')} + ''">0</h2>
+                        </div>
+                    </div>
+                </div>
+
+                
 	            <!-- Metric Cards -->
 	            <div class="metrics-grid">
 	                <div class="card stat-card">

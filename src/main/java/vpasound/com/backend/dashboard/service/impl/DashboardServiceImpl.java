@@ -5,11 +5,15 @@ import com.github.dockerjava.api.model.Container;
 import io.micrometer.core.instrument.MeterRegistry;
 import lombok.RequiredArgsConstructor;
 import vpasound.com.backend.dashboard.service.DashboardService;
+import vpasound.com.core.repository.TrafficStatsRepository;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -19,6 +23,8 @@ public class DashboardServiceImpl implements DashboardService {
 	private final MeterRegistry meterRegistry;
 	private final DockerClient dockerClient;
 	private final RestTemplate restTemplate = new RestTemplate();
+	private final StringRedisTemplate redisTemplate;
+    private final TrafficStatsRepository trafficStatsRepository;
 
 	@Value("${rabbitmq.management.url}")
 	private String rabbitMqUrl;
@@ -141,5 +147,34 @@ public class DashboardServiceImpl implements DashboardService {
 		}
 
 		return metrics;
+	}
+	
+	@Override
+	public Map<String, Long> getTrafficStats() {
+		Map<String, Long> stats = new HashMap<>();
+        LocalDate today = LocalDate.now();
+
+        // 1. Số liệu NGÀY HÔM NAY (Lấy realtime từ Redis)
+        String todayStr = today.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        Long todayCount = redisTemplate.opsForHyperLogLog().size("traffic:" + todayStr);
+        todayCount = (todayCount != null) ? todayCount : 0L;
+        stats.put("today", todayCount);
+
+        // 2. Số liệu TUẦN NÀY (7 ngày qua tính cả hôm nay)
+        LocalDate oneWeekAgo = today.minusDays(7);
+        Long pastWeekCount = trafficStatsRepository.sumVisitorCountBetween(oneWeekAgo, today.minusDays(1));
+        stats.put("week", todayCount + (pastWeekCount != null ? pastWeekCount : 0L));
+
+        // 3. Số liệu THÁNG NÀY (Từ đầu tháng đến nay)
+        LocalDate startOfMonth = today.withDayOfMonth(1);
+        Long pastMonthCount = trafficStatsRepository.sumVisitorCountBetween(startOfMonth, today.minusDays(1));
+        stats.put("month", todayCount + (pastMonthCount != null ? pastMonthCount : 0L));
+
+        // 4. Số liệu NĂM NÀY (Từ đầu năm đến nay)
+        LocalDate startOfYear = today.withDayOfYear(1);
+        Long pastYearCount = trafficStatsRepository.sumVisitorCountBetween(startOfYear, today.minusDays(1));
+        stats.put("year", todayCount + (pastYearCount != null ? pastYearCount : 0L));
+
+        return stats;
 	}
 }

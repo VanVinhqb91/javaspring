@@ -1,9 +1,13 @@
 package vpasound.com.backend.systems.service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.scheduling.support.CronTrigger;
@@ -11,8 +15,10 @@ import org.springframework.scheduling.support.CronTrigger;
 import lombok.RequiredArgsConstructor;
 
 import vpasound.com.core.entity.SettingEntity;
+import vpasound.com.core.entity.TrafficStatsEntity;
 import vpasound.com.core.repository.ProductRepository;
 import vpasound.com.core.repository.SettingRepository;
+import vpasound.com.core.repository.TrafficStatsRepository;
 
 @Configuration
 @EnableScheduling
@@ -21,6 +27,8 @@ public class DynamicCronjobScheduler implements SchedulingConfigurer{
 	
 	private final ProductRepository productRepository;
 	private final SettingRepository settingRepository;
+	private final StringRedisTemplate redisTemplate;
+	private final TrafficStatsRepository trafficStatsRepository;
 	
 	@Override
 	public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
@@ -40,4 +48,24 @@ public class DynamicCronjobScheduler implements SchedulingConfigurer{
 			}
 		);
 	}
+	
+	@Scheduled(cron = "0 59 23 * * *")
+	public void syncTrafficToDatabase() {
+        LocalDate today = LocalDate.now();
+        String todayStr = today.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        String redisKey = "traffic:" + todayStr;
+
+        // Lấy tổng số lượng unique visitor từ HyperLogLog của Redis
+        Long count = redisTemplate.opsForHyperLogLog().size(redisKey);
+
+        if (count != null && count > 0) {
+            TrafficStatsEntity stat = new TrafficStatsEntity();
+            stat.setRecordDate(today);
+            stat.setVisitorCount(count);
+            trafficStatsRepository.save(stat); // Lưu vào DB phục vụ tuần/tháng/năm
+            
+            // Xóa key Redis cũ sau khi đã lưu DB thành công (hoặc để tự hủy bằng expire)
+            redisTemplate.delete(redisKey);
+        }
+    }
 }

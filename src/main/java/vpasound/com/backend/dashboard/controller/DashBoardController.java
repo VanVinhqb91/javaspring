@@ -23,6 +23,13 @@ public class DashBoardController {
 	@GetMapping("/dashboard")
 	public String dashBoardPage(Model model) {
 		Map<String, Object> metrics = dashboardService.getMetrics();
+		Map<String, Long> trafficStats = dashboardService.getTrafficStats();
+
+        // 2. Đẩy từng chỉ số vào Model để Thymeleaf có thể đọc được
+        model.addAttribute("todayCount", trafficStats.get("today"));
+        model.addAttribute("weekCount", trafficStats.get("week"));
+        model.addAttribute("monthCount", trafficStats.get("month"));
+        model.addAttribute("yearCount", trafficStats.get("year"));
         model.addAttribute("metrics", metrics);
 		return "backend/dashboard";
 	}
