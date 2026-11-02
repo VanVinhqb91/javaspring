@@ -2,7 +2,11 @@ package vpasound.com.core.entity;
 
 import java.util.Date;
 
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,6 +14,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import vpasound.com.core.helper.AddressConverter;
+import vpasound.com.core.helper.AddressSnapshot;
 
 @Entity
 @Getter
@@ -39,11 +45,13 @@ public class OrderEntity {
 	@Column(name = "status")
 	public String status;
 	
-	@Column(name = "billing_address")
-	public String billingAddress;
+	@Column(name = "billing_address", columnDefinition = "json")
+	@Convert(converter = AddressConverter.class)
+	public AddressSnapshot billingAddress;
 	
-	@Column(name = "shipping_address")
-	public String shippingAddress;
+	@Column(name = "shipping_address", columnDefinition = "json")
+	@Convert(converter = AddressConverter.class)
+	public AddressSnapshot shippingAddress;
 	
 	@Column(name = "note")
 	public String note;
