@@ -87,7 +87,7 @@ public class BackendInterceptor implements HandlerInterceptor{
         if (uri.equals("/backend/login") || uri.equals("/backend/logout")) {
             return true; 
         }
-        if ("GET".equalsIgnoreCase(method)) {
+        if ("GET".equalsIgnoreCase(method)||"POST".equalsIgnoreCase(method)||"PUT".equalsIgnoreCase(method)) {
         	return true;
         }
         // Lấy tham số 'key' được truyền trên URL (Ví dụ: /backend/contents/page?key=...)

@@ -52,7 +52,7 @@ public class HomeController {
 	        System.out.println("2. [Controller] Đã bắn tin nhắn vào RabbitMQ. Trả kết quả ngay cho User!");
 	        
 			if (username != null)
-				httpSession.setAttribute("username", username);
+				httpSession.setAttribute("userCustomer", username);
 		} catch (Exception e) {
 			e.getMessage();
 		}

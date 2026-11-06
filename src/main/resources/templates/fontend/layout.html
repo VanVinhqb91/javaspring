@@ -180,8 +180,9 @@
 					<div class="relative group">
 						<button id="open-login-btn"
 							class="flex items-center space-x-2 text-zinc-700 hover:text-black p-2 rounded-full hover:bg-zinc-100 transition-colors">
-							<i class="fa-regular fa-user text-xl"></i> <span th:text="${session.username}"></span> <span
-								class="hidden xl:inline text-xs font-semibold">Tài Khoản</span>
+							<i class="fa-regular fa-user text-xl"></i> 
+                            <span th:if="${session.userCustomer}" th:text = "${session.userCustomer}"></span> 
+                            <span th:if = "${session.userCustomer == null}" class="hidden xl:inline text-xs font-semibold">Tài Khoản</span>
 						</button>
 
 						<!-- Menu nhanh Tài khoản khi đã Hover -->
