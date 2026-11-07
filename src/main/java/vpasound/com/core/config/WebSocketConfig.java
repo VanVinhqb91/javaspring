@@ -30,6 +30,6 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         .setSystemLogin("guest")      // Bổ sung thêm tài khoản hệ thống của Spring
         .setSystemPasscode("guest")
         .setVirtualHost("/");
-        registry.setUserDestinationPrefix("/user");
+        registry.setUserDestinationPrefix("/user"); 
     }
 }

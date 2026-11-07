@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://thymeleaf.org">
+<head>
+<title>Product Detail</title>
+</head>
+<body>
+    <h1>Trang view san pham</h1>
+    
+    <!-- SCRIPT XỬ LÝ SỰ KIỆN GỬI KAFKA -->
+    <script th:inline="javascript">
+        // Lấy thông tin từ Thymeleaf Model truyền vào Javascript
+        const currentProductId = /*[[${product.id}]]*/ 1;
+        const currentUserId = /*[[${currentUser}]]*/ 'GUEST';
+
+        // Hàm gọi API ngầm gửi sang Controller xử lý
+        function sendTrackingEvent(activityType) {
+            const payload = {
+                userId: currentUserId,
+                id: currentProductId,
+                name: "iphone 15",
+                qty: 11,
+                price: 240,
+                activityType: activityType
+            };
+
+            fetch('/product/api/tracking/activity', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(response => response.text())
+            .then(data => console.log('Server phản hồi:', data))
+            .catch(error => console.error('Lỗi kết nối tracking API:', error));
+        }
+
+        // KỊCH BẢN 1: Tự động chạy ngay khi load trang xong (PRODUCT_VIEW)
+        document.addEventListener('DOMContentLoaded', function() {
+            sendTrackingEvent('PRODUCT_VIEW');
+        });
+
+        // KỊCH BẢN 2: Chạy khi người dùng click vào vùng đánh giá (REVIEW_VIEW)
+        //const reviewSection = document.getElementById('review-section');
+        //reviewSection.addEventListener('click', function() {
+        //    sendTrackingEvent('REVIEW_VIEW');
+        //    reviewSection.classList.add('border-green-500', 'bg-green-50/10');
+        //});
+    </script>
+</body>
+</html>
