@@ -10,14 +10,15 @@ import vpasound.com.core.entity.ProductEntity;
 import vpasound.com.fontend.elastic.ProductElastic;
 import vpasound.com.fontend.elastic.ProductElasticRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 public class DataSyncMySqlToElasticSearch implements CommandLineRunner {
 
-	private final ProductService productService; // Đọc từ MySQL của bạn
-	private final ProductElasticRepository productElasticRepository; // Ghi vào Elastic Docker
+	private final ProductService productService;
+	private final ProductElasticRepository productElasticRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -27,27 +28,21 @@ public class DataSyncMySqlToElasticSearch implements CommandLineRunner {
 		if (countInElastic == 0) {
 			System.out.println("-> [Elasticsearch] Phát hiện dữ liệu trống. Bắt đầu đồng bộ từ MySQL XAMPP...");
 
-			// 2. Lấy toàn bộ danh sách sản phẩm từ MySQL (Lưu ý: Nếu hàm này chưa có, bạn
-			// hãy viết trong ProductService nhé)
 			List<ProductEntity> allProductsInMySQL = productService.findAll();
 
 			if (allProductsInMySQL != null && !allProductsInMySQL.isEmpty()) {
+				List<ProductElastic> listProducts = new ArrayList<>();
 				for (ProductEntity mysqlProd : allProductsInMySQL) {
 					ProductElastic elasticDoc = new ProductElastic();
-					elasticDoc.setId(String.valueOf(mysqlProd.getId())); // Chuyển Long ID sang String
+					elasticDoc.setId(String.valueOf(mysqlProd.getId()));
 					elasticDoc.setName(mysqlProd.getName());
-
-					// Xử lý ép kiểu giá tiền an toàn (đề phòng giá bên MySQL bị Null)
-					if (mysqlProd.getPrice() != null) {
-						elasticDoc.setPrice(mysqlProd.getPrice().intValue());
-					} else {
-						elasticDoc.setPrice(0);
-					}
-
-					// Lưu sản phẩm vào Elasticsearch Docker
-					productElasticRepository.save(elasticDoc);
+					elasticDoc.setPrice(mysqlProd.getPrice() != null ? mysqlProd.getPrice().intValue() : 0);
+					listProducts.add(elasticDoc);
 				}
-				System.out.println("-> [Elasticsearch] Đồng bộ thành công " + allProductsInMySQL.size() + " sản phẩm!");
+				if (!listProducts.isEmpty()) {
+					productElasticRepository.saveAll(listProducts);
+					System.out.println("-> [Elasticsearch] Đồng bộ thành công " + listProducts.size() + " sản phẩm!");
+				}
 			} else {
 				System.out.println("-> [Elasticsearch] Không có dữ liệu sản phẩm nào trong MySQL XAMPP để đồng bộ.");
 			}

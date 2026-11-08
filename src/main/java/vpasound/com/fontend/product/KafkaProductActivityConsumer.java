@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import vpasound.com.core.dto.response.fontend.ProductViewKafkaResponseDto;
 import vpasound.com.core.entity.UserProductActivityEntity;
@@ -21,16 +20,16 @@ public class KafkaProductActivityConsumer {
     
     private final UserProductActivityRepository activityRepository;
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private final KafkaTemplate<String, String> dltKafkaTemplate;
 
     @KafkaListener(
         topics = "vpa_tracking_activity", 
-        groupId = "vpa-analytics-kafka-group-120",
+        groupId = "vpa-activity-product-click-detail",
         containerFactory = "kafkaListenerContainerFactory",
         concurrency = "3"
     )
     public void listenProductActivity(List<String> listRawJson) {
     		String threadName = Thread.currentThread().getName();
+    		log.info("📥 [THREAD: " + threadName + "] Nhận được lô gồm: " + listRawJson.size() + " tin nhan.");
         System.out.println("==================================================");
         System.out.println("📥 [THREAD: " + threadName + "] Nhận được lô gồm: " + listRawJson.size() + " tin nhan.");
 
@@ -49,6 +48,7 @@ public class KafkaProductActivityConsumer {
 	                    .build();
 	            entityList.add(entity);
 	        } catch (Exception e) {
+	        		log.error("Lỗi giải mã JSON lẻ: " + e.getMessage());
 	        		System.err.println("Lỗi giải mã JSON lẻ: " + e.getMessage());
 	        }
         }

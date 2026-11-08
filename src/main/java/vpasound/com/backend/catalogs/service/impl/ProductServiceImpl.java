@@ -14,12 +14,15 @@ import lombok.RequiredArgsConstructor;
 import vpasound.com.backend.catalogs.service.ProductService;
 import vpasound.com.core.entity.ProductEntity;
 import vpasound.com.core.repository.ProductRepository;
+import vpasound.com.core.service.KafkaService;
+import vpasound.com.fontend.elastic.ProductElastic;
 
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService{
 	
 	private final ProductRepository productRepository;
+	private final KafkaService kafkaService;
 
 	@Override
 	public Page<ProductEntity> getAllProduct(int page, int size, String sortBy, String sortDir) {
@@ -34,7 +37,20 @@ public class ProductServiceImpl implements ProductService{
 	
 	@Override
 	public void createProduct(@NonNull ProductEntity product) {
-		productRepository.save(product);
+		ProductEntity productEntity = productRepository.save(product);
+		// Ban event len Kafka de consumer lang nghe va dong bo len Elastich Search
+		String productTopic = "vpa_product_sync_to_elastic";
+		String productKey = String.valueOf(productEntity.getId());
+		try {
+			ProductElastic elasticDoc = new ProductElastic();
+			elasticDoc.setId(productKey);
+			elasticDoc.setName(product.getName());
+			elasticDoc.setPrice(product.getPrice() != null ? product.getPrice().intValue() : 0);
+
+			kafkaService.sendProductSyncElastic(productTopic, productKey, elasticDoc);
+		} catch (Exception e) {
+			System.out.println("Loi khi gui Product data len Kafka: " + e.getMessage());
+		}
 	}
 	
 	@Override
@@ -67,11 +83,34 @@ public class ProductServiceImpl implements ProductService{
 		else
 			productUpdate.setUrlImage(productUpdate.getUrlImage());
 		productRepository.save(productUpdate);
+		
+		// Update product thi ban event len Kafka
+		//if (productUpdate.getName() != product.getName() || productUpdate.getPrice() != product.getPrice()) {
+			// Ban event len Kafka de consumer lang nghe va dong bo len Elastich Search
+			String productTopic = "vpa_product_sync_to_elastic";
+			String productKey = String.valueOf(id);
+			try {
+				ProductElastic elasticDoc = new ProductElastic();
+				elasticDoc.setId(productKey);
+				elasticDoc.setName(product.getName());
+				elasticDoc.setPrice(product.getPrice() != null ? product.getPrice().intValue() : 0);
+
+				kafkaService.sendProductSyncElastic(productTopic, productKey, elasticDoc);
+			} catch (Exception e) {
+				System.out.println("Loi khi gui Product data len Kafka: " + e.getMessage());
+			}
+		//}
 	}
 	
 	@Override
 	public void deleteProduct(@NonNull Long id) {
 		productRepository.deleteById(id);
+		try {
+			kafkaService.sendProductSyncElastic("vpa_product_sync_to_elastic", String.valueOf(id), "DELETE");
+		    System.out.println("🚀 [KAFKA PRODUCER] Đã bắn sự kiện XÓA sản phẩm ID: " + id);
+		} catch (Exception e) {
+		    System.err.println("❌ Lỗi phát sự kiện xóa Elastic: " + e.getMessage());
+		}
 	}
 	
 	@Override

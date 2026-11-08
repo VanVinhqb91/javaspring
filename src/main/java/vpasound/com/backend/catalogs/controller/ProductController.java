@@ -99,7 +99,7 @@ public class ProductController {
 	        fileNames.append(file.getOriginalFilename());
 	        Files.write(fileNameAndPath, file.getBytes());
         } catch (IOException e) {
-        	e.printStackTrace();
+        		e.printStackTrace();
         }
 		
 		String imgFile = file.getOriginalFilename().isEmpty() ? "vanhyaudio.png" : file.getOriginalFilename();

@@ -28,4 +28,10 @@ public class KafkaTopicConfig {
         // Kafka tạo sẵn topic tên là "vpa_tracking_activity" với 1 partition và 1 replica factor
         return new NewTopic("vpa_tracking_activity", 1, (short) 1);
     }
+    
+    @Bean
+    public NewTopic vpaProductSyncElastic() {
+        // Kafka tạo sẵn topic tên là "vpa_product_sync_to_elastic" với 1 partition và 1 consumer
+        return new NewTopic("vpa_product_sync_to_elastic", 1, (short) 1);
+    }
 }
