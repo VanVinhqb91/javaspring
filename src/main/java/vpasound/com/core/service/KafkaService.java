@@ -18,14 +18,14 @@ public class KafkaService {
             String jsonString = objectMapper.writeValueAsString(data);
             kafkaTemplate.send(topic, key, jsonString).whenComplete((result, ex) -> {
                 if (ex == null) {
-                    System.out.println("🚀 PRODUCER SUCCESS: Đã gửi chuỗi thô lên Kafka thành công! Offset: " 
+                    System.out.println("🚀 [PRODUCER PRODUCT] Đã gửi chuỗi thô lên Kafka thành công! Offset: " 
                             + result.getRecordMetadata().offset());
                 } else {
-                    System.err.println("❌ PRODUCER ERROR: Gửi lên Kafka THẤT BẠI! " + ex.getMessage());
+                    System.err.println("❌ [PRODUCER PRODUCT] Gửi lên Kafka THẤT BẠI! " + ex.getMessage());
                 }
             });
         } catch (Exception e) {
-            System.err.println("❌ LỖI KHI CHUYỂN ĐỔI JSON STRING: " + e.getMessage());
+            System.err.println("❌ [PRODUCER PRODUCT] Lỗi khi chuyển đổi Json String: " + e.getMessage());
         }
     }
     
@@ -34,14 +34,14 @@ public class KafkaService {
             String jsonString = objectMapper.writeValueAsString(data);
             kafkaTemplate.send(topic, key, jsonString).whenComplete((result, ex) -> {
                 if (ex == null) {
-                    System.out.println("🚀 PRODUCT: Đã tạo thành công 1 sản phẩm và gửi lên Kafka thành công!." 
+                    System.out.println("🚀 [PRODUCER ELASTIC] Đã tạo thành công 1 sản phẩm và gửi lên Kafka thành công!." 
                             + result.getRecordMetadata().offset());
                 } else {
-                    System.err.println("❌ PRODUCT ERROR: Gửi lên Kafka thất bại! " + ex.getMessage());
+                    System.err.println("❌ [PRODUCER ELASTIC] Gửi lên Kafka THẤT BẠI! " + ex.getMessage());
                 }
             });
         } catch (Exception e) {
-            System.err.println("❌ LỖI KHI CHUYỂN ĐỔI JSON STRING: " + e.getMessage());
+            System.err.println("❌ [PRODUCER ELASTIC] Lỗi khi chuyển đổi Json String: " + e.getMessage());
         }
     }
 }
