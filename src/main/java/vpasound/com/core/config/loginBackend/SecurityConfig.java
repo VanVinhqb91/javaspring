@@ -69,7 +69,7 @@ public class SecurityConfig {
 	                .invalidateHttpSession(true) // Xóa sạch HTTP Session hiện tại của User
 	                .deleteCookies("JSESSIONID") // Xóa Cookie định danh phiên làm việc trên trình duyệt
 	                .permitAll()
-	            );
+            );
 	    return http.build();
 	}
 

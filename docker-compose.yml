@@ -57,6 +57,8 @@ services:
       - '3306:3306'
     environment:
       MYSQL_ROOT_PASSWORD: 07021991@Vinh
+    volumes:
+      - mysql_vpa_data:/var/lib/mysql
       
   redis:
     image: redis:alpine
@@ -75,4 +77,20 @@ services:
     command: >
       sh -c "echo '[rabbitmq_management, rabbitmq_prometheus, rabbitmq_stomp, rabbitmq_web_stomp].' > /etc/rabbitmq/enabled_plugins && exec rabbitmq-server"
 
-     
+  redisinsight:
+    image: redis/redisinsight:latest
+    container_name: ecom-redisinsight
+    ports:
+        - "5540:5540"
+    volumes:
+        - redisinsight_data:/data
+    depends_on:
+        - redis
+volumes:
+    redisinsight_data: 
+    mysql_vpa_data:
+        
+        
+        
+        
+        

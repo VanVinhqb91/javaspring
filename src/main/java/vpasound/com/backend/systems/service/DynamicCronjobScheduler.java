@@ -52,8 +52,8 @@ public class DynamicCronjobScheduler implements SchedulingConfigurer{
 	@Scheduled(cron = "0 59 23 * * *")
 	public void syncTrafficToDatabase() {
         LocalDate today = LocalDate.now();
-        String todayStr = today.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-        String redisKey = "traffic:" + todayStr;
+        String todayStr = today.format(DateTimeFormatter.ofPattern("dd_MM_yyyy"));
+        String redisKey = "Traffic:" + todayStr;
 
         // Lấy tổng số lượng unique visitor từ HyperLogLog của Redis
         Long count = redisTemplate.opsForHyperLogLog().size(redisKey);
@@ -62,9 +62,8 @@ public class DynamicCronjobScheduler implements SchedulingConfigurer{
             TrafficStatsEntity stat = new TrafficStatsEntity();
             stat.setRecordDate(today);
             stat.setVisitorCount(count);
-            trafficStatsRepository.save(stat); // Lưu vào DB phục vụ tuần/tháng/năm
+            trafficStatsRepository.save(stat);
             
-            // Xóa key Redis cũ sau khi đã lưu DB thành công (hoặc để tự hủy bằng expire)
             redisTemplate.delete(redisKey);
         }
     }

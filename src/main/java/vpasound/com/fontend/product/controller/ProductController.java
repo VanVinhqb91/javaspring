@@ -15,13 +15,13 @@ import lombok.RequiredArgsConstructor;
 import vpasound.com.core.dto.response.fontend.ProductViewKafkaResponseDto;
 import vpasound.com.core.entity.ProductEntity;
 import vpasound.com.core.service.KafkaService;
-import vpasound.com.fontend.product.service.impl.ProductServiceImpl;
+import vpasound.com.fontend.product.service.ProductService;
 
 @Controller("frontendProductController")
 @RequiredArgsConstructor
 @RequestMapping("/product")
 public class ProductController {
-	public final ProductServiceImpl productService;
+	public final ProductService productService;
 	public final KafkaService kafkaService;
 	
 	@GetMapping("/{id}")
