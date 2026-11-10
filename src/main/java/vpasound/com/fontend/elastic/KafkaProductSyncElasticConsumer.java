@@ -22,7 +22,7 @@ public class KafkaProductSyncElasticConsumer {
 	        concurrency = "2"
 	    )
 	public void listenProductSyncElastic(List<ConsumerRecord<String, String>> listRawJson) {
-	    System.out.println("📥 [ELASTIC - CONSUMER] Nhận được lô gồm: " + listRawJson.size() + " tin nhan.");
+	    System.out.println("📥 [ELASTIC-CONSUMER] Nhận được lô gồm: " + listRawJson.size() + " tin nhan.");
 	
 	    List<ProductElastic> entityList = new ArrayList<>();
 	    List<String> idsToDelete = new ArrayList<>();
@@ -45,26 +45,26 @@ public class KafkaProductSyncElasticConsumer {
                     entityList.add(doc);
                 }
             } catch (Exception e) {
-                System.err.println("❌ [ELASTIC - CONSUMER] Bỏ qua 1 tin rác kẹt không đúng định dạng class: " + e.getMessage());
+                System.err.println("❌ [ELASTIC-CONSUMER] Bỏ qua 1 tin rác kẹt không đúng định dạng class: " + e.getMessage());
             }
 	    }
 	    if (!entityList.isEmpty()) {
 	    		try {
 	            productElasticRepository.saveAll(entityList);
-	            System.out.println("✅ [ELASTIC - CONSUMER] Đã ghi gom cụm thành công " + entityList.size() + " dòng vào Elastic Docker.");
+	            System.out.println("✅ [ELASTIC-CONSUMER] Đã ghi gom cụm thành công " + entityList.size() + " dòng vào Elastic Docker.");
 	        } catch (Exception e) {
-	            System.err.println("❌ [ELASTIC - CONSUMER] Lỗi Bulk Insert Elastic: " + e.getMessage());
+	            System.err.println("❌ [ELASTIC-CONSUMER] Lỗi Bulk Insert Elastic: " + e.getMessage());
 	        }
 	    }
 	    if (!idsToDelete.isEmpty()) {
 	    		try {
 	    			for (String del : idsToDelete) {
 	    				productElasticRepository.deleteById(del);
-	    				System.out.println("[ELASTIC - CONSUMER] -> Đang thực thi xóa ID: " + del);
+	    				System.out.println("✅ [ELASTIC-CONSUMER] -> Đang thực thi xóa ID: " + del);
 	    			}
-	    			System.out.println("✅ [ELASTIC - CONSUMER] Đã xóa sổ hoàn toàn " + idsToDelete.size() + " sản phẩm khỏi ô tìm kiếm!");
+	    			System.out.println("✅ [ELASTIC-CONSUMER] Đã xóa sổ hoàn toàn " + idsToDelete.size() + " sản phẩm khỏi ô tìm kiếm!");
 	    		} catch (Exception e) {
-	    			System.err.println("❌ [ELASTIC - CONSUMER] Lỗi hủy chỉ mục thực tế trên Elastic Docker: " + e.getMessage());
+	    			System.err.println("❌ [ELASTIC-CONSUMER] Lỗi hủy chỉ mục thực tế trên Elastic Docker: " + e.getMessage());
 	        }
 	    }
 	}

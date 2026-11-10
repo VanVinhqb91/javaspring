@@ -38,42 +38,34 @@ public class DashboardServiceImpl implements DashboardService {
 	@Override
 	public Map<String, Object> getMetrics() {
 		Map<String, Object> metrics = new HashMap<>();
-
 		// 1. LẤY SỐ LIỆU CPU & RAM CỦA HỆ THỐNG
 		double cpuSystem = 0;
 		var cpuMeter = meterRegistry.find("system.cpu.usage").gauge();
 		if (cpuMeter != null)
 			cpuSystem = cpuMeter.value() * 100; // Đổi sang %
-
 		double ramUsed = 0;
 		var ramMeter = meterRegistry.find("jvm.memory.used").gauge();
 		if (ramMeter != null)
 			ramUsed = ramMeter.value() / (1024 * 1024); // Đổi sang MB
-
 		Map<String, Object> systemMetrics = new HashMap<>();
 		systemMetrics.put("cpuUsagePercent", Math.round(cpuSystem * 100.0) / 100.0);
 		systemMetrics.put("ramUsedMB", Math.round(ramUsed));
 		metrics.put("system", systemMetrics);
-
 		// 2. LẤY TRẠNG THÁI DOCKER CONTAINERS
 		List<Map<String, Object>> dockerContainers = new ArrayList<>();
 		try {
 			List<Container> containers = dockerClient.listContainersCmd().withShowAll(true).exec();
 			for (Container container : containers) {
 				Map<String, Object> cMap = new HashMap<>();
-
 				if (container.getNames() != null && container.getNames().length > 0) {
 					cMap.put("name", container.getNames()[0]);
 				} else if (container.getId() != null) {
-					cMap.put("name", container.getId().substring(0, 12)); // Nếu container không có tên, lấy tạm 12 ký
-																			// tự ID ngắn
+					cMap.put("name", container.getId().substring(0, 12)); // Nếu container không có tên, lấy tạm 12 ký														// tự ID ngắn
 				} else {
 					cMap.put("name", "Unknown Container");
 				}
-
 				cMap.put("status", container.getStatus());
 				cMap.put("state", container.getState());
-
 				// TÍNH TOÁN RAM TIÊU THỤ CỦA CONTAINER
 				String memoryUsageStr = "0 MB";
 				if ("running".equals(container.getState())) {
@@ -82,7 +74,6 @@ public class DashboardServiceImpl implements DashboardService {
 						class CustomStatsCallback extends
 								com.github.dockerjava.api.async.ResultCallback.Adapter<com.github.dockerjava.api.model.Statistics> {
 							private com.github.dockerjava.api.model.Statistics latestStats;
-
 							@Override
 							public void onNext(com.github.dockerjava.api.model.Statistics object) {
 								this.latestStats = object;
@@ -91,12 +82,10 @@ public class DashboardServiceImpl implements DashboardService {
 								} catch (Exception ignored) {
 								} // Đóng stream ngay khi có dữ liệu
 							}
-
 							public com.github.dockerjava.api.model.Statistics getLatestStats() {
 								return latestStats;
 							}
 						}
-
 						// Khởi tạo instance từ Class tường minh vừa tạo
 						CustomStatsCallback statsCallback = new CustomStatsCallback();
 						dockerClient.statsCmd(container.getId()).exec(statsCallback);
@@ -104,7 +93,6 @@ public class DashboardServiceImpl implements DashboardService {
 						// Chờ tối đa 1 giây để Docker trả về dữ liệu RAM
 						statsCallback.awaitCompletion(1, java.util.concurrent.TimeUnit.SECONDS);
 						com.github.dockerjava.api.model.Statistics stats = statsCallback.getLatestStats();
-
 						if (stats != null && stats.getMemoryStats() != null
 								&& stats.getMemoryStats().getUsage() != null) {
 							long usageBytes = stats.getMemoryStats().getUsage();
@@ -117,7 +105,6 @@ public class DashboardServiceImpl implements DashboardService {
 				} else {
 					memoryUsageStr = "0 MB (Stopped)";
 				}
-
 				cMap.put("memory", memoryUsageStr);
 				dockerContainers.add(cMap);
 			}
@@ -129,7 +116,6 @@ public class DashboardServiceImpl implements DashboardService {
 			metrics.put("rabbitmq", emptyRabbit);
 		}
 		metrics.put("docker", dockerContainers);
-
 		// 3. LẤY CHỈ SỐ RABBITMQ (Gọi qua REST API của Management Plugin)
 		try {
 			// Sử dụng HTTP Basic Auth để gọi API của RabbitMQ
@@ -137,7 +123,6 @@ public class DashboardServiceImpl implements DashboardService {
 			String urlWithAuth = rabbitMqUrl.replace("http://",
 					"http://" + rabbitUsername + ":" + rabbitPassword + "@");
 			Map<String, Object> rabbitResponse = restTemplate.getForObject(urlWithAuth, Map.class);
-
 			if (rabbitResponse != null && rabbitResponse.containsKey("queue_totals")) {
 				metrics.put("rabbitmq", rabbitResponse.get("queue_totals"));
 				// Sẽ trả về các trường như: messages_ready, messages_unacknowledged, messages
@@ -145,36 +130,29 @@ public class DashboardServiceImpl implements DashboardService {
 		} catch (Exception e) {
 			metrics.put("rabbitmqError", "Không kết nối được RabbitMQ API: " + e.getMessage());
 		}
-
 		return metrics;
 	}
-	
 	@Override
 	public Map<String, Long> getTrafficStats() {
 		Map<String, Long> stats = new HashMap<>();
         LocalDate today = LocalDate.now();
-
         // 1. Số liệu NGÀY HÔM NAY (Lấy realtime từ Redis)
-        String todayStr = today.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-        Long todayCount = redisTemplate.opsForHyperLogLog().size("traffic:" + todayStr);
+        String todayStr = today.format(DateTimeFormatter.ofPattern("dd_MM_yyyy"));
+        Long todayCount = redisTemplate.opsForHyperLogLog().size("Traffic:" + todayStr);
         todayCount = (todayCount != null) ? todayCount : 0L;
         stats.put("today", todayCount);
-
         // 2. Số liệu TUẦN NÀY (7 ngày qua tính cả hôm nay)
         LocalDate oneWeekAgo = today.minusDays(7);
         Long pastWeekCount = trafficStatsRepository.sumVisitorCountBetween(oneWeekAgo, today.minusDays(1));
         stats.put("week", todayCount + (pastWeekCount != null ? pastWeekCount : 0L));
-
         // 3. Số liệu THÁNG NÀY (Từ đầu tháng đến nay)
         LocalDate startOfMonth = today.withDayOfMonth(1);
         Long pastMonthCount = trafficStatsRepository.sumVisitorCountBetween(startOfMonth, today.minusDays(1));
         stats.put("month", todayCount + (pastMonthCount != null ? pastMonthCount : 0L));
-
         // 4. Số liệu NĂM NÀY (Từ đầu năm đến nay)
         LocalDate startOfYear = today.withDayOfYear(1);
         Long pastYearCount = trafficStatsRepository.sumVisitorCountBetween(startOfYear, today.minusDays(1));
         stats.put("year", todayCount + (pastYearCount != null ? pastYearCount : 0L));
-
         return stats;
 	}
 }

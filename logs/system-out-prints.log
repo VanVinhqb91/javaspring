@@ -1,0 +1,61 @@
+2026-11-10 19:17:04.773 - .   ____          _            __ _ _
+2026-11-10 19:17:04.773 - /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+2026-11-10 19:17:04.773 - ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+2026-11-10 19:17:04.773 - \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+2026-11-10 19:17:04.773 - '  |____| .__|_| |_|_| |_\__, | / / / /
+2026-11-10 19:17:04.773 - =========|_|==============|___/=/_/_/_/
+2026-11-10 19:17:04.773 - [32m :: Spring Boot :: [39m              [2m (v4.1.0)[0;39m
+2026-11-10 19:17:07.228 - Lịch chạy tiếp theo dựa trên cấu hình database: 0 0 0 * * ?
+2026-11-10 19:17:07.246 - [Elastic-Product] Database trong Mysql và Elasticsearch đã giống nhau => Bỏ qua đồng bộ.
+2026-11-10 19:17:07.248 - 🎉 [SYSTEM-OUT] Đã kích hoạt bộ lọc StackTrace tối cao, quét sạch 100% rác Spring và Hibernate!
+2026-11-10 19:17:33.132 - 🚀 [PRODUCT-PRODUCER] Đã gửi chuỗi thô lên Kafka thành công! Offset: 7
+2026-11-10 19:17:33.753 - 🚀 [PRODUCT-PRODUCER] Đã gửi chuỗi thô lên Kafka thành công! Offset: 8
+2026-11-10 19:17:34.384 - 🚀 [PRODUCT-PRODUCER] Đã gửi chuỗi thô lên Kafka thành công! Offset: 9
+2026-11-10 19:17:34.949 - 🚀 [PRODUCT-PRODUCER] Đã gửi chuỗi thô lên Kafka thành công! Offset: 10
+2026-11-10 19:17:34.950 - 📥 [PRODUCT-CONSUMER] Nhận được lô gồm: 5 tin nhan.
+2026-11-10 19:17:34.988 - ✅ [PRODUCT-CONSUMER] Đã ghi gom cụm thành công 5 dòng vào Database.
+2026-11-10 19:17:35.464 - 🚀 [PRODUCT-PRODUCER] Đã gửi chuỗi thô lên Kafka thành công! Offset: 11
+2026-11-10 19:17:36.027 - 🚀 [PRODUCT-PRODUCER] Đã gửi chuỗi thô lên Kafka thành công! Offset: 12
+2026-11-10 19:18:13.725 - 🚀 [REDIS TRAFFIC] Ghi nhận thêm 1 lượt truy cập vào Key: Traffic:10_11_2026
+2026-11-10 19:18:18.150 - 🚀 [REDIS TRAFFIC] Ghi nhận thêm 1 lượt truy cập vào Key: Traffic:10_11_2026
+2026-11-10 19:18:30.079 - 🚀 [REDIS TRAFFIC] Ghi nhận thêm 1 lượt truy cập vào Key: Traffic:10_11_2026
+2026-11-10 19:18:35.213 - 🚀 [REDIS TRAFFIC] Ghi nhận thêm 1 lượt truy cập vào Key: Traffic:10_11_2026
+2026-11-10 19:18:42.236 - 🚀 [REDIS TRAFFIC] Ghi nhận thêm 1 lượt truy cập vào Key: Traffic:10_11_2026
+2026-11-10 19:18:46.296 - 🚀 [REDIS TRAFFIC] Ghi nhận thêm 1 lượt truy cập vào Key: Traffic:10_11_2026
+2026-11-10 19:18:48.578 - >>> Thiết bị [GUEST_6FN3G4LI] đã kết nối vào phòng chat: GUEST_6FN3G4LI
+2026-11-10 19:18:53.322 - 🚀 [REDIS TRAFFIC] Ghi nhận thêm 1 lượt truy cập vào Key: Traffic:10_11_2026
+2026-11-10 19:18:55.702 - >>> Đã kích hoạt Telegram Bot gửi thông báo thành công cho Admin!
+2026-11-10 19:18:59.386 - 🚀 [REDIS TRAFFIC] Ghi nhận thêm 1 lượt truy cập vào Key: Traffic:10_11_2026
+2026-11-10 19:19:05.450 - 🚀 [REDIS TRAFFIC] Ghi nhận thêm 1 lượt truy cập vào Key: Traffic:10_11_2026
+2026-11-10 19:19:12.474 - 🚀 [REDIS TRAFFIC] Ghi nhận thêm 1 lượt truy cập vào Key: Traffic:10_11_2026
+2026-11-10 19:19:17.611 - 🚀 [REDIS TRAFFIC] Ghi nhận thêm 1 lượt truy cập vào Key: Traffic:10_11_2026
+2026-11-10 19:19:24.634 - 🚀 [REDIS TRAFFIC] Ghi nhận thêm 1 lượt truy cập vào Key: Traffic:10_11_2026
+2026-11-10 19:19:30.712 - 🚀 [REDIS TRAFFIC] Ghi nhận thêm 1 lượt truy cập vào Key: Traffic:10_11_2026
+2026-11-10 19:19:35.778 - 🚀 [REDIS TRAFFIC] Ghi nhận thêm 1 lượt truy cập vào Key: Traffic:10_11_2026
+2026-11-10 19:19:42.819 - 🚀 [REDIS TRAFFIC] Ghi nhận thêm 1 lượt truy cập vào Key: Traffic:10_11_2026
+2026-11-10 19:19:47.911 - 🚀 [REDIS TRAFFIC] Ghi nhận thêm 1 lượt truy cập vào Key: Traffic:10_11_2026
+2026-11-10 19:19:53.954 - 🚀 [REDIS TRAFFIC] Ghi nhận thêm 1 lượt truy cập vào Key: Traffic:10_11_2026
+2026-11-10 19:20:23.218 - 🚀 [REDIS TRAFFIC] Ghi nhận thêm 1 lượt truy cập vào Key: Traffic:10_11_2026
+2026-11-10 19:21:23.215 - 🚀 [REDIS TRAFFIC] Ghi nhận thêm 1 lượt truy cập vào Key: Traffic:10_11_2026
+2026-11-10 19:22:23.209 - 🚀 [REDIS TRAFFIC] Ghi nhận thêm 1 lượt truy cập vào Key: Traffic:10_11_2026
+2026-11-10 19:23:23.207 - 🚀 [REDIS TRAFFIC] Ghi nhận thêm 1 lượt truy cập vào Key: Traffic:10_11_2026
+2026-11-10 19:24:23.214 - 🚀 [REDIS TRAFFIC] Ghi nhận thêm 1 lượt truy cập vào Key: Traffic:10_11_2026
+2026-11-10 19:24:50.799 - >>> Khách vãng lai ở phòng [GUEST_6FN3G4LI] đã ngắt kết nối. Đã xóa riêng phòng này, giữ nguyên các phòng khác!
+2026-11-10 19:24:53.104 - .   ____          _            __ _ _
+2026-11-10 19:24:53.104 - /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+2026-11-10 19:24:53.104 - ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+2026-11-10 19:24:53.104 - \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+2026-11-10 19:24:53.104 - '  |____| .__|_| |_|_| |_\__, | / / / /
+2026-11-10 19:24:53.104 - =========|_|==============|___/=/_/_/_/
+2026-11-10 19:24:53.104 - [32m :: Spring Boot :: [39m              [2m (v4.1.0)[0;39m
+2026-11-10 19:24:55.728 - Lịch chạy tiếp theo dựa trên cấu hình database: 0 0 0 * * ?
+2026-11-10 19:24:55.747 - [Elastic-Product] Database trong Mysql và Elasticsearch đã giống nhau => Bỏ qua đồng bộ.
+2026-11-10 19:24:55.749 - 🎉 [SYSTEM-OUT] Đã kích hoạt bộ lọc StackTrace tối cao, quét sạch 100% rác Spring và Hibernate!
+2026-11-10 19:25:23.241 - 🚀 [REDIS TRAFFIC] Ghi nhận thêm 1 lượt truy cập vào Key: Traffic:10_11_2026
+2026-11-10 19:26:23.207 - 🚀 [REDIS TRAFFIC] Ghi nhận thêm 1 lượt truy cập vào Key: Traffic:10_11_2026
+2026-11-10 19:27:23.213 - 🚀 [REDIS TRAFFIC] Ghi nhận thêm 1 lượt truy cập vào Key: Traffic:10_11_2026
+2026-11-10 19:28:23.217 - 🚀 [REDIS TRAFFIC] Ghi nhận thêm 1 lượt truy cập vào Key: Traffic:10_11_2026
+2026-11-10 19:29:23.216 - 🚀 [REDIS TRAFFIC] Ghi nhận thêm 1 lượt truy cập vào Key: Traffic:10_11_2026
+2026-11-10 19:30:23.206 - 🚀 [REDIS TRAFFIC] Ghi nhận thêm 1 lượt truy cập vào Key: Traffic:10_11_2026
+2026-11-10 19:31:23.206 - 🚀 [REDIS TRAFFIC] Ghi nhận thêm 1 lượt truy cập vào Key: Traffic:10_11_2026
+2026-11-10 19:32:23.211 - 🚀 [REDIS TRAFFIC] Ghi nhận thêm 1 lượt truy cập vào Key: Traffic:10_11_2026

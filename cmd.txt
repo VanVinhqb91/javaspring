@@ -1,0 +1,7 @@
+
+# Tim va xoa Port dang chay
+C:\EclipseJava\vpasound>netstat -ano | findstr :80
+C:\EclipseJava\vpasound>taskkill /F /PID 3988
+
+# Chay cmd voi UTF-8
+chcp 65001

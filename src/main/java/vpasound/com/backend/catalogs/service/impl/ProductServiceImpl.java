@@ -67,6 +67,22 @@ public class ProductServiceImpl implements ProductService{
 	public void updateProduct(@NonNull Long id, ProductEntity product) {
 		ProductEntity productUpdate = productRepository.findById(id)
 				.orElseThrow(()-> new RuntimeException("Khong tim thay san pham co id: = " + id));
+
+		if (!product.getName().equalsIgnoreCase(productUpdate.getName()) || 
+				!java.util.Objects.equals(product.getPrice(), productUpdate.getPrice())) {
+			String productTopic = "vpa_product_sync_to_elastic";
+			String productKey = String.valueOf(id);
+			try {
+				ProductElastic elasticDoc = new ProductElastic();
+				elasticDoc.setId(productKey);
+				elasticDoc.setName(product.getName());
+				elasticDoc.setPrice(product.getPrice() != null ? product.getPrice().intValue() : 0);
+
+				kafkaService.sendProductSyncElastic(productTopic, productKey, elasticDoc);
+			} catch (Exception e) {
+				System.out.println("[KAFKA-PRODUCER] Loi khi gui Product data len Kafka: " + e.getMessage());
+			}
+		}
 		productUpdate.setName(product.getName());
 		productUpdate.setBrandId(product.getBrandId());
 		productUpdate.setDescription(product.getDescription());
@@ -86,19 +102,6 @@ public class ProductServiceImpl implements ProductService{
 		else
 			productUpdate.setUrlImage(productUpdate.getUrlImage());
 		productRepository.save(productUpdate);
-		
-		String productTopic = "vpa_product_sync_to_elastic";
-		String productKey = String.valueOf(id);
-		try {
-			ProductElastic elasticDoc = new ProductElastic();
-			elasticDoc.setId(productKey);
-			elasticDoc.setName(product.getName());
-			elasticDoc.setPrice(product.getPrice() != null ? product.getPrice().intValue() : 0);
-
-			kafkaService.sendProductSyncElastic(productTopic, productKey, elasticDoc);
-		} catch (Exception e) {
-			System.out.println("[KAFKA PRODUCER] Loi khi gui Product data len Kafka: " + e.getMessage());
-		}
 	}
 	
 	@Override
@@ -106,9 +109,9 @@ public class ProductServiceImpl implements ProductService{
 		productRepository.deleteById(id);
 		try {
 			kafkaService.sendProductSyncElastic("vpa_product_sync_to_elastic", String.valueOf(id), "DELETE");
-		    System.out.println("🚀 [KAFKA PRODUCER] Đã bắn sự kiện XÓA sản phẩm ID: " + id);
+		    System.out.println("🚀 [KAFKA-PRODUCER] Đã bắn sự kiện XÓA sản phẩm ID: " + id);
 		} catch (Exception e) {
-		    System.err.println("❌ [KAFKA PRODUCER] Lỗi phát sự kiện xóa Elastic: " + e.getMessage());
+		    System.err.println("❌ [KAFKA-PRODUCER] Lỗi phát sự kiện xóa Elastic: " + e.getMessage());
 		}
 	}
 	

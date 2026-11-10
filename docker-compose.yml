@@ -8,6 +8,11 @@ services:
       - discovery.type=single-node
       - xpack.security.enabled=false
       - ES_JAVA_OPTS=-Xms256m -Xmx256m
+      
+      - "http.cors.enabled=true"
+      - "http.cors.allow-origin=*"
+      - "http.cors.allow-origin=http://localhost:8085"
+      - "http.cors.allow-headers=X-Requested-With,Content-Type,Content-Length,Authorization"
     ports:
       - '9200:9200'
     deploy:
@@ -86,8 +91,17 @@ services:
         - redisinsight_data:/data
     depends_on:
         - redis
+        
+  elasticvue:
+    image: cars10/elasticvue:latest
+    container_name: elastic-ui
+    ports:
+        - "8085:8080"
+    depends_on:
+        - elasticsearch
+        
 volumes:
-    redisinsight_data: 
+    redisinsight_data:
     mysql_vpa_data:
         
         

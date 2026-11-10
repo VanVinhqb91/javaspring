@@ -24,7 +24,7 @@ public class KafkaProductActivityConsumer {
         concurrency = "3"
     )
     public void listenProductActivity(List<String> listRawJson) {
-        System.out.println("📥 [PRODUCT - CONSUMER] Nhận được lô gồm: " + listRawJson.size() + " tin nhan.");
+        System.out.println("📥 [PRODUCT-CONSUMER] Nhận được lô gồm: " + listRawJson.size() + " tin nhan.");
 
         List<UserProductActivityEntity> entityList = new ArrayList<>();
         for (String rawJson : listRawJson) {
@@ -41,12 +41,12 @@ public class KafkaProductActivityConsumer {
 	                    .build();
 	            entityList.add(entity);
 	        } catch (Exception e) {
-	        		System.out.println("[PRODUCT - CONSUMER] Lỗi giải mã JSON lẻ: " + e.getMessage());
+	        		System.out.println("[PRODUCT-CONSUMER] Lỗi giải mã JSON lẻ: " + e.getMessage());
 	        }
         }
         if (!entityList.isEmpty()) {
             activityRepository.saveAllAndFlush(entityList);
-            System.out.println("✅ [PRODUCT - CONSUMER] Đã ghi gom cụm thành công " + entityList.size() + " dòng vào Database.");
+            System.out.println("✅ [PRODUCT-CONSUMER] Đã ghi gom cụm thành công " + entityList.size() + " dòng vào Database.");
         }
     }
 }

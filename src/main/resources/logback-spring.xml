@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="LOG_DIR" value="./logs" />
+
+    <!-- 🌟 1. IN RA TERMINAL CONSOLE MÀU SẮC ĐẸP RỰC RỠ (ANSI COLOR) -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %highlight(%-5level) %cyan(%logger{36}) - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 🌟 2. CẤU HÌNH FILE LOG RIÊNG CHO KAFKA -->
+    <appender name="KAFKA_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/kafka-system.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/archived/kafka-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxFileSize>5MB</maxFileSize>
+            <maxHistory>10</maxHistory>
+            <totalSizeCap>50MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{40} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 🌟 3. CẤU HÌNH FILE LOG RIÊNG CHO ELASTICSEARCH -->
+    <appender name="ELASTIC_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/elasticsearch-system.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/archived/elastic-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxFileSize>5MB</maxFileSize>
+            <maxHistory>10</maxHistory>
+            <totalSizeCap>50MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{40} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 🌟 4. CẤU HÌNH FILE LOG RIÊNG CHO REDIS -->
+    <appender name="REDIS_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/redis-system.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/archived/redis-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxFileSize>5MB</maxFileSize>
+            <maxHistory>10</maxHistory>
+            <totalSizeCap>50MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{40} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 🌟 5. CẤU HÌNH FILE LOG RIÊNG CHO RABBITMQ (AMQP) -->
+    <appender name="RABBIT_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/rabbitmq-system.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/archived/rabbitmq-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxFileSize>5MB</maxFileSize>
+            <maxHistory>10</maxHistory>
+            <totalSizeCap>50MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{40} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 🌟 6. CẤU HÌNH FILE LOG RIÊNG CHO LÕI HỆ THỐNG SPRING BOOT -->
+    <appender name="SPRING_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/spring-core.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/archived/spring-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxFileSize>5MB</maxFileSize>
+            <maxHistory>10</maxHistory>
+            <totalSizeCap>50MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{40} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    
+    <!-- 🌟 7. CẤU HÌNH GHI FILE RIÊNG CHO TẤT CẢ CÁC LỆNH SYSTEM.OUT.PRINTLN -->
+    <appender name="PRINT_LN_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/system-out-prints.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/archived/prints-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxFileSize>5MB</maxFileSize>
+            <maxHistory>10</maxHistory>
+            <totalSizeCap>50MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <!-- Định dạng ghi nhận: Hiện ngày giờ và nội dung câu chữ bạn println -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- A. LUỒNG KAFKA -->
+    <logger name="org.springframework.kafka" level="INFO" additivity="false">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="KAFKA_FILE" />
+    </logger>
+    <logger name="org.apache.kafka" level="INFO" additivity="false">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="KAFKA_FILE" />
+    </logger>
+
+    <!-- B. LUỒNG ELASTICSEARCH -->
+    <logger name="org.springframework.data.elasticsearch" level="INFO" additivity="false">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="ELASTIC_FILE" />
+    </logger>
+    <logger name="org.elasticsearch" level="INFO" additivity="false">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="ELASTIC_FILE" />
+    </logger>
+
+    <!-- C. LUỒNG REDIS -->
+    <logger name="org.springframework.data.redis" level="INFO" additivity="false">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="REDIS_FILE" />
+    </logger>
+    <logger name="io.lettuce.core" level="INFO" additivity="false">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="REDIS_FILE" />
+    </logger>
+
+    <!-- D. LUỒNG RABBITMQ (Tính năng Chatbox Realtime của bạn) -->
+    <logger name="org.springframework.amqp" level="INFO" additivity="false">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="RABBIT_FILE" />
+    </logger>
+    <logger name="com.rabbitmq.client" level="INFO" additivity="false">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="RABBIT_FILE" />
+    </logger>
+
+    <!-- E. LUỒNG LÕI SPRING BOOT (Các log khởi tạo Beans, Web Server Tomcat, Security, Hibernate...) -->
+    <!-- Chỉ bắt các log thuộc framework gốc, loại trừ code app của bạn -->
+    <logger name="org.springframework" level="INFO" additivity="false">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="SPRING_FILE" />
+    </logger>
+    <logger name="org.hibernate" level="INFO" additivity="false">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="SPRING_FILE" />
+    </logger>
+    <logger name="PRINT_LN_FILE" level="INFO" additivity="false">
+        <appender-ref ref="PRINT_LN_FILE" />
+    </logger>
+
+    <!-- 🌟 F. LUỒNG LOG GỐC CHO CODE DỰ ÁN CỦA BẠN (vpasound.com) -->
+    <!-- Log từ code bạn viết sẽ in ra Console siêu đẹp để bạn tiện debug -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+    </root>
+</configuration>
