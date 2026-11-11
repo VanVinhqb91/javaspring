@@ -1,12 +1,10 @@
-package vpasound.com;
+package vpasound.com.fontend.elastic;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import lombok.RequiredArgsConstructor;
 import vpasound.com.backend.catalogs.service.ProductService;
 import vpasound.com.core.entity.ProductEntity;
-import vpasound.com.fontend.elastic.ProductElastic;
-import vpasound.com.fontend.elastic.ProductElasticRepository;
 import java.util.ArrayList;
 import java.util.List;
 
