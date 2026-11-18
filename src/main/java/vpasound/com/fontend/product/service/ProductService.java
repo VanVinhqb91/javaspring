@@ -4,4 +4,5 @@ import vpasound.com.core.entity.ProductEntity;
 
 public interface ProductService {
 	public ProductEntity getProductById(Long id);
+	public ProductEntity getProductBySlug(String slug);
 }

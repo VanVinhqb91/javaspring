@@ -20,4 +20,7 @@ public class ProductElastic {
 
     @Field(type = FieldType.Integer)
     private Integer price;
+    
+    @Field(type = FieldType.Text)
+    private String slug;
 }

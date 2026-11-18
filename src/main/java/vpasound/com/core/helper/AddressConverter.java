@@ -16,7 +16,7 @@ public class AddressConverter implements AttributeConverter<AddressSnapshot, Str
         try {
             return attribute == null ? null : objectMapper.writeValueAsString(attribute);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("Lỗi đóng gói chuỗi JSON: " + e.getMessage());
+            throw new RuntimeException("["+this.getClass().getSimpleName()+"] Lỗi đóng gói chuỗi JSON: " + e.getMessage());
         }
     }
 
@@ -26,7 +26,7 @@ public class AddressConverter implements AttributeConverter<AddressSnapshot, Str
         try {
             return dbData == null || dbData.isBlank() ? null : objectMapper.readValue(dbData, AddressSnapshot.class);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("Lỗi giải mã chuỗi JSON: " + e.getMessage());
+            throw new RuntimeException("["+this.getClass().getSimpleName()+"] Lỗi giải mã chuỗi JSON: " + e.getMessage());
         }
     }
 }

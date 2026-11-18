@@ -14,13 +14,13 @@
     <appender name="KAFKA_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_DIR}/kafka-system.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_DIR}/archived/kafka-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${LOG_DIR}/archived/kafka_system_%d{dd-MM-yyyy}.log</fileNamePattern>
             <maxFileSize>5MB</maxFileSize>
             <maxHistory>10</maxHistory>
             <totalSizeCap>50MB</totalSizeCap>
         </rollingPolicy>
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{40} - %msg%n</pattern>
+            <pattern>%d{dd-MM-yyyy HH:mm:ss} [%thread] %-5level %logger{40} - %msg%n</pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -29,13 +29,13 @@
     <appender name="ELASTIC_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_DIR}/elasticsearch-system.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_DIR}/archived/elastic-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${LOG_DIR}/archived/elastic_system_%d{dd-MM-yyyy}.log</fileNamePattern>
             <maxFileSize>5MB</maxFileSize>
             <maxHistory>10</maxHistory>
             <totalSizeCap>50MB</totalSizeCap>
         </rollingPolicy>
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{40} - %msg%n</pattern>
+            <pattern>%d{dd-MM-yyyy HH:mm:ss} [%thread] %-5level %logger{40} - %msg%n</pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -44,13 +44,13 @@
     <appender name="REDIS_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_DIR}/redis-system.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_DIR}/archived/redis-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${LOG_DIR}/archived/redis_system_%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxFileSize>5MB</maxFileSize>
             <maxHistory>10</maxHistory>
             <totalSizeCap>50MB</totalSizeCap>
         </rollingPolicy>
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{40} - %msg%n</pattern>
+            <pattern>%d{dd-MM-yyyy HH:mm:ss} [%thread] %-5level %logger{40} - %msg%n</pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -59,28 +59,28 @@
     <appender name="RABBIT_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_DIR}/rabbitmq-system.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_DIR}/archived/rabbitmq-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${LOG_DIR}/archived/rabbitmq_system_%d{dd-MM-yyyy}.log</fileNamePattern>
             <maxFileSize>5MB</maxFileSize>
             <maxHistory>10</maxHistory>
             <totalSizeCap>50MB</totalSizeCap>
         </rollingPolicy>
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{40} - %msg%n</pattern>
+            <pattern>%d{dd-MM-yyyy HH:mm:ss} [%thread] %-5level %logger{40} - %msg%n</pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
 
     <!-- 🌟 6. CẤU HÌNH FILE LOG RIÊNG CHO LÕI HỆ THỐNG SPRING BOOT -->
     <appender name="SPRING_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_DIR}/spring-core.log</file>
+        <file>${LOG_DIR}/javaSpring-core.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_DIR}/archived/spring-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${LOG_DIR}/archived/javaSpring_core_%d{dd-MM-yyyy}.log</fileNamePattern>
             <maxFileSize>5MB</maxFileSize>
             <maxHistory>10</maxHistory>
             <totalSizeCap>50MB</totalSizeCap>
         </rollingPolicy>
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{40} - %msg%n</pattern>
+            <pattern>%d{dd-MM-yyyy HH:mm:ss} [%thread] %-5level %logger{40} - %msg%n</pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -89,14 +89,14 @@
     <appender name="PRINT_LN_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_DIR}/system-out-prints.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_DIR}/archived/prints-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <fileNamePattern>${LOG_DIR}/archived/system_out_prints_%d{dd-MM-yyyy}.log</fileNamePattern>
             <maxFileSize>5MB</maxFileSize>
             <maxHistory>10</maxHistory>
             <totalSizeCap>50MB</totalSizeCap>
         </rollingPolicy>
         <encoder>
             <!-- Định dạng ghi nhận: Hiện ngày giờ và nội dung câu chữ bạn println -->
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} - %msg%n</pattern>
+            <pattern>%d{dd-MM-yyyy HH:mm:ss} - %msg%n</pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>

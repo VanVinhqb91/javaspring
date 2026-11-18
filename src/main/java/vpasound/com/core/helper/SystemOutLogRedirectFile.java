@@ -1,5 +1,6 @@
 package vpasound.com.core.helper;
 
+import org.apache.commons.compress.harmony.unpack200.bytecode.forms.ThisFieldRefForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -66,6 +67,6 @@ public class SystemOutLogRedirectFile {
             }
         }, true));
         
-        System.out.println("🎉 [SYSTEM-OUT] Đã kích hoạt bộ lọc StackTrace tối cao, quét sạch 100% rác Spring và Hibernate!");
+        System.out.println("["+this.getClass().getSimpleName()+"] Đã kích hoạt bộ lọc StackTrace tối cao, quét sạch 100% rác Spring và Hibernate!");
     }
 }

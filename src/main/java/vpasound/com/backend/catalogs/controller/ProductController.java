@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
 import lombok.RequiredArgsConstructor;
-
 import vpasound.com.backend.catalogs.service.BrandService;
 import vpasound.com.backend.catalogs.service.CategoryService;
 import vpasound.com.backend.catalogs.service.ProductService;
@@ -21,7 +19,6 @@ import vpasound.com.backend.systems.service.SettingService;
 import vpasound.com.core.dto.response.backend.CategoryResponseDto;
 import vpasound.com.core.entity.BrandEntity;
 import vpasound.com.core.entity.ProductEntity;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -35,7 +32,6 @@ public class ProductController {
 	
 	@Value("${upload.path_products}")
 	private String uploadDirProduct;
-	
 	private final SettingService settingService;
 	private final ProductService productService;
 	private final CategoryService categoryService;

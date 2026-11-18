@@ -18,14 +18,14 @@ public class KafkaService {
             String jsonString = objectMapper.writeValueAsString(data);
             kafkaTemplate.send(topic, key, jsonString).whenComplete((result, ex) -> {
                 if (ex == null) {
-                    System.out.println("🚀 [PRODUCT-PRODUCER] Đã gửi chuỗi thô lên Kafka thành công! Offset: " 
+                    System.out.println("["+this.getClass().getSimpleName()+"][PRODUCT-PRODUCER] Đã gửi chuỗi thô lên Kafka thành công! Offset: " 
                             + result.getRecordMetadata().offset());
                 } else {
-                    System.err.println("❌ [PRODUCT-PRODUCER] Gửi lên Kafka THẤT BẠI! " + ex.getMessage());
+                    System.err.println("["+this.getClass().getSimpleName()+"][PRODUCT-PRODUCER] Gửi lên Kafka THẤT BẠI! " + ex.getMessage());
                 }
             });
         } catch (Exception e) {
-            System.err.println("❌ [PRODUCT-PRODUCER] Lỗi khi chuyển đổi Json String: " + e.getMessage());
+            System.err.println("["+this.getClass().getSimpleName()+"][PRODUCT-PRODUCER] Lỗi khi chuyển đổi Json String: " + e.getMessage());
         }
     }
     
@@ -34,14 +34,14 @@ public class KafkaService {
             String jsonString = objectMapper.writeValueAsString(data);
             kafkaTemplate.send(topic, key, jsonString).whenComplete((result, ex) -> {
                 if (ex == null) {
-                    System.out.println("🚀 [ELASTIC-PRODUCER] Đã tạo thành công 1 sản phẩm và gửi lên Kafka thành công!." 
+                    System.out.println("["+this.getClass().getSimpleName()+"][ELASTIC-PRODUCER] Đã tạo thành công 1 sản phẩm và gửi lên Kafka thành công!." 
                             + result.getRecordMetadata().offset());
                 } else {
-                    System.err.println("❌ [ELASTIC-PRODUCER] Gửi lên Kafka THẤT BẠI! " + ex.getMessage());
+                    System.err.println("["+this.getClass().getSimpleName()+"][ELASTIC-PRODUCER] Gửi lên Kafka THẤT BẠI! " + ex.getMessage());
                 }
             });
         } catch (Exception e) {
-            System.err.println("❌ [ELASTIC-PRODUCER] Lỗi khi chuyển đổi Json String: " + e.getMessage());
+            System.err.println("["+this.getClass().getSimpleName()+"][ELASTIC-PRODUCER] Lỗi khi chuyển đổi Json String: " + e.getMessage());
         }
     }
 }

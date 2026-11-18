@@ -23,7 +23,7 @@ public class DataSyncMySqlToElasticSearch implements CommandLineRunner {
 		
 		if (countInElastic != totalProductDatabase) {
 			productElasticRepository.deleteAll();
-			System.out.println("[Elastic-Product] Phát hiện dữ liệu trống. Bắt đầu đồng bộ từ MySQL");
+			System.out.println("["+this.getClass().getSimpleName()+"][Elastic-Product] Phát hiện dữ liệu trống. Bắt đầu đồng bộ từ MySQL");
 			List<ProductEntity> allProductsInMySQL = productService.findAll();
 			if (allProductsInMySQL != null && !allProductsInMySQL.isEmpty()) {
 				List<ProductElastic> listProducts = new ArrayList<>();
@@ -32,17 +32,18 @@ public class DataSyncMySqlToElasticSearch implements CommandLineRunner {
 					elasticDoc.setId(String.valueOf(mysqlProd.getId()));
 					elasticDoc.setName(mysqlProd.getName());
 					elasticDoc.setPrice(mysqlProd.getPrice() != null ? mysqlProd.getPrice().intValue() : 0);
+					elasticDoc.setSlug(mysqlProd.getSlug());
 					listProducts.add(elasticDoc);
 				}
 				if (!listProducts.isEmpty()) {
 					productElasticRepository.saveAll(listProducts);
-					System.out.println("[Elastic-Product] Đồng bộ thành công " + listProducts.size() + " sản phẩm!");
+					System.out.println("["+this.getClass().getSimpleName()+"][Elastic-Product] Đồng bộ thành công " + listProducts.size() + " sản phẩm!");
 				}
 			} else {
-				System.out.println("[Elastic-Product] Không có dữ liệu sản phẩm nào trong MySQL để đồng bộ.");
+				System.out.println("["+this.getClass().getSimpleName()+"][Elastic-Product] Không có dữ liệu sản phẩm nào trong MySQL để đồng bộ.");
 			}
 		} else {
-			System.out.println("[Elastic-Product] Database trong Mysql và Elasticsearch đã giống nhau => Bỏ qua đồng bộ.");
+			System.out.println("["+this.getClass().getSimpleName()+"][Elastic-Product] Database trong Mysql và Elasticsearch đã giống nhau => Bỏ qua đồng bộ.");
 		}
 	}
 }

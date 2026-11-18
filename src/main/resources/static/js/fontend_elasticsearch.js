@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             suggestionBox.style.display = "none";
 
                             // CHÚ Ý: Chuyển hướng người dùng sang trang chi tiết sản phẩm dựa vào ID
-                            window.location.href = `/product/detail/${product.id}`;
+                            window.location.href = `/san-pham/${product.slug}-pid${product.id}.html`;
                         });
 
                         suggestionBox.appendChild(li);

@@ -1,10 +1,8 @@
 package vpasound.com.fontend.product.service.impl;
 
 import java.util.Objects;
-
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-
 import lombok.RequiredArgsConstructor;
 import vpasound.com.core.entity.ProductEntity;
 import vpasound.com.core.repository.ProductRepository;
@@ -23,5 +21,10 @@ public class ProductServiceImpl implements ProductService{
 				.orElseThrow(() -> new RuntimeException("Khong tim thay id: " + id));
 		if (Objects.isNull(product)) return null;
 		return product;
+	}
+	
+	public ProductEntity getProductBySlug(String slug) {
+		return productRepository.findBySlug(slug)
+				.orElseThrow(() -> new RuntimeException("Khong tim thay slug: " + slug));
 	}
 }

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
@@ -19,13 +18,13 @@ import vpasound.com.fontend.product.service.ProductService;
 
 @Controller("frontendProductController")
 @RequiredArgsConstructor
-@RequestMapping("/product")
 public class ProductController {
 	public final ProductService productService;
 	public final KafkaService kafkaService;
 	
-	@GetMapping("/{id}")
+	@GetMapping("/san-pham/{slug}-pid{id}.html")
 	public String viewProduct(
+			@PathVariable String slug,
 			@PathVariable Long id,
 			Model model
 	) {
@@ -33,10 +32,10 @@ public class ProductController {
 		model.addAttribute("product", product);
 		model.addAttribute("currentUser", "user_003");
 		
-		return "fontend/product_detail";
+		return "fontend/products/product_detail";
 	}
 	
-	@PostMapping("/api/tracking/activity")
+	@PostMapping("/product/api/tracking/activity")
 	@ResponseBody
 	public String trackingActivity(@RequestBody ProductViewKafkaResponseDto event) {
 		if (event.getTimestamp() == null) {

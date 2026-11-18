@@ -40,7 +40,7 @@ public class TrafficInterceptor implements HandlerInterceptor{
         String today = java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("dd_MM_yyyy"));
         String redisKey = "Traffic:" + today;
         redisTemplate.opsForHyperLogLog().add(redisKey, visitorId);
-        System.out.println("🚀 [REDIS TRAFFIC] Ghi nhận thêm 1 lượt truy cập vào Key: " + redisKey);
+        System.out.println("["+this.getClass().getSimpleName()+"][REDIS-TRAFFIC] Ghi nhận thêm 1 lượt truy cập vào Key: " + redisKey);
 
         return true;
     }

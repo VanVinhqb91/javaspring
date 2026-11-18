@@ -28,37 +28,43 @@
 				class="bg-white border border-slate-300 rounded-t shadow-sm">
 				<main class="main-content">
 					<section class="panel">
-						<div class="panel-header" onclick="togglePanel(this)">Basic
-							Settings</div>
+						<div class="panel-header" onclick="togglePanel(this)">Basic Settings</div>
 						<div class="panel-body">
 							<div class="form-group required">
 								<label>Enable Product</label>
 								<div class="switch-container">
-									<label class="switch" style="width: 140px"> <input
-										type="checkbox" name="status" value="1"
-										th:checked="*{status} == 1"> <span class="slider"></span>
+									<label class="switch" style="width: 140px">
+                                        <input type="checkbox" name="status" value="1"
+										th:checked="*{status} == 1"> 
+                                        <span class="slider"></span>
 									</label>
 								</div>
 							</div>
 							<div class="form-group required">
-								<label for="product-name">Product Name</label> <input
-									type="text" th:field="*{name}" class="form-control"
+								<label for="product-name">Product Name</label> 
+                                <input type="text" th:field="*{name}" class="form-control"
 									placeholder="e.g. Fusion Backpack" required>
 							</div>
+                            
+                            <div class="form-group">
+                                <label for="slug">Slug</label> 
+                                <input type="text" th:field="*{slug}" class="form-control">
+                            </div>
 
 							<div class="form-group required">
-								<label for="sku">SKU</label> <input type="text"
+								<label for="sku">SKU</label> 
+                                <input type="text"
 									th:field="*{sku}" class="form-control" placeholder="24-MB01" required>
 							</div>
 
 							<div class="form-group required">
-								<label for="price">Price ($)</label> <input type="number"
-									th:field="*{price}" class="form-control" required>
+								<label for="price">Price ($)</label> 
+                                <input type="number" th:field="*{price}" class="form-control" required>
 							</div>
 
 							<div class="form-group">
-								<label for="tax-class">Tax Class</label> <select id="tax-class"
-									class="form-control">
+								<label for="tax-class">Tax Class</label>
+                                <select id="tax-class" class="form-control">
 									<option value="none">None</option>
 									<option value="taxable" selected>Taxable Goods</option>
 									<option value="shipping">Shipping</option>
@@ -66,12 +72,14 @@
 							</div>
 
 							<div class="form-group required">
-								<label for="qty">Quantity</label> <input type="number"
-									th:field="*{qty}" class="form-control" value="100" required>
+								<label for="qty">Quantity</label> 
+                                <input type="number" 
+                                    th:field="*{qty}" class="form-control" value="100" required>
 							</div>
 							
 							<div class="form-group">
-								<label for="qty">Quantity Sold</label> <input type="number"
+								<label for="qty">Quantity Sold</label> 
+                                <input type="number"
 									th:field="*{qtySold}" class="form-control" value="1">
 							</div>
 
@@ -82,6 +90,18 @@
 									<option value="0">Out of Stock</option>
 								</select>
 							</div>
+                            
+                            <div class="form-group required">
+                                <label for="stock-status">Warranty Months</label> 
+                                <select
+                                    th:field="*{warrantyMonths}" class="form-control" required>
+                                    <option value="0">Không Bảo Hành</option>
+                                    <option value="6">Bảo Hành 6 Tháng</option>
+                                    <option value="12">Bảo Hành 12 Tháng</option>
+                                    <option value="18">Bảo Hành 18 Tháng</option>
+                                    <option value="24">Bảo Hành 24 Tháng</option>
+                                </select>
+                            </div>
 							
 							<div class="form-group required">
 								<label for="categories">Categories</label> 
@@ -98,7 +118,7 @@
 							</div>
 						</div>
 					</section>
-
+                    
 					<!-- Content Panel -->
 					<section class="panel">
 						<div class="panel-header" onclick="togglePanel(this)">Content</div>
@@ -114,25 +134,22 @@
 							</div>
 						</div>
 					</section>
-
+                    
 					<!-- Images & Videos Panel -->
 					<section class="panel">
-						<div class="panel-header" onclick="togglePanel(this)">Images
-							and Videos</div>
+						<div class="panel-header" onclick="togglePanel(this)">Images and Videos</div>
 						<div class="panel-body">
 							<div class="upload-zone">
 							<input type="file" name="image-file">
-								<p>
-									<strong>Browse files</strong> or drag & drop images here
-								</p>
+								<p><strong>Browse files</strong> or drag & drop images here</p>
 								<span class="field-note">Supports JPG, PNG, GIF files.</span>
 							</div>
 						</div>
 						
 						<div class="panel-body">
 							<div class="form-group">
-								<label for="url-key">Link Youtube Video</label> <input type="text"
-									th:field="*{urlVideo}" class="form-control">
+								<label for="url-key">Link Youtube Video</label> 
+                                <input type="text" th:field="*{urlVideo}" class="form-control">
 							</div>
 						</div>
 					</section>
@@ -142,8 +159,8 @@
 						<div class="panel-header" onclick="togglePanel(this)">Product Attribute</div>
 						<div class="panel-body">
 							<div class="form-group">
-								<label for="attribute-set">Attribute Set</label> <select
-									id="attribute-set" class="form-control">
+								<label for="attribute-set">Attribute Set</label> 
+                                <select id="attribute-set" class="form-control">
 									<option value="default">Default</option>
 									<option value="bag">Bag</option>
 									<option value="gear">Gear</option>
@@ -151,12 +168,12 @@
 							</div>
 
 							<div class="form-group">
-								<label for="visibility">Visibility</label> <select
-									id="visibility" class="form-control">
-									<option value="4" selected>Catalog, Search</option>
+								<label for="visibility">Visibility</label> 
+                                <select id="visibility" class="form-control">
+									<option value="1" selected>Catalog, Search</option>
 									<option value="2">Catalog</option>
 									<option value="3">Search</option>
-									<option value="1">Not Visible Individually</option>
+									<option value="4">Not Visible Individually</option>
 								</select>
 							</div>
 						</div>
@@ -164,16 +181,11 @@
 
 					<!-- Search Engine Optimization Panel -->
 					<section class="panel">
-						<div class="panel-header" onclick="togglePanel(this)">Search
-							Engine Optimization</div>
+						<div class="panel-header" onclick="togglePanel(this)">Search Engine Optimization</div>
 						<div class="panel-body">
 							<div class="form-group">
-								<label for="url-key">URL Key</label> <input type="text"
-									th:field="*{seoUrlKey}" class="form-control">
-							</div>
-							<div class="form-group">
-								<label for="meta-title">Meta Title</label> <input type="text"
-									th:field="*{seoMetaTitle}" class="form-control">
+								<label for="meta-title">Meta Title</label> 
+                                <input type="text" th:field="*{seoMetaTitle}" class="form-control">
 							</div>
 							<div class="form-group">
 								<label for="meta-keywords">Meta Keywords</label>

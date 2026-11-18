@@ -29,6 +29,9 @@ public class ProductEntity {
 	@Column(name = "name")
 	private String name;
 	
+	@Column(name = "slug", nullable = false, unique = true)
+	private String slug;
+	
 	@Column(name = "url_image")
 	private String urlImage;
 	
@@ -77,9 +80,6 @@ public class ProductEntity {
 	
 	@Column(name = "stock_status")
 	private Integer stockStatus;
-	
-	@Column(name = "seo_url_key")
-	private String seoUrlKey;
 	
 	@Column(name = "seo_meta_title")
 	private String seoMetaTitle;

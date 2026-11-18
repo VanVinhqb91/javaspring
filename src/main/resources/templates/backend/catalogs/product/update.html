@@ -47,7 +47,10 @@
 									type="text" th:field="*{name}" class="form-control"
 									placeholder="e.g. Fusion Backpack" required>
 							</div>
-
+                            <div class="form-group">
+                                <label for="slug">Slug</label> <input type="text"
+                                    th:field="*{slug}" class="form-control">
+                            </div>
 							<div class="form-group required">
 								<label for="sku">SKU</label> <input type="text"
 									th:field="*{sku}" class="form-control" placeholder="24-MB01" required>
@@ -85,6 +88,17 @@
 								</select>
 							</div>
 							
+                            <div class="form-group required">
+                                <label for="stock-status">Warranty Months</label> <select
+                                    th:field="*{warrantyMonths}" class="form-control" required>
+                                    <option value="0">Không Bảo Hành</option>
+                                    <option value="6">Bảo Hành 6 Tháng</option>
+                                    <option value="12">Bảo Hành 12 Tháng</option>
+                                    <option value="18">Bảo Hành 18 Tháng</option>
+                                    <option value="24">Bảo Hành 24 Tháng</option>
+                                </select>
+                            </div>
+                            
 							<div class="form-group required">
 								<label for="categories">Categories</label> 
 								<select th:field="*{categoryId}" class="form-control" multiple style="height: 180px;" required>
@@ -167,10 +181,6 @@
 						<div class="panel-header" onclick="togglePanel(this)">Search
 							Engine Optimization</div>
 						<div class="panel-body">
-							<div class="form-group">
-								<label for="url-key">URL Key</label> <input type="text"
-									th:field="*{seoUrlKey}" class="form-control">
-							</div>
 							<div class="form-group">
 								<label for="meta-title">Meta Title</label> <input type="text"
 									th:field="*{seoMetaTitle}" class="form-control">
