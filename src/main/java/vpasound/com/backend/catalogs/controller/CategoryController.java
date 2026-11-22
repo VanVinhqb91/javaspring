@@ -17,6 +17,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import vpasound.com.backend.catalogs.service.CategoryService;
+import vpasound.com.core.config.SecretUrlKeyAdmin;
 import vpasound.com.core.dto.request.backend.CategoryRequestDto;
 import vpasound.com.core.dto.response.backend.CategoryResponseDto;
 import vpasound.com.core.entity.CategoryEntity;
@@ -27,6 +28,7 @@ import vpasound.com.core.entity.CategoryEntity;
 public class CategoryController {
 	
 	public final CategoryService categoryService;
+	private final SecretUrlKeyAdmin secretUrlKeyAdmin;
 	
 	@GetMapping("")
 	public String getCategory(Model model) {
@@ -53,7 +55,7 @@ public class CategoryController {
 		int status = categoryDTO.getStatus() == null ? 0 : 1;
 		categoryDTO.setStatus(status);
 		categoryService.saveCategory(categoryDTO);
-		return "redirect:/backend/catalogs/category/list";
+		return "redirect:" + secretUrlKeyAdmin.url("/backend/catalogs/category/list");
 	}
 	
 	@GetMapping("/update/{id}")
@@ -92,7 +94,7 @@ public class CategoryController {
 		} catch (Exception e) {
 			redirectAttributes.addFlashAttribute("errorMessage", "Lỗi Khi Update Danh Mục: ID - " + id + e.getMessage());
 		}
-		return "redirect:/backend/catalogs/category";
+		return "redirect:" + secretUrlKeyAdmin.url("/backend/catalogs/category");
 	}
 	
 	@GetMapping("/delete/{id}")
@@ -106,6 +108,6 @@ public class CategoryController {
 		} catch (Exception e) {
 			redirectAttributes.addFlashAttribute("errorMessage", "Lỗi khi xóa danh mục: " + e.getMessage());
 		}
-		return "redirect:/backend/catalogs/category";
+		return "redirect:" + secretUrlKeyAdmin.url("/backend/catalogs/category");
 	}
 }

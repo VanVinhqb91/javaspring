@@ -26,4 +26,6 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long>{
 	public Optional<ProductEntity> findBySlug(String slug);
 	
 	boolean existsBySlug(String slug);
+	
+	List<ProductEntity> findTop8ByOrderByQtySoldDesc();
 }

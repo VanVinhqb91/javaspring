@@ -273,8 +273,7 @@
 
 					<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 						<!-- Product Card 1 -->
-						<div
-							class="bg-white rounded-2xl p-4 border border-zinc-200 shadow-sm hover:shadow-lg transition-all group relative flex flex-col justify-between">
+						<div th:each="product:${bestProducts}" class="bg-white rounded-2xl p-4 border border-zinc-200 shadow-sm hover:shadow-lg transition-all group relative flex flex-col justify-between">
 							<div
 								class="relative w-full h-56 bg-zinc-100 rounded-xl overflow-hidden flex items-center justify-center p-4">
 								<span
@@ -287,90 +286,11 @@
 								<span
 									class="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">Tai
 									Nghe</span>
-								<h4
-									class="text-sm font-bold text-black group-hover:text-zinc-600 transition-colors line-clamp-1">
-									AudioLab Studio Wireless Pro</h4>
+								<h4 class="text-sm font-bold text-black group-hover:text-zinc-600 transition-colors line-clamp-1">
+									[[${product.name}]]</h4>
 								<div class="flex items-center space-x-2">
-									<span class="text-sm font-extrabold text-black">8.990.000₫</span>
+									<span class="text-sm font-extrabold text-black">[[${product.price}]]</span>
 									<span class="text-xs text-zinc-400 line-through">10.500.000₫</span>
-								</div>
-								<button
-									class="w-full mt-3 bg-black text-white text-xs font-bold py-2.5 rounded-xl hover:bg-zinc-800 transition-colors uppercase tracking-wider">
-									Thêm Vào Giỏ</button>
-							</div>
-						</div>
-
-						<!-- Product Card 2 -->
-						<div
-							class="bg-white rounded-2xl p-4 border border-zinc-200 shadow-sm hover:shadow-lg transition-all group relative flex flex-col justify-between">
-							<div
-								class="relative w-full h-56 bg-zinc-100 rounded-xl overflow-hidden flex items-center justify-center p-4">
-								<img
-									src="https://images.unsplash.com/photo-1545454675-3531b543be5d?q=80&w=400&auto=format&fit=crop"
-									class="max-h-full object-contain group-hover:scale-105 transition-all duration-300" />
-							</div>
-							<div class="mt-4 space-y-2">
-								<span
-									class="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">Loa
-									Bluetooth</span>
-								<h4
-									class="text-sm font-bold text-black group-hover:text-zinc-600 transition-colors line-clamp-1">
-									SoundBar Hi-End Master III</h4>
-								<div class="flex items-center space-x-2">
-									<span class="text-sm font-extrabold text-black">14.500.000₫</span>
-								</div>
-								<button
-									class="w-full mt-3 bg-black text-white text-xs font-bold py-2.5 rounded-xl hover:bg-zinc-800 transition-colors uppercase tracking-wider">
-									Thêm Vào Giỏ</button>
-							</div>
-						</div>
-
-						<!-- Product Card 3 -->
-						<div
-							class="bg-white rounded-2xl p-4 border border-zinc-200 shadow-sm hover:shadow-lg transition-all group relative flex flex-col justify-between">
-							<div
-								class="relative w-full h-56 bg-zinc-100 rounded-xl overflow-hidden flex items-center justify-center p-4">
-								<span
-									class="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase">-15%</span>
-								<img
-									src="https://images.unsplash.com/photo-1590658268037-6bf12165a8df?q=80&w=400&auto=format&fit=crop"
-									class="max-h-full object-contain group-hover:scale-105 transition-all duration-300" />
-							</div>
-							<div class="mt-4 space-y-2">
-								<span
-									class="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">Amply
-									& Dac</span>
-								<h4
-									class="text-sm font-bold text-black group-hover:text-zinc-600 transition-colors line-clamp-1">
-									AudioLab Dac X-Lossless</h4>
-								<div class="flex items-center space-x-2">
-									<span class="text-sm font-extrabold text-black">18.200.000₫</span>
-									<span class="text-xs text-zinc-400 line-through">21.500.000₫</span>
-								</div>
-								<button
-									class="w-full mt-3 bg-black text-white text-xs font-bold py-2.5 rounded-xl hover:bg-zinc-800 transition-colors uppercase tracking-wider">
-									Thêm Vào Giỏ</button>
-							</div>
-						</div>
-
-						<!-- Product Card 4 -->
-						<div
-							class="bg-white rounded-2xl p-4 border border-zinc-200 shadow-sm hover:shadow-lg transition-all group relative flex flex-col justify-between">
-							<div
-								class="relative w-full h-56 bg-zinc-100 rounded-xl overflow-hidden flex items-center justify-center p-4">
-								<img
-									src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=400&auto=format&fit=crop"
-									class="max-h-full object-contain group-hover:scale-105 transition-all duration-300" />
-							</div>
-							<div class="mt-4 space-y-2">
-								<span
-									class="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">Tai
-									Nghe Studio</span>
-								<h4
-									class="text-sm font-bold text-black group-hover:text-zinc-600 transition-colors line-clamp-1">
-									AudioLab Reference Monitor</h4>
-								<div class="flex items-center space-x-2">
-									<span class="text-sm font-extrabold text-black">12.000.000₫</span>
 								</div>
 								<button
 									class="w-full mt-3 bg-black text-white text-xs font-bold py-2.5 rounded-xl hover:bg-zinc-800 transition-colors uppercase tracking-wider">

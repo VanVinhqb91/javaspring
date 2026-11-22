@@ -16,6 +16,7 @@ import vpasound.com.backend.catalogs.service.BrandService;
 import vpasound.com.backend.catalogs.service.CategoryService;
 import vpasound.com.backend.catalogs.service.ProductService;
 import vpasound.com.backend.systems.service.SettingService;
+import vpasound.com.core.config.SecretUrlKeyAdmin;
 import vpasound.com.core.dto.response.backend.CategoryResponseDto;
 import vpasound.com.core.entity.BrandEntity;
 import vpasound.com.core.entity.ProductEntity;
@@ -36,6 +37,7 @@ public class ProductController {
 	private final ProductService productService;
 	private final CategoryService categoryService;
 	private final BrandService brandService;
+	private final SecretUrlKeyAdmin secretUrlKeyAdmin;
 	
 	@GetMapping("")
 	public String getProduct(
@@ -105,9 +107,9 @@ public class ProductController {
 		productService.createProduct(product);
 		
 		if ("saveAndClose".equals(action)) {
-			return "redirect:/backend/catalogs/product";
+			return "redirect:" + secretUrlKeyAdmin.url("/backend/catalogs/product");
         }
-		return "redirect:/backend/catalogs/product/add";
+		return "redirect:" + secretUrlKeyAdmin.url("/backend/catalogs/product/add");
 	}
 	
 	@GetMapping("/update/{id}")
@@ -148,14 +150,14 @@ public class ProductController {
 		productService.updateProduct(id, product);
 		
 		if ("updateAndClose".equals(action)) {
-			return "redirect:/backend/catalogs/product";
+			return "redirect:" + secretUrlKeyAdmin.url("/backend/catalogs/product");
 		}
-		return "redirect:/backend/catalogs/product/update/" + id;
+		return "redirect:" + secretUrlKeyAdmin.url("/backend/catalogs/product/update" + id);
 	}
 	
 	@GetMapping("/delete/{id}")
 	public String deleteProduct(@PathVariable Long id) {
 		productService.deleteProduct(id);
-		return "redirect:/backend/catalogs/product";
+		return "redirect:" + secretUrlKeyAdmin.url("/backend/catalogs/product");
 	}
 }

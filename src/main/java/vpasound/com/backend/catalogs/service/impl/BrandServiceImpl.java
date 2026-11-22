@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,7 +31,7 @@ public class BrandServiceImpl implements BrandService{
 	
 	@Override
 	public List<BrandEntity> getAllBrand() {
-		List<BrandEntity> brands = brandRepository.findAll();
+		List<BrandEntity> brands = brandRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
 		return brands;
 	}
 	

@@ -7,13 +7,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import jakarta.servlet.http.HttpSession;
-
 import lombok.RequiredArgsConstructor;
-
 import vpasound.com.core.dto.response.fontend.LoginFontendResponseDto;
 import vpasound.com.fontend.home.service.HomeService;
+import vpasound.com.fontend.product.service.ProductService;
 
 
 @Controller
@@ -22,6 +20,7 @@ public class HomeController {
 	
 	private final HomeService homeService;
 	private final RabbitTemplate rabbitTemplate;
+	private final ProductService productService;
 	
 	@Value("${app.rabbitmq.exchange}")
     private String exchange;
@@ -35,6 +34,7 @@ public class HomeController {
 		model.addAttribute("webTitle", homeService.getConfigByKey("web_title"));
 		model.addAttribute("formLogin", new LoginFontendResponseDto());
 		model.addAttribute("title", "TRANG CHỦ");
+		model.addAttribute("bestProducts", productService.getBestProductHomePage());
 
 		return "fontend/homepage";
 	}

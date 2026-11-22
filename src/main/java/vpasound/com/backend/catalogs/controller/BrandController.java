@@ -10,10 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import lombok.RequiredArgsConstructor;
-
 import vpasound.com.backend.catalogs.service.BrandService;
+import vpasound.com.core.config.SecretUrlKeyAdmin;
 import vpasound.com.core.dto.request.backend.BrandRequestDto;
 import vpasound.com.core.entity.BrandEntity;
 
@@ -23,6 +22,7 @@ import vpasound.com.core.entity.BrandEntity;
 public class BrandController {
 	
 	private final BrandService brandService;
+	private final SecretUrlKeyAdmin secretUrlKeyAdmin;
 	
 	@GetMapping("")
 	public String showBrand(Model model) {
@@ -51,9 +51,9 @@ public class BrandController {
 			redirectAttributes.addFlashAttribute("errorMessage", "Da co loi khi Tao moi Brand: " + e.getMessage());
 		}
 		if ("saveAndClose".equals(action)) {
-			return "redirect:/backend/catalogs/brand";
+			return "redirect:" + secretUrlKeyAdmin.url("/backend/catalogs/brand");
 		}
-		return "redirect:/backend/catalogs/brand/add";
+		return "redirect:" + secretUrlKeyAdmin.url("/backend/catalogs/brand/add");
 	}
 	
 	@GetMapping("/update/{id}")
@@ -80,9 +80,9 @@ public class BrandController {
 			redirectAttributes.addFlashAttribute("errorMessage", "Loi Update Brand " + e.getMessage());
 		}
 		if ("saveAndClose".equals(action)) {
-			return "redirect:/backend/catalogs/brand";
+			return "redirect:" + secretUrlKeyAdmin.url("/backend/catalogs/brand");
 		}
-		return "redirect:/backend/catalogs/brand/update/" + id;
+		return "redirect:" + secretUrlKeyAdmin.url("/backend/catalogs/brand/update/" + id);
 	}
 	
 	@GetMapping("/delete/{id}")
@@ -96,7 +96,6 @@ public class BrandController {
 		} catch (Exception e) {
 			redirectAttributes.addFlashAttribute("errorMessage", "Loi Deleted Brand " + e.getMessage());
 		}
-		
-		return "redirect:/backend/catalogs/brand";
+		return "redirect:" + secretUrlKeyAdmin.url("/backend/catalogs/brand");
 	}
 }

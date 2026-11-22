@@ -1,5 +1,6 @@
 package vpasound.com.fontend.product.service.impl;
 
+import java.util.List;
 import java.util.Objects;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -26,5 +27,10 @@ public class ProductServiceImpl implements ProductService{
 	public ProductEntity getProductBySlug(String slug) {
 		return productRepository.findBySlug(slug)
 				.orElseThrow(() -> new RuntimeException("Khong tim thay slug: " + slug));
+	}
+	
+	public List<ProductEntity> getBestProductHomePage() {
+		List<ProductEntity> products = productRepository.findTop8ByOrderByQtySoldDesc();
+		return products;
 	}
 }

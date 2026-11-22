@@ -1,4 +1,32 @@
-16-11-2026 21:50:28 [restartedMain] INFO  o.s.a.r.c.CachingConnectionFactory - Attempting to connect to: [localhost:5672]
-16-11-2026 21:50:28 [restartedMain] INFO  o.s.a.r.c.CachingConnectionFactory - Created new connection: rabbitConnectionFactory#4a530167:0/SimpleConnection@6bd9b0e9 [delegate=amqp://guest@127.0.0.1:5672/, localPort=56598]
-16-11-2026 21:51:27 [restartedMain] INFO  o.s.a.r.c.CachingConnectionFactory - Attempting to connect to: [localhost:5672]
-16-11-2026 21:51:28 [restartedMain] INFO  o.s.a.r.c.CachingConnectionFactory - Created new connection: rabbitConnectionFactory#5e7d379b:0/SimpleConnection@43158d54 [delegate=amqp://guest@127.0.0.1:5672/, localPort=56631]
+22-11-2026 14:22:52 [restartedMain] INFO  o.s.a.r.c.CachingConnectionFactory - Attempting to connect to: [localhost:5672]
+22-11-2026 14:22:52 [restartedMain] INFO  o.s.a.r.c.CachingConnectionFactory - Created new connection: rabbitConnectionFactory#2e65ff94:0/SimpleConnection@16dd4c1e [delegate=amqp://guest@127.0.0.1:5672/, localPort=64541]
+22-11-2026 14:28:48 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  o.s.a.r.l.SimpleMessageListenerContainer - Waiting for workers to finish.
+22-11-2026 14:28:49 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  o.s.a.r.l.SimpleMessageListenerContainer - Successfully waited for workers to finish.
+22-11-2026 14:28:53 [restartedMain] INFO  o.s.a.r.c.CachingConnectionFactory - Attempting to connect to: [localhost:5672]
+22-11-2026 14:28:53 [restartedMain] INFO  o.s.a.r.c.CachingConnectionFactory - Created new connection: rabbitConnectionFactory#1f8b833a:0/SimpleConnection@3667b394 [delegate=amqp://guest@127.0.0.1:5672/, localPort=64904]
+22-11-2026 14:43:41 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  o.s.a.r.l.SimpleMessageListenerContainer - Waiting for workers to finish.
+22-11-2026 14:43:41 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  o.s.a.r.l.SimpleMessageListenerContainer - Successfully waited for workers to finish.
+22-11-2026 22:40:28 [restartedMain] INFO  o.s.a.r.c.CachingConnectionFactory - Attempting to connect to: [localhost:5672]
+22-11-2026 22:40:28 [restartedMain] INFO  o.s.a.r.c.CachingConnectionFactory - Created new connection: rabbitConnectionFactory#7af3d8da:0/SimpleConnection@9e586f2 [delegate=amqp://guest@127.0.0.1:5672/, localPort=64962]
+22-11-2026 22:51:01 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  o.s.a.r.l.SimpleMessageListenerContainer - Waiting for workers to finish.
+22-11-2026 22:51:02 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  o.s.a.r.l.SimpleMessageListenerContainer - Successfully waited for workers to finish.
+22-11-2026 22:51:06 [restartedMain] INFO  o.s.a.r.c.CachingConnectionFactory - Attempting to connect to: [localhost:5672]
+22-11-2026 22:51:06 [restartedMain] INFO  o.s.a.r.c.CachingConnectionFactory - Created new connection: rabbitConnectionFactory#30209d67:0/SimpleConnection@739d4425 [delegate=amqp://guest@127.0.0.1:5672/, localPort=49991]
+22-11-2026 23:28:25 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  o.s.a.r.l.SimpleMessageListenerContainer - Waiting for workers to finish.
+22-11-2026 23:28:25 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  o.s.a.r.l.SimpleMessageListenerContainer - Successfully waited for workers to finish.
+22-11-2026 23:28:30 [restartedMain] INFO  o.s.a.r.c.CachingConnectionFactory - Attempting to connect to: [localhost:5672]
+22-11-2026 23:28:30 [restartedMain] INFO  o.s.a.r.c.CachingConnectionFactory - Created new connection: rabbitConnectionFactory#656c5bb8:0/SimpleConnection@1e78c354 [delegate=amqp://guest@127.0.0.1:5672/, localPort=50858]
+22-11-2026 23:33:26 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  o.s.a.r.l.SimpleMessageListenerContainer - Waiting for workers to finish.
+22-11-2026 23:33:27 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  o.s.a.r.l.SimpleMessageListenerContainer - Successfully waited for workers to finish.
+22-11-2026 23:33:31 [restartedMain] INFO  o.s.a.r.c.CachingConnectionFactory - Attempting to connect to: [localhost:5672]
+22-11-2026 23:33:31 [restartedMain] INFO  o.s.a.r.c.CachingConnectionFactory - Created new connection: rabbitConnectionFactory#1bfc56d2:0/SimpleConnection@2259267f [delegate=amqp://guest@127.0.0.1:5672/, localPort=50934]
+22-11-2026 23:35:04 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  o.s.a.r.l.SimpleMessageListenerContainer - Waiting for workers to finish.
+22-11-2026 23:35:04 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  o.s.a.r.l.SimpleMessageListenerContainer - Successfully waited for workers to finish.
+22-11-2026 23:35:09 [restartedMain] INFO  o.s.a.r.c.CachingConnectionFactory - Attempting to connect to: [localhost:5672]
+22-11-2026 23:35:09 [restartedMain] INFO  o.s.a.r.c.CachingConnectionFactory - Created new connection: rabbitConnectionFactory#65e4cb6c:0/SimpleConnection@25f529cb [delegate=amqp://guest@127.0.0.1:5672/, localPort=50966]
+22-11-2026 23:55:33 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  o.s.a.r.l.SimpleMessageListenerContainer - Waiting for workers to finish.
+22-11-2026 23:55:33 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  o.s.a.r.l.SimpleMessageListenerContainer - Successfully waited for workers to finish.
+22-11-2026 23:55:38 [restartedMain] INFO  o.s.a.r.c.CachingConnectionFactory - Attempting to connect to: [localhost:5672]
+22-11-2026 23:55:38 [restartedMain] INFO  o.s.a.r.c.CachingConnectionFactory - Created new connection: rabbitConnectionFactory#34bed810:0/SimpleConnection@61f734da [delegate=amqp://guest@127.0.0.1:5672/, localPort=51535]
+22-11-2026 23:58:36 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  o.s.a.r.l.SimpleMessageListenerContainer - Waiting for workers to finish.
+22-11-2026 23:58:36 [org.springframework.amqp.rabbit.RabbitListenerEndpointContainer#0-2] INFO  o.s.a.r.l.SimpleMessageListenerContainer - Successfully waited for workers to finish.
