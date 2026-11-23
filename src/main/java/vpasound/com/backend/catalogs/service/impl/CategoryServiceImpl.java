@@ -84,6 +84,7 @@ public class CategoryServiceImpl implements CategoryService{
                     .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy danh mục cha có ID: " + categoryDto.getParent()));
 			categoryEntity.setParent(parentCategory);
         }
+		if (categoryDto.getParent() == 0) categoryEntity.setParent(null);
 		categoryRepository.save(categoryEntity);
 	}
 	

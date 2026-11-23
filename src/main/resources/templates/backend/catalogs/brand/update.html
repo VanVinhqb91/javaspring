@@ -28,7 +28,7 @@
 
                 <form id="update_brand" th:action="@{${urlSecretKey.url('/backend/catalogs/brand/update/' + id)}}"
                     th:object="${createBrandForm}" enctype="multipart/form-data" method="POST"
-                    class="bg-white border border-slate-300 rounded-t shadow-sm">
+                    class="bg-white border-slate-300 rounded-t shadow-sm">
                     <main class="main-content">
                         <section class="panel">
                             <div class="panel-header" onclick="togglePanel(this)">Basic
@@ -75,6 +75,17 @@
                         </section>
                     </main>
                 </form>
+                <div class="w-[100%] pb-[60px]">
+                    <div class="action-buttons float-right">
+                        <button class="btn-secondary">
+                            <a th:href="@{${urlSecretKey.url('/backend/catalogs/brand')}}">Back</a>
+                        </button>
+                        <button type="submit" form="update_brand" name="action" value="save"
+                            class="btn-secondary">Save</button>
+                        <button type="submit" form="update_brand" name="action" value="saveAndClose"
+                            class="btn-primary">Save & Closed</button>
+                    </div>
+                </div>
             </div>
             <div th:replace="~{backend/fragments/footer :: htmlFooter}"></div>
         </main>

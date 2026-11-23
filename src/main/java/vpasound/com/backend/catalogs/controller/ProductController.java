@@ -152,7 +152,7 @@ public class ProductController {
 		if ("updateAndClose".equals(action)) {
 			return "redirect:" + secretUrlKeyAdmin.url("/backend/catalogs/product");
 		}
-		return "redirect:" + secretUrlKeyAdmin.url("/backend/catalogs/product/update" + id);
+		return "redirect:" + secretUrlKeyAdmin.url("/backend/catalogs/product/update/" + id);
 	}
 	
 	@GetMapping("/delete/{id}")

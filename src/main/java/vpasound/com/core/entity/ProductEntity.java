@@ -44,9 +44,6 @@ public class ProductEntity {
 	@Column(name = "sku")
 	private String sku;
 	
-	@Column(name = "url_product")
-	private String urlProduct;
-	
 	@Column(name = "category_id")
 	private Integer categoryId;
 	

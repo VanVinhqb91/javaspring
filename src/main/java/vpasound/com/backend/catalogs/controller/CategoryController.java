@@ -55,7 +55,7 @@ public class CategoryController {
 		int status = categoryDTO.getStatus() == null ? 0 : 1;
 		categoryDTO.setStatus(status);
 		categoryService.saveCategory(categoryDTO);
-		return "redirect:" + secretUrlKeyAdmin.url("/backend/catalogs/category/list");
+		return "redirect:" + secretUrlKeyAdmin.url("/backend/catalogs/category");
 	}
 	
 	@GetMapping("/update/{id}")

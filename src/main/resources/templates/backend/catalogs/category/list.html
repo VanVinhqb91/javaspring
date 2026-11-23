@@ -34,7 +34,6 @@
                             </div>
                             <ul class="tree-list" style="padding-left: 0;">
                                 <li>
-                                    <span class="tree-item">📁 Default Store View</span>
                                     <ul class="tree-list">
                                         <li th:each="category:${categories}">
                                             <a th:href="@{${urlSecretKey.url('/backend/catalogs/category/update/' + category.id)}}"
@@ -96,9 +95,9 @@
                                         </div>
                                     </div>
                                     <div class="admin-field">
-                                        <label>URL Category</label>
+                                        <label>Slug</label>
                                         <div class="admin-field-control">
-                                            <input type="text" th:field="*{cateUrl}">
+                                            <input type="text" th:field="*{slug}">
                                         </div>
                                     </div>
                                     <div class="admin-field">

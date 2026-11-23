@@ -17,7 +17,7 @@ public class CategoryRequestDto {
 	private Integer parent;
 	
 	private String description;
-	private String cateUrl;
+	private String slug;
 	private String metaTitle;
 	private Integer status;
 	private String metaKeywords;

@@ -46,8 +46,8 @@ public class CategoryEntity {
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<CategoryEntity> children;
     
-	@Column(name = "cate_url")
-	private String cateUrl;
+	@Column(name = "slug")
+	private String slug;
 	
 	@Column(name = "meta_title")
 	private String metaTitle;
