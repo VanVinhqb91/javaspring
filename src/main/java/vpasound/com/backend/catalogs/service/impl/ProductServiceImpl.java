@@ -105,6 +105,7 @@ public class ProductServiceImpl implements ProductService{
 		productUpdate.setQty(product.getQty());
 		productUpdate.setQtySold(product.getQtySold());
 		productUpdate.setStatus(product.getStatus());
+		productUpdate.setUrlVideo(product.getUrlVideo());
 		productUpdate.setStockStatus(product.getStockStatus());
 		if (product.getUrlImage() != null) 
 			productUpdate.setUrlImage(product.getUrlImage());

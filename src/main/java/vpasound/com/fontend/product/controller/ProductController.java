@@ -22,7 +22,7 @@ public class ProductController {
 	public final ProductService productService;
 	public final KafkaService kafkaService;
 	
-	@GetMapping("/san-pham/{slug}-pid{id}.html")
+	@GetMapping("/san-pham/{slug}-sid{id}.html")
 	public String viewProduct(
 			@PathVariable String slug,
 			@PathVariable Long id,

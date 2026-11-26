@@ -1,5 +1,5 @@
 <html xmlns:th="http://www.thymeleaf.org">
-<th:block th:fragment="htmlHead">
+<head th:fragment="htmlHead">
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script src="https://cdn.tailwindcss.com"></script>
@@ -17,7 +17,7 @@
 		background-color: rgb(255, 255, 255);
 	}
 	</style>
-</th:block>
+</head>
 
 <head th:fragment="htmlHeadProduct">
 	<meta charset="UTF-8">
@@ -38,8 +38,7 @@
 		background-color: rgb(255, 255, 255);
 	}
 	</style>
-	<script src="https://ckeditor.com"></script>
-	<script src="https://cdn.ckeditor.com/ckeditor5/12.3.1/classic/ckeditor.js"></script>
+	<script th:src="@{/js/ckeditor.js}"></script>
 </head>
 
 <head th:fragment="htmlHeadUser">

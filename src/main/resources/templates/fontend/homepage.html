@@ -286,8 +286,8 @@
 								<span
 									class="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">Tai
 									Nghe</span>
-								<h4 class="text-sm font-bold text-black group-hover:text-zinc-600 transition-colors line-clamp-1">
-									[[${product.name}]]</h4>
+								<a th:href="@{|/san-pham/${product.slug}-sid${product.id}.html|}" class="text-sm font-bold text-black group-hover:text-zinc-600 transition-colors line-clamp-1">
+									[[${product.name}]]</a>
 								<div class="flex items-center space-x-2">
 									<span class="text-sm font-extrabold text-black">[[${product.price}]]</span>
 									<span class="text-xs text-zinc-400 line-through">10.500.000₫</span>

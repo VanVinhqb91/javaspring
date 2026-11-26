@@ -1,0 +1,384 @@
+
+:root {
+    --bg-main: #ffffff;
+    --bg-toolbar: #f8f8f8;
+    --border-color: #d6d6d6;
+    --text-primary: #303030;
+    --text-secondary: #666666;
+    --accent-blue: #007bdb;
+    --accent-blue-bg: #e5f3ff;
+    --btn-disabled-text: #a6a6a6;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    padding: 20px 30px;
+}
+
+.page-title {
+    font-size: 26px;
+    font-weight: 400;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Action Bar */
+.action-bar {
+    background-color: var(--bg-toolbar);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.btn {
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 2px;
+    cursor: pointer;
+    border: 1px solid #adadad;
+    background-color: #e3e3e3;
+    color: #333;
+    transition: all 0.2s;
+}
+
+.btn:hover:not(:disabled) {
+    background-color: #d5d5d5;
+}
+
+.btn:disabled {
+    background-color: #f2f2f2;
+    border-color: #e0e0e0;
+    color: var(--btn-disabled-text);
+    cursor: not-allowed;
+}
+
+/* Search & Filter */
+.search-filter-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-left: 15px;
+}
+
+.search-box {
+    position: relative;
+    width: 380px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 9px 35px 9px 12px;
+    border: 1px solid #adadad;
+    font-size: 14px;
+    outline: none;
+}
+
+.search-box input:focus {
+    border-color: var(--accent-blue);
+}
+
+.search-box i {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #555;
+    cursor: pointer;
+}
+
+.filter-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-outline {
+    background: #fff;
+    border: 1px solid #adadad;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-outline:hover {
+    background: #f5f5f5;
+}
+
+/* Active Filters */
+.active-filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 15px;
+    font-size: 13px;
+    padding-left: 15px;
+}
+
+.filter-tags {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tag-badge {
+    background: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 3px 8px;
+    border-radius: 3px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.tag-badge i {
+    cursor: pointer;
+    color: #666;
+}
+
+.clear-all {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    background-color: #eb5202;
+    padding: 7px 20px;
+    font-weight: 700;
+}
+
+/* Pagination */
+.pagination-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 13px;
+    padding-left: 15px;
+}
+
+.records-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sort-control select {
+    border: none;
+    font-weight: 600;
+    color: #333;
+    cursor: pointer;
+    outline: none;
+    background: transparent;
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.page-size-select, .page-input {
+    padding: 6px 10px;
+    border: 1px solid #adadad;
+    background: #fff;
+    font-size: 13px;
+}
+
+.page-input {
+    width: 45px;
+    text-align: center;
+}
+
+.page-btn {
+    padding: 6px 12px;
+    border: 1px solid #adadad;
+    background: #f5f5f5;
+    cursor: pointer;
+}
+
+/* Workspace */
+.gallery-workspace {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+    padding-left: 10px;
+}
+
+/* Folder Tree */
+.folder-tree {
+    width: 240px;
+    flex-shrink: 0;
+    user-select: none;
+}
+
+.tree-node {
+    list-style: none;
+}
+
+.tree-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    cursor: pointer;
+    border-radius: 2px;
+    font-size: 14px;
+    color: #333;
+    border: 1px solid transparent;
+}
+
+.tree-item:hover {
+    background-color: #f5f5f5;
+}
+
+.tree-item.active {
+    background-color: var(--accent-blue-bg);
+    border-color: var(--accent-blue);
+    font-weight: 600;
+}
+
+.tree-item i.fa-folder {
+    color: #6b7280;
+    font-size: 16px;
+}
+
+.tree-children {
+    padding-left: 22px;
+    margin-top: 2px;
+}
+
+/* Media Grid */
+.media-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(192px, 1fr));
+    gap: 20px;
+}
+
+.media-card {
+    cursor: pointer;
+    position: relative;
+}
+
+.media-thumb {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: #f4f4f4;
+    border: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.media-card.selected .media-thumb {
+    border: 2px solid var(--accent-blue);
+    box-shadow: 0 0 0 2px rgba(0, 123, 219, 0.2);
+}
+
+.media-thumb img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.media-checkbox {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    display: none;
+}
+
+.media-card:hover .media-checkbox,
+.media-card.selected .media-checkbox {
+    display: block;
+}
+
+.media-info {
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.media-details {
+    overflow: hidden;
+}
+
+.media-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 3px;
+}
+
+.media-meta {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.media-more {
+    color: #666;
+    padding: 2px 6px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+
+/* 1. Thanh "21 records found + Sort by + Phân trang" dính ở mép trên cùng */
+.pagination-row {
+    position: sticky;
+    top: 0;
+    z-index: 20; /* Nổi lên trên các thẻ ảnh khi cuộn */
+    background-color: #ffffff; /* Nền trắng để che ảnh cuộn bên dưới */
+    padding: 12px 16px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+/* 2. Khu vực làm việc 2 cột */
+.gallery-workspace {
+    display: flex;
+    align-items: flex-start; /* Bắt buộc có để sticky hoạt động */
+    padding-top: 16px;
+}
+
+/* 3. Cột cây thư mục "All Media Gallery" bên trái dính ngay dưới thanh pagination-row */
+.folder-tree {
+    width: 240px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 75px; /* Bằng đúng chiều cao của .pagination-row + khoảng cách lề trên */
+    max-height: calc(100vh - 95px); /* Tự cuộn nội bộ nếu danh sách thư mục quá dài */
+    overflow-y: auto;
+}
+
+/* 4. Lưới ảnh bên phải cuộn tự nhiên theo trang */
+.media-grid {
+    flex: 1;
+}
+
+

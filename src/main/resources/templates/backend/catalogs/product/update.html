@@ -217,30 +217,46 @@
             <div th:replace="~{backend/fragments/footer :: htmlFooter}"></div>
         </main>
     </div>
+    
+    <div id="mediaGalleryModal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-2">
+        <div class="bg-white shadow-xl w-full max-w-6xl h-[92vh] flex flex-col overflow-hidden">
+            
+            <!-- Header Modal -->
+            <div class="px-6 py-4 border-b flex items-center justify-between bg-slate-50">
+                <h3 class="text-lg font-semibold text-slate-800">Media Gallery</h3>
+                <button type="button" onclick="closeMediaModal()" class="text-slate-500 hover:text-slate-800 text-2xl leading-none">&times;</button>
+            </div>
 
-    <script type="text/javascript">
-        function togglePanel(header) {
-            const panel = header.parentElement;
-            panel.classList.toggle('collapsed');
-        };
+            <!-- Thanh công cụ: Tìm kiếm & Nút chèn ảnh -->
+            <div class="px-6 py-3 border-b flex items-center justify-between gap-4 bg-white">
+                <div class="flex items-center gap-3">
+                    <input type="text" id="modalSearchInput" onkeyup="renderModalGrid()" 
+                           placeholder="Tìm kiếm tên ảnh..." 
+                           class="border px-3 py-1.5 text-sm w-64">
+                    
+                    <!-- Nút upload nhanh ngay trong popup -->
+                    <button type="button" onclick="document.getElementById('modalFileInput').click()"
+                            class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 border border-slate-300 text-slate-700 text-sm">
+                        <i class="fas fa-upload mr-1"></i> Upload Image
+                    </button>
+                    <input type="file" id="modalFileInput" multiple accept="image/*" class="hidden" onchange="handleModalUpload(event)">
+                </div>
+                
+                <div class="flex items-center gap-3">
+                    <span class="text-sm text-slate-600">Đã chọn: <strong id="modalSelectedCount">0</strong> ảnh</span>
+                    <button type="button" id="btnInsertSelected" disabled onclick="insertSelectedImagesToEditor()"
+                            class="px-4 py-1.5 bg-orange-600 hover:bg-orange-700 disabled:bg-slate-300 text-white text-sm font-medium">
+                        Insert Selected
+                    </button>
+                </div>
+            </div>
 
-        ClassicEditor
-            .create(document.querySelector('#editorShort'))
-            .then(editor => {
-                editor.editing.view.change(writer => {
-                    writer.setStyle('height', '200px', editor.editing.view.document.getRoot());
-                    writer.setStyle('width', '900px', editor.editing.view.document.getRoot());
-                });
-            });
-
-        ClassicEditor
-            .create(document.querySelector('#editorDescription'))
-            .then(editor => {
-                editor.editing.view.change(writer => {
-                    writer.setStyle('height', '300px', editor.editing.view.document.getRoot());
-                });
-            });
-    </script>
+            <!-- Lưới hiển thị ảnh từ /api/media -->
+            <div id="modalMediaGrid" 
+                 class="flex-1 overflow-y-auto p-6 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-4 auto-rows-max content-start items-start bg-slate-50">
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" th:src="@{/js/admin_ckeditor_media.js}"></script>
 </body>
-
 </html>
