@@ -7,13 +7,13 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import vpasound.com.backend.systems.helper.CronjobBaseDynamicHelper;
-import vpasound.com.backend.systems.service.SystemCronjobService;
+import vpasound.com.backend.systems.service.CronjobService;
 import vpasound.com.core.entity.SystemCronjobEntity;
 import vpasound.com.core.repository.SystemCronjobRepository;
 
 @Service
 @RequiredArgsConstructor
-public class SystemCronjobServiceImpl implements SystemCronjobService{
+public class CronjobServiceImpl implements CronjobService{
 
 	private final SystemCronjobRepository systemCronjobRepository;
 	private final List<CronjobBaseDynamicHelper> cronjobHelpers;

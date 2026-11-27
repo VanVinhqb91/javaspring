@@ -1,7 +1,5 @@
 package vpasound.com.backend.systems.controller;
 
-import java.lang.classfile.instruction.NewMultiArrayInstruction;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,12 +7,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.RequiredArgsConstructor;
-import vpasound.com.backend.systems.service.SettingService;
-import vpasound.com.backend.systems.service.SystemCronjobService;
-import vpasound.com.core.entity.SettingEntity;
+import vpasound.com.backend.systems.service.CronjobService;
 import vpasound.com.core.entity.SystemCronjobEntity;
 import vpasound.com.core.repository.SystemCronjobRepository;
 
@@ -24,7 +19,7 @@ import vpasound.com.core.repository.SystemCronjobRepository;
 public class CronjobController {
 
 	private final SystemCronjobRepository systemCronjobRepository;
-	private final SystemCronjobService systemCronjobService;
+	private final CronjobService cronjobService;
 	
 	@GetMapping("")
 	public String getCronjob(Model model) {
@@ -46,7 +41,7 @@ public class CronjobController {
 			@ModelAttribute(value = "cronjob") SystemCronjobEntity systemCronjobEntity,
 			Model model
 	) {
-		systemCronjobService.createCronjob(systemCronjobEntity);
+		cronjobService.createCronjob(systemCronjobEntity);
 		return "redirect:/backend/systems/cronjob";
 	}
 	
@@ -65,7 +60,7 @@ public class CronjobController {
 			@ModelAttribute(value = "cronjob") SystemCronjobEntity systemCronjobEntity,
 			Model model
 	) {
-		systemCronjobService.updateCronjob(id, systemCronjobEntity);
+		cronjobService.updateCronjob(id, systemCronjobEntity);
 		return "redirect:/backend/systems/cronjob";
 	}
 }
