@@ -113,6 +113,26 @@
             <div th:replace="~{backend/fragments/footer :: htmlFooter}"></div>
         </main>
     </div>
+    
+    <!-- Modal Create Folder Popup -->
+    <div id="folderModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50">
+      <div class="w-full min-h-[300px] max-w-[600px] bg-white p-12 shadow-xl">
+        <h3 class="mb-4 text-lg font-semibold text-gray-800">Enter New Folder Name</h3>
+        <input type="text" id="folderNameInput" 
+          class="mb-6 w-full border border-[#adadad] rounded-none focus:outline-none focus:ring-0 focus:border-[#adadad] px-3 py-2"
+          placeholder="New folder name ..."
+        />
+        <div class="flex justify-end gap-3">
+          <button onclick="submitFolder()" class="bg-[#eb5202] px-6 py-2 text-sm font-medium text-white">
+            Create Folder
+          </button>
+          <button onclick="closeFolderModal()" class="bg-[#e3e3e3] border border-[#adadad] px-6 py-2 text-sm font-medium">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+    
     <script type="text/javascript" th:src="@{/js/admin_media_gallery.js}"></script>
 </body>
 </html>

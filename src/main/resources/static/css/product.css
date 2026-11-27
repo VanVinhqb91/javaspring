@@ -430,3 +430,8 @@ body {
     font-weight: 600;
     cursor: pointer;
 }
+
+/* Hidden Powey by Ckeditor */
+.ck.ck-balloon-panel.ck-powered-by-balloon {
+    display: none !important;
+}

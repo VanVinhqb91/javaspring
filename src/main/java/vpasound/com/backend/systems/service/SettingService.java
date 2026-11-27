@@ -2,7 +2,6 @@ package vpasound.com.backend.systems.service;
 
 import java.util.List;
 import java.util.Optional;
-
 import vpasound.com.core.entity.SettingEntity;
 
 public interface SettingService {

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{backend/fragments/head :: htmlHeadProduct}"></head>
+
+<body class="text-slate-700 antialiased min-h-screen flex flex-col pb-0 pr-0">
+    <div class="flex flex-1">
+        <div th:replace="~{backend/fragments/leftsidebar :: htmlLeftSideBar}"></div>
+        <main class="ml-[75px] flex-1 bg-[#f5f5f5] overflow-x-auto">
+            <div class="p-6">
+                <div th:replace="~{backend/fragments/header :: htmlHeader}"></div>
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                    <div>
+                        <h1 class="text-2xl font-light text-slate-800">
+                            <b>Systems / Cronjob Schedule / Create</b>
+                        </h1>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn-secondary">
+                            <a th:href="@{${urlSecretKey.url('/backend/systems/cronjob')}}">Back</a>
+                        </button>
+                        <button type="submit" form="update_cronjob" name="action"
+                            class="btn-primary">Save & Closed</button>
+                    </div>
+                </div>
+
+                <form id="update_cronjob"
+                    th:action="@{${urlSecretKey.url('/backend/systems/cronjob/create')}}"
+                    th:object="${cronjob}" method="POST"
+                    class="bg-white border-slate-300 rounded-t shadow-sm">
+                    <main class="main-content">
+                        <section class="panel">
+                            <div class="panel-header" onclick="togglePanel(this)">Default Cronjob Schedule</div>
+                            <div class="panel-body grid grid-cols-1 md:grid-cols-[40%_1fr] gap-6">
+                                <div class="p-4 rounded">
+                                    <div class="form-group required">
+                                        <label for="product-name">Cronjob Key</label>
+                                        <input type="text" th:field="*{cronKey}"
+                                            style="width: 100%;" class="form-control">
+                                    </div>
+    
+                                    <div class="form-group required">
+                                        <label>Status</label>
+                                        <select th:field="*{status}" style="width: 100%;" class="form-control">
+                                            <option value="1">Activated</option>
+                                            <option value="0">Deactivated</option>
+                                        </select>
+                                    </div>
+    
+                                    <div class="form-group required">
+                                        <label for="product-name">Cronjob Name</label>
+                                        <input type="text" th:field="*{name}" style="width: 100%;" class="form-control" required>
+                                    </div>
+    
+                                    <div class="form-group required">
+                                        <label for="sku">Cronjob Value</label>
+                                        <input type="text" th:field="*{cronValue}" style="width: 100%;" class="form-control" placeholder="* * * * * *" required>
+                                    </div>
+                                </div>
+                                <div class="bg-[#fafafa] p-4 rounded shadow-lg">
+                                    <h3 class="font-bold text-center pb-4 text-[16px]">Cronjob Schedule Configs</h3>
+                                    <ul class="list-disc pl-5 space-y-2 text-gray-700 marker:text-indigo-600 text-[15px]">
+                                      <li>Mỗi phút 1 lần: 0 * * * * * | Mỗi 5 phút 1 lần: */5 * * * *</li>
+                                      <li>Mỗi 30 phút 1 lần: 0 */30 * * * * | Mỗi tiếng 1 lần (vào phút 00): 0 0 * * * *</li>
+                                      <li>Mỗi 6 tiếng 1 lần: 0 0 */6 * * * | Hàng ngày lúc 00:00 (nửa đêm): 0 0 0 * * *</li>
+                                      <li>Hàng ngày lúc 08:30 sáng: 0 30 8 * * * | 2 lần/ngày (lúc 08:00 và 20:00): 0 0 8,20 * * *</li>
+                                      <li>Hàng tuần (00:00 sáng Thứ Hai): 0 0 0 * * 1 | Hàng tuần (23:59 Chủ Nhật): 0 59 23 * * 0</li>
+                                      <li>Hàng tháng (00:00 ngày mùng 1): 0 0 0 1 * * | Hàng quý (00:00 ngày 1 tháng 1, 4, 7, 10): 0 0 0 1 1,4,7,10 *</li>
+                                      <li>2 Ngày/lần (23:59 Tối): 0 59 23 */2 * *</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </section>
+                    </main>
+                </form>
+            </div>
+            <div th:replace="~{backend/fragments/footer :: htmlFooter}"></div>
+        </main>
+    </div>
+</body>
+</html>

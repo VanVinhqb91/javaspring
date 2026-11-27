@@ -139,15 +139,30 @@ function updateActionButtons() {
 
 // 6. Tạo thư mục mới trên cây thư mục
 async function createFolder() {
-    const name = prompt('Nhập tên thư mục mới:');
-    if (name && name.trim() !== '') {
-        const res = await fetch(`${API_URL}/folders?name=${encodeURIComponent(name)}`, {
-            method: 'POST'
-        });
-        if (res.ok) {
-            location.reload();
-        }
-    }
+    const modal = document.getElementById('folderModal');
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+}
+
+async function closeFolderModal() {
+  const modal = document.getElementById('folderModal');
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
+}
+
+async function submitFolder() {
+  const folderName = document.getElementById('folderNameInput').value.trim();
+  if (!folderName) return;
+  
+  if (folderName && folderName.trim() !== '') {
+      const res = await fetch(`${API_URL}/folders?name=${encodeURIComponent(folderName)}`, {
+          method: 'POST'
+      });
+      if (res.ok) {
+          location.reload();
+      }
+  }
+  closeFolderModal();
 }
 
 // 7. Xóa thư mục đang chọn

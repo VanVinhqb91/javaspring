@@ -1,36 +1,71 @@
 package vpasound.com.backend.systems.controller;
 
+import java.lang.classfile.instruction.NewMultiArrayInstruction;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.RequiredArgsConstructor;
 import vpasound.com.backend.systems.service.SettingService;
+import vpasound.com.backend.systems.service.SystemCronjobService;
+import vpasound.com.core.entity.SettingEntity;
+import vpasound.com.core.entity.SystemCronjobEntity;
+import vpasound.com.core.repository.SystemCronjobRepository;
 
 @Controller
 @RequestMapping("/backend/systems/cronjob")
 @RequiredArgsConstructor
 public class CronjobController {
 
-	private final SettingService settingService;
+	private final SystemCronjobRepository systemCronjobRepository;
+	private final SystemCronjobService systemCronjobService;
 	
 	@GetMapping("")
 	public String getCronjob(Model model) {
-		model.addAttribute("cronjobs", settingService.getCronJobSetting());
+		model.addAttribute("cronjobs", systemCronjobRepository.findAll());
+		
 		return "backend/systems/cronjob/list";
 	}
 	
-	@PostMapping("/update")
-	public String cronJobUpdateSetting(
-			@RequestParam(name = "product_cron_time_select") String productValue,
-			@RequestParam(name = "price_cron_time_select") String priceValue,
-			@RequestParam(name = "cron_advertising_campaign_select") String adCampaign,
+	@GetMapping("/create")
+	public String cronJobCreate(
 			Model model
 	) {
-		settingService.updateCronJobSetting(productValue, priceValue, adCampaign);
+		model.addAttribute("cronjob", new SystemCronjobEntity());
+		return "backend/systems/cronjob/create";
+	}
+	
+	@PostMapping("/create")
+	public String postCronJobCreate(
+			@ModelAttribute(value = "cronjob") SystemCronjobEntity systemCronjobEntity,
+			Model model
+	) {
+		systemCronjobService.createCronjob(systemCronjobEntity);
+		return "redirect:/backend/systems/cronjob";
+	}
+	
+	@GetMapping("/update/{id}")
+	public String cronJobUpdate(
+			@PathVariable Integer id,
+			Model model
+	) {
+		model.addAttribute("cronjob", systemCronjobRepository.findById(id));
+		return "backend/systems/cronjob/update";
+	}
+	
+	@PostMapping("/update/{id}")
+	public String postCronJobUpdate(
+			@PathVariable Integer id,
+			@ModelAttribute(value = "cronjob") SystemCronjobEntity systemCronjobEntity,
+			Model model
+	) {
+		systemCronjobService.updateCronjob(id, systemCronjobEntity);
 		return "redirect:/backend/systems/cronjob";
 	}
 }
